@@ -1,0 +1,34 @@
+.ulContainer{
+    display: flex;
+    justify-content: space-between;
+    width: 250px;
+}
+.ulContainer>li{
+    font-size: 1.2rem;
+    color:rgb(214, 107, 19);
+}
+.actionsContainer{
+    display: flex;
+}
+.cart,
+.login{
+    display: flex;
+    align-items: center;
+}
+.login{
+    margin-left:10px;
+}
+.cart>p,
+.login>p{
+    color:rgb(42, 68, 153);
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+@media(max-width:700px){
+    .navContainer,
+    .actionsContainer{
+        display: none;
+    }
+}

@@ -1,0 +1,95 @@
+.logo{
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: 'The Nautigal', cursive;
+    text-shadow: 0px 1px 3px;
+}
+.logoZone{
+    font-family: 'The Nautigal', cursive;
+    color:rgb(214, 107, 19);
+}
+.hamburger,
+.hamburgerAcrive{
+    cursor: pointer;
+    z-index: 100;
+    position: absolute;
+    right: 20px;
+}
+.hamburger{
+    transform: rotate(0);
+    transition: transform 250ms;
+}
+.hamburgerAcrive{
+    transform:rotate(-360deg);
+    transition: transform 250ms;
+}
+.hamline1,.hamline2,.hamline3{
+    width: 40px;
+    height: 5px;
+    background-color: rgb(214, 107, 19);
+    margin: 5px 0;
+}
+.hamburgerAcrive>.hamline1{
+    transform: rotate(-45deg) translate(-5px, 6px);
+    transition: transform 250ms;
+}
+.hamburgerAcrive>.hamline2{
+    opacity: 0;
+}
+.hamburgerAcrive>.hamline3{
+    transform: rotate(45deg) translate(-8px, -10px);
+    transition: transform 250ms;
+}
+.navLow{
+    padding: 20px 0px;
+    background-color: white;
+    position: fixed;
+    right:0px;
+    top:0px;
+    width:0;
+    height: 100%;
+    transition:width 250ms;
+}
+.navLowActive{
+    padding:20px 20px;
+    background-color: white;
+    position: fixed;
+    right: 0px;
+    top:0px;
+    height: 100%;
+    width: 100%;
+    transition:width 250ms;
+}
+.actionsContainerActive{
+    display: flex;
+    justify-content: center;
+}
+.actionsContainer{
+    display: flex;
+}
+.ulContainer{
+    margin:50px 0px;
+}
+.ulContainer>li{
+    font-size: 1.4rem;
+    color:rgb(214, 107, 19);
+    margin:10px 0px;
+}
+.cart,
+.login{
+    display: flex;
+}
+.cart>p,
+.login>p{
+    font-size:1.4rem;
+    font-weight: 900;
+    color:rgb(42, 68, 153);
+}
+
+@media(min-width:700px){
+    .hamburger,
+    .hamburgerAcrive,
+    .navLowActive{
+        display: none;
+    }
+}
