@@ -4,10 +4,11 @@
 .headerContainer{
     display: flex;
     justify-content: space-between;
-    padding:20px;
+    padding:15px 20px;
     width: 100%;
     align-items: center;
     position: fixed;
+    background-color: white;
 }
 .logo{
     font-size: 2.5rem;
