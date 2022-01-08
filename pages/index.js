@@ -6,7 +6,9 @@ import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import Image from 'next/image';
 import {db} from '../firebase'
 import {useEffect,useState} from 'react'
-import { collection, getDocs } from "firebase/firestore"; 
+import { collection, getDocs } from "firebase/firestore";
+import bigphoto from '../components/Images/bigphoto.jpg'
+import lowphoto from '../components/Images/lowphoto.jpg' 
 
 
 export default function Home() {
@@ -31,9 +33,20 @@ export default function Home() {
     <div className={styles.container}>
       <Header/>
       <div className={styles.firstContainer}>
-        <h1>Design Your Comfort <span className={styles.zone}>Zone</span></h1>
-        <p>“I think about every tree that is cut down, and the power and privilege we have to extend its life and to display its beauty in the furniture we make.” – Dave Allard</p>
-        <button className={styles.shopNow}>SHOP NOW</button>
+        <div className={styles.firstContainerLeft}>
+          <h1>Design Your Comfort <span className={styles.zone}>Zone</span></h1>
+          <p>“I think about every tree that is cut down, and the power and privilege we have to extend its life and to display its beauty in the furniture we make.” – Dave Allard</p>
+          <button className={styles.shopNow}>SHOP NOW</button>
+        </div>
+
+        <div className={styles.firstContainerRight}>
+          <Image src={bigphoto} layout='fill' objectFit='cover' objectPosition={'100% 10%'}/>
+          <div className={styles.lowPhoto}>
+            <Image src={lowphoto} objectFit='cover' width='300' height='200' />
+          </div>
+          
+        </div>
+
       </div>
       <section className={styles.secondContainer}>
         <h2>Featured Products</h2>
