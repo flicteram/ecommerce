@@ -3,13 +3,29 @@ import Header from '../components/Header/Header'
 import ExploreIcon from '@mui/icons-material/Explore';
 import DiamondIcon from '@mui/icons-material/Diamond';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
+import {db} from '../firebase'
+import {useEffect,useState} from 'react'
+import { collection, getDocs } from "firebase/firestore"; 
+
 
 export default function Home() {
-
+  const [featured,setFeatured]=useState([])
   const iconsStyle={
     fontSize:50,
     color:'rgb(255, 240, 210)',
   }
+  console.log(featured)
+  async function getDataFromDb(){
+    let data = []
+    const querySnapshot = await getDocs(collection(db, "products"));
+    querySnapshot.forEach((doc) => {
+      data = [...data,doc.data()]
+    });
+    setFeatured(data)
+  }
+  useEffect(()=>{
+    getDataFromDb()
+  },[])
   return (
     <div className={styles.container}>
       <Header/>

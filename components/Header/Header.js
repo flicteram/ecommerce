@@ -1,6 +1,7 @@
 import styles from '../../styles/Header.module.css'
 import HeaderLow from './HeaderLow/HeaderLow'
 import HeaderBig from './HeaderBig/HeaderBig'
+import db from '../../firebase'
 
 export default function Header(){
     return (
