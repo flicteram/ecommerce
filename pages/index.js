@@ -17,7 +17,7 @@ export default function Home() {
     fontSize:50,
     color:'rgb(255, 240, 210)',
   }
-  console.log(featured)
+
   async function getDataFromDb(){
     let data = []
     const querySnapshot = await getDocs(collection(db, "products"));
@@ -55,7 +55,7 @@ export default function Home() {
           <div className={styles.productsContainer}>
             {featured.map((product,index)=>(
               <div key={index} className={styles.productContainer}>
-                <Image src={product.image} width={30} height={20} objectFit='cover' className={styles.image} objectPosition={'50% 70%'} layout='responsive'/>
+                <Image src={product.image} priority width={30} height={20} objectFit='cover' className={styles.image} objectPosition={'50% 70%'} layout='responsive'/>
                 <div className={styles.productInfo}>
                   <p className={styles.productName}>{product.name}</p>
                   <p className={styles.productPrice}>${product.price}</p>
@@ -91,6 +91,7 @@ export default function Home() {
           </div>
         </section>
       </div>
+      <div className={styles.white}></div>
     </div>
   )
 }
