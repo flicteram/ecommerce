@@ -20,9 +20,8 @@
 }
 .cart>p,
 .login>p{
-    color:rgb(42, 68, 153);
+    color:rgb(24, 27, 36);
     font-size: 1.5rem;
-    font-weight: 900;
     letter-spacing: 1px;
 }
 

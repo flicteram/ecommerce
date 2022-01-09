@@ -14,11 +14,11 @@ export default function HeaderBig(){
         <div className={styles.actionsContainer}>
             <div className={styles.cart}>
                 <p>Cart</p>
-                <ShoppingCartIcon sx={{fontSize:30,color:'rgb(42, 68, 153)'}}/>
+                <ShoppingCartIcon sx={{fontSize:30,color:'rgb(24, 27, 36)'}}/>
             </div>
             <div className={styles.login}>
                 <p>Login</p>
-                <PersonAddIcon sx={{fontSize:30,color:'rgb(42, 68, 153)'}}/>
+                <PersonAddIcon sx={{fontSize:30,color:'rgb(24, 27, 36)'}}/>
             </div>
         </div>
         </>

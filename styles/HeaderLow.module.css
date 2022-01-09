@@ -79,11 +79,13 @@
 .login{
     display: flex;
 }
+.cart{
+    margin-right: 20px;
+}
 .cart>p,
 .login>p{
     font-size:1.4rem;
-    font-weight: 900;
-    color:rgb(42, 68, 153);
+    color:rgb(24, 27, 36);
 }
 
 @media(min-width:700px){
