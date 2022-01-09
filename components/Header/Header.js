@@ -5,9 +5,11 @@ import HeaderBig from './HeaderBig/HeaderBig'
 export default function Header(){
     return (
         <header className={styles.headerContainer}>
-            <p className={styles.logo}>Comfort<span className={styles.logoZone}>Zone</span></p>
-            <HeaderLow/>
-            <HeaderBig/>
+            <div className={styles.headerContainerInner}>
+                <p className={styles.logo}>Comfort<span className={styles.logoZone}>Zone</span></p>
+                <HeaderLow/>
+                <HeaderBig/>
+            </div>
         </header>
     )
 }
