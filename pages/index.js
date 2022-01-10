@@ -6,9 +6,10 @@ import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import Image from 'next/image';
 import {db} from '../firebase'
 import {useEffect,useState} from 'react'
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, limit, where } from "firebase/firestore";
 import bigphoto from '../components/Images/bigphoto.jpg'
-import lowphoto from '../components/Images/lowphoto.jpg' 
+import lowphoto from '../components/Images/lowphoto.jpg'
+import AddItems from '../components/AddItems/AddItems'
 
 
 export default function Home() {
@@ -20,7 +21,8 @@ export default function Home() {
 
   async function getDataFromDb(){
     let data = []
-    const querySnapshot = await getDocs(collection(db, "products"));
+    const q = query(collection(db, 'products'),where('featured','==',true),limit(3))
+    const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       data = [...data,doc.data()]
     });
