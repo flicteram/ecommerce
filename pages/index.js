@@ -4,11 +4,13 @@ import ExploreIcon from '@mui/icons-material/Explore';
 import DiamondIcon from '@mui/icons-material/Diamond';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import Image from 'next/image';
+import Product from '../components/Product/Product';
 import {db} from '../firebase'
 import {useEffect,useState} from 'react'
 import { collection, getDocs, query, limit, where } from "firebase/firestore";
 import bigphoto from '../components/Images/bigphoto.jpg'
 import lowphoto from '../components/Images/lowphoto.jpg'
+import Link from 'next/link';
 import AddItems from '../components/AddItems/AddItems'
 
 
@@ -39,14 +41,14 @@ export default function Home() {
             <div className={styles.firstContainerLeft}>
               <h1>Design Your Comfort <span className={styles.zone}>Zone</span></h1>
               <p>“I think about every tree that is cut down, and the power and privilege we have to extend its life and to display its beauty in the furniture we make.” – Dave Allard</p>
-              <button className={styles.shopNow}>SHOP NOW</button>
+              <Link href='/products'><button className={styles.shopNow}>SHOP NOW</button></Link>
             </div>
 
             <div className={styles.firstContainerRight}>
               <div className={styles.design}></div>
-              <Image src={bigphoto} layout='fill' objectFit='cover' objectPosition={'100% 10%'} className={styles.imagePresentation}/>
+              <Image src={bigphoto} priority layout='fill' objectFit='cover' objectPosition={'100% 10%'} className={styles.imagePresentation}/>
               <div className={styles.lowPhoto}>
-                <Image src={lowphoto} objectFit='cover' width='300' height='200' className={styles.imagePresentation}/>
+                <Image src={lowphoto} priority objectFit='cover' width='300' height='200' className={styles.imagePresentation}/>
               </div>
             </div>
           </div>
@@ -55,17 +57,10 @@ export default function Home() {
         <section className={styles.secondContainer}>
           <h2>Featured Products</h2>
           <div className={styles.productsContainer}>
-            {featured.map((product,index)=>(
-              <div key={index} className={styles.productContainer}>
-                <Image src={product.image} priority width={30} height={20} objectFit='cover' className={styles.image} objectPosition={'50% 70%'} layout='responsive'/>
-                <div className={styles.productInfo}>
-                  <p className={styles.productName}>{product.name}</p>
-                  <p className={styles.productPrice}>${product.price}</p>
-                </div>
-              </div>
-            ))}
+            {featured.map((product,index)=>
+            <Product key={index} index={index} product={product}/>)}
             </div>
-          <button className={styles.allProducts}>ALL PRODUCTS</button>
+          <Link href='/products'><button className={styles.allProducts}>ALL PRODUCTS</button></Link>
         </section>
         </div>
       <div className={styles.thirdContainerAll}>
@@ -94,6 +89,7 @@ export default function Home() {
         </section>
       </div>
       <div className={styles.white}></div>
+      <AddItems/>
     </div>
   )
 }

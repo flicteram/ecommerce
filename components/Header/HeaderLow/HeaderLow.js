@@ -2,6 +2,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import styles from '../../../styles/HeaderLow.module.css'
 import {useState} from 'react'
+import Link from 'next/link'
 
 export default function HeaderLow(){
     const [isActive,setIsActive]=useState(false)
@@ -15,9 +16,9 @@ export default function HeaderLow(){
     <nav className={isActive?styles.navLowActive:styles.navLow}>
         <p className={styles.logo}>Comfort<span className={styles.logoZone}>Zone</span></p>
         <ul className={styles.ulContainer}>
-            <li>Home</li>
+            <Link href='/'><li>Home</li></Link>
             <li>About</li>
-            <li>Products</li>
+            <Link href='/products'><li>Products</li></Link>
         </ul>
         <div className={isActive?styles.actionsContainerActive:styles.actionsContainer}>
             <div className={styles.cart}>

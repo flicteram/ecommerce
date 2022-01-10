@@ -97,10 +97,7 @@
     max-width: 1200px;
     margin:0 auto;
 }
-.productContainer{
-    margin:20px 0px;
-    position: relative;
-}
+
 .secondContainer>h2{
     font-size: 1.8rem;
     text-align: center;
@@ -108,21 +105,8 @@
     margin-bottom: 20px;
     padding-bottom: 20px;
 }
-.productInfo{
-    display: flex;
-    justify-content: space-between;
-    margin-top:10px;
-}
-.productName,
-.productPrice{
-    font-size: 0.9rem;
-}
-.productName{
-    color:rgb(49, 64, 65);
-}
-.productPrice{
-    color:rgb(214, 107, 19);
-}
+
+
 .allProducts{
     margin-top: 20px;
     align-self: center;
@@ -149,12 +133,11 @@
     bottom:180px;
     border-radius: 5px;
 }
+@media(min-width:600px){
+
 @media(min-width:700px){
     .secondContainer>h2{
         font-size: 2.5rem;
-    }
-    .productContainer{
-        margin:0;
     }
     .productsContainer{
         margin:50px 0px;
@@ -162,6 +145,7 @@
         grid-template-columns: 1fr 1fr;
         gap:20px;
     }
+}
     .thirdContainer>h2{
         font-size: 2rem;
         max-width: 350px;

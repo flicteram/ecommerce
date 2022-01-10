@@ -1,14 +1,15 @@
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import styles from '../../../styles/HeaderBig.module.css'
+import Link from 'next/link';
 export default function HeaderBig(){
     return (
         <>
         <nav className={styles.navContainer}>
             <ul className={styles.ulContainer}>
-                <li>Home</li>
+                <Link href='/'><li>Home</li></Link>
                 <li>About</li>
-                <li>Products</li>
+                <Link href='/products'><li>Products</li></Link>
             </ul>
         </nav>
         <div className={styles.actionsContainer}>
