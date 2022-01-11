@@ -33,10 +33,10 @@ export default function Products(){
 
     function handleFilterPrice(){
         if(sortBy==='lowest'){
-            setDisplayProducts([...products.sort((a,b)=>a.price-b.price)])
+            setDisplayProducts([...displayProducts.sort((a,b)=>+a.price - +b.price)])
         }
         else if(sortBy==='highest'){
-            setDisplayProducts([...products.sort((a,b)=>b.price-a.price)])
+            setDisplayProducts([...displayProducts.sort((a,b)=>+b.price - +a.price)])
         }
     }
 
@@ -74,7 +74,8 @@ export default function Products(){
             return acc
         },[]))
     }
-        
+    
+
     
     return (
         <div>
@@ -104,7 +105,6 @@ export default function Products(){
                 </div>
             </div>
             <div className={styles.productsContainer}>
-                <Image width={100} height={100} src={'https://firebasestorage.googleapis.com/v0/b/instagram-15651.appspot.com/o/4NDo5TsuzMSxS8QKW6ENDDj4Lgv1%2F4NDo5TsuzMSxS8QKW6ENDDj4Lgv1%2F977IMG_20211102_152912_775.webp?alt=media&token=a51f0916-50c8-47a3-8ed2-a286ec1d15fd'}/>
                 {displayProducts.map((product,index)=>
                     <Product key={index} index={index} product={product}/>)}
             </div>
