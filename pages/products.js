@@ -13,8 +13,15 @@ export default function Products(){
 
     
     const categories=[...new Set(products.map(item=>item.category))].sort()
+    const companies=[...new Set(products.map(item=>item.company))].sort()
+
+    
+
     const [categoryChecked,setCategoryChecked]=useState([])
+    const [companyChecked,setCompanyChecked]=useState([])
+
     const [categoryArray,setCategoryArray]=useState([])
+    const [companyArray,setCompanyArray]=useState([])
     
 
     async function getProducts(){
@@ -24,13 +31,14 @@ export default function Products(){
             data = [...data,doc.data()]
         });
         setCategoryChecked(new Array([...new Set(data.map(item=>item.category))].length).fill(false))
+        setCompanyChecked(new Array([...new Set(data.map(item=>item.company))].length).fill(false))
         setProducts(data)
         setDisplayProducts(data)
     }
     useEffect(()=>{
         getProducts()
     },[])
-
+    
     function handleFilterPrice(){
         if(sortBy==='lowest'){
             setDisplayProducts([...displayProducts.sort((a,b)=>+a.price - +b.price)])
@@ -41,9 +49,18 @@ export default function Products(){
     }
 
     function advancedFilters(){
-        if(categoryArray.length){
+        if(categoryArray.length&&companyArray.length){
             setDisplayProducts(products.filter(item=>
                 categoryArray.includes(item.category)
+                &&
+                companyArray.includes(item.company)
+            ))
+        }
+        else if(categoryArray.length||companyArray.length){
+            setDisplayProducts(products.filter(item=>
+                categoryArray.includes(item.category)
+                ||
+                companyArray.includes(item.company)
             ))
         }
         else{
@@ -52,7 +69,7 @@ export default function Products(){
     }
     useEffect(()=>{
         advancedFilters()
-    },[categoryChecked])
+    },[categoryChecked,companyChecked])
 
     useEffect(()=>{
         if(products.length){
@@ -74,6 +91,7 @@ export default function Products(){
             return acc
         },[]))
     }
+    
     
 
     
@@ -99,8 +117,21 @@ export default function Products(){
                             />
                             {category}
                         </label>
-
-
+                    )}
+                </div>
+                <div>
+                    {companies.map((company,index)=>
+                        <label key={company}>
+                            <input
+                                type='checkbox'
+                                value={company}
+                                name={company}
+                                checked={companyChecked[index]}
+                                onChange={()=>
+                                handleOnChangeChecked(index,companyChecked,setCompanyChecked,setCompanyArray,companies)}
+                            />
+                            {company}
+                        </label>
                     )}
                 </div>
             </div>

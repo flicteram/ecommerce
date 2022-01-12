@@ -11,7 +11,7 @@ import { collection, getDocs, query, limit, where } from "firebase/firestore";
 import bigphoto from '../components/Images/bigphoto.jpg'
 import lowphoto from '../components/Images/lowphoto.jpg'
 import Link from 'next/link';
-import AddItems from '../components/AddItems/AddItems'
+
 
 export default function Home() {
   const [featured,setFeatured]=useState([])
@@ -88,7 +88,6 @@ export default function Home() {
         </section>
       </div>
       <div className={styles.white}></div>
-      <AddItems/>
     </div>
   )
 }
