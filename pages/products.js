@@ -14,14 +14,19 @@ export default function Products(){
     
     const categories=[...new Set(products.map(item=>item.category))].sort()
     const companies=[...new Set(products.map(item=>item.company))].sort()
+    const colors = products.map(item=>item.colors).reduce((acc,currentVal)=>{
+        acc.push(...currentVal)
+        return [...new Set(acc)]
+    },[]).sort()
 
-    
 
     const [categoryChecked,setCategoryChecked]=useState([])
     const [companyChecked,setCompanyChecked]=useState([])
+    const [colorChecked,setColorChecked]=useState([])
 
     const [categoryArray,setCategoryArray]=useState([])
     const [companyArray,setCompanyArray]=useState([])
+    const [colorArray,setColorArray]=useState([])
     
 
     async function getProducts(){
@@ -32,6 +37,10 @@ export default function Products(){
         });
         setCategoryChecked(new Array([...new Set(data.map(item=>item.category))].length).fill(false))
         setCompanyChecked(new Array([...new Set(data.map(item=>item.company))].length).fill(false))
+        setColorChecked(new Array(data.map(item=>item.colors).reduce((acc,currentVal)=>{
+            acc.push(...currentVal)
+            return [...new Set(acc)]
+        },[]).length).fill(false))
         setProducts(data)
         setDisplayProducts(data)
     }
@@ -49,18 +58,43 @@ export default function Products(){
     }
 
     function advancedFilters(){
-        if(categoryArray.length&&companyArray.length){
+        if(categoryArray.length&&companyArray.length&&colorArray.length){
             setDisplayProducts(products.filter(item=>
                 categoryArray.includes(item.category)
                 &&
                 companyArray.includes(item.company)
+                &&
+                item.colors.some(item2=>colorArray.includes(item2))
             ))
         }
-        else if(categoryArray.length||companyArray.length){
+        else if(categoryArray.length&&companyArray.length&& !colorArray.length){
+            setDisplayProducts(products.filter(item=>
+                categoryArray.includes(item.category)
+                &&
+                companyArray.includes(item.company)
+                ))
+        }
+        else if(categoryArray.length&& !companyArray.length &&colorArray.length){
+            setDisplayProducts(products.filter(item=>
+                categoryArray.includes(item.category)
+                &&
+                item.colors.some(item2=>colorArray.includes(item2))
+                ))
+        }
+        else if(!categoryArray.length&& companyArray.length &&colorArray.length){
+            setDisplayProducts(products.filter(item=>
+                companyArray.includes(item.company)
+                &&
+                item.colors.some(item2=>colorArray.includes(item2))
+                ))
+        }
+        else if(categoryArray.length||companyArray.length||colorArray.length){
             setDisplayProducts(products.filter(item=>
                 categoryArray.includes(item.category)
                 ||
                 companyArray.includes(item.company)
+                ||
+                item.colors.some(item2=>colorArray.includes(item2))
             ))
         }
         else{
@@ -69,7 +103,7 @@ export default function Products(){
     }
     useEffect(()=>{
         advancedFilters()
-    },[categoryChecked,companyChecked])
+    },[categoryChecked,companyChecked,colorChecked])
 
     useEffect(()=>{
         if(products.length){
@@ -131,6 +165,21 @@ export default function Products(){
                                 handleOnChangeChecked(index,companyChecked,setCompanyChecked,setCompanyArray,companies)}
                             />
                             {company}
+                        </label>
+                    )}
+                </div>
+                <div>
+                    {colors.map((color,index)=>
+                        <label key={color}>
+                            <input
+                                type='checkbox'
+                                value={color}
+                                name={color}
+                                checked={colorChecked[index]}
+                                onChange={()=>
+                                handleOnChangeChecked(index,colorChecked,setColorChecked,setColorArray,colors)}
+                            />
+                            {color}
                         </label>
                     )}
                 </div>
