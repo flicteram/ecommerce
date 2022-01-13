@@ -12,14 +12,13 @@ export default function Products(){
     const [sortBy,setSortBy]=useState('lowest')
 
     const [priceRange,setPriceRange]=useState(0)
- 
+
     const categories=[...new Set(products.map(item=>item.category))].sort()
     const companies=[...new Set(products.map(item=>item.company))].sort()
     const colors = products.map(item=>item.colors).reduce((acc,currentVal)=>{
         acc.push(...currentVal)
         return [...new Set(acc)]
     },[]).sort()
-
 
     const [categoryChecked,setCategoryChecked]=useState([])
     const [companyChecked,setCompanyChecked]=useState([])
@@ -28,7 +27,10 @@ export default function Products(){
     const [categoryArray,setCategoryArray]=useState([])
     const [companyArray,setCompanyArray]=useState([])
     const [colorArray,setColorArray]=useState([])
+
+    const [allFilters,setAllFilter]=useState([])
     
+    console.log(allFilters)
 
     async function getProducts(){
         const data = []
@@ -67,6 +69,10 @@ export default function Products(){
                 &&
                 +item.price<=priceRange
             ))
+            setAllFilter(
+                [...categoryArray.map(item=>`Category: ${item}`),
+                ...companyArray.map(item=>`Company: ${item}`),
+                ...colorArray.map(item=>`Color: ${item}`)])
         }
         else if(categoryArray.length&&companyArray.length&& !colorArray.length){
             setDisplayProducts(products.filter(item=>
@@ -76,6 +82,9 @@ export default function Products(){
                 &&
                 +item.price<=priceRange
                 ))
+            setAllFilter(
+                [...categoryArray.map(item=>`Category: ${item}`),
+                ...companyArray.map(item=>`Company: ${item}`)])
         }
         else if(categoryArray.length&& !companyArray.length &&colorArray.length){
             setDisplayProducts(products.filter(item=>
@@ -85,6 +94,9 @@ export default function Products(){
                 &&
                 +item.price<=priceRange
                 ))
+            setAllFilter([
+                ...categoryArray.map(item=>`Category: ${item}`),
+                ...colorArray.map(item=>`Color: ${item}`)])
         }
         else if(!categoryArray.length&& companyArray.length &&colorArray.length){
             setDisplayProducts(products.filter(item=>
@@ -94,6 +106,9 @@ export default function Products(){
                 &&
                 +item.price<=priceRange
                 ))
+            setAllFilter([
+                ...companyArray.map(item=>`Company: ${item}`),
+                ...colorArray.map(item=>`Color: ${item}`)])
         }
         else if(categoryArray.length||companyArray.length||colorArray.length){
             setDisplayProducts(products.filter(item=>
@@ -105,9 +120,14 @@ export default function Products(){
                 &&
                 +item.price<=priceRange
             ))
+            setAllFilter(
+                [...categoryArray.map(item=>`Category: ${item}`),
+                ...companyArray.map(item=>`Company: ${item}`),
+                ...colorArray.map(item=>`Color: ${item}`)])
         }
         else{
             setDisplayProducts(products.filter(item=>+item.price<=priceRange))
+            setAllFilter([])
         }
     }
 
@@ -147,6 +167,9 @@ export default function Products(){
                     <option value='lowest'>Low-High</option>
                     <option value='highest'>High-Low</option>
                 </select>
+                <div>
+                    {allFilters}
+                </div>
                 <div>
                     {categories.map((category,index)=>
                         <label key={category}>
