@@ -11,7 +11,8 @@ export default function Products(){
     const [displayProducts,setDisplayProducts]=useState([])
     const [sortBy,setSortBy]=useState('')
 
-    
+    const [priceRange,setPriceRange]=useState(0)
+ 
     const categories=[...new Set(products.map(item=>item.category))].sort()
     const companies=[...new Set(products.map(item=>item.company))].sort()
     const colors = products.map(item=>item.colors).reduce((acc,currentVal)=>{
@@ -19,6 +20,7 @@ export default function Products(){
         return [...new Set(acc)]
     },[]).sort()
 
+    console.log(priceRange)
 
     const [categoryChecked,setCategoryChecked]=useState([])
     const [companyChecked,setCompanyChecked]=useState([])
@@ -41,6 +43,7 @@ export default function Products(){
             acc.push(...currentVal)
             return [...new Set(acc)]
         },[]).length).fill(false))
+        setPriceRange(data.sort((a,b)=>b.price-a.price)[0].price)
         setProducts(data)
         setDisplayProducts(data)
     }
@@ -57,6 +60,12 @@ export default function Products(){
         }
     }
 
+    function handlePriceRange(){
+        setDisplayProducts(products.filter(item=>+item.price<=priceRange))
+    }
+    useEffect(()=>{
+        handlePriceRange()
+    },[priceRange])
     function advancedFilters(){
         if(categoryArray.length&&companyArray.length&&colorArray.length){
             setDisplayProducts(products.filter(item=>
@@ -182,6 +191,18 @@ export default function Products(){
                             {color}
                         </label>
                     )}
+                </div>
+                <div>
+                    <label>
+                    <input
+                     type="range" 
+                     min='0' 
+                     max='999.99'
+                     step='0.01'
+                     value={priceRange} 
+                     onChange={e=>setPriceRange(e.target.value)}/>
+                        {priceRange}
+                    </label>
                 </div>
             </div>
             <div className={styles.productsContainer}>
