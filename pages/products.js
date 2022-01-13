@@ -9,7 +9,7 @@ import Image from "next/image";
 export default function Products(){
     const [products,setProducts]=useState([])
     const [displayProducts,setDisplayProducts]=useState([])
-    const [sortBy,setSortBy]=useState('')
+    const [sortBy,setSortBy]=useState('lowest')
 
     const [priceRange,setPriceRange]=useState(0)
  
@@ -20,7 +20,6 @@ export default function Products(){
         return [...new Set(acc)]
     },[]).sort()
 
-    console.log(priceRange)
 
     const [categoryChecked,setCategoryChecked]=useState([])
     const [companyChecked,setCompanyChecked]=useState([])
@@ -44,13 +43,10 @@ export default function Products(){
             return [...new Set(acc)]
         },[]).length).fill(false))
         setPriceRange(data.sort((a,b)=>b.price-a.price)[0].price)
-        setProducts(data)
+        setProducts(data.sort((a,b)=>a.price-b.price))
         setDisplayProducts(data)
     }
-    useEffect(()=>{
-        getProducts()
-    },[])
-    
+
     function handleFilterPrice(){
         if(sortBy==='lowest'){
             setDisplayProducts([...displayProducts.sort((a,b)=>+a.price - +b.price)])
@@ -60,12 +56,6 @@ export default function Products(){
         }
     }
 
-    function handlePriceRange(){
-        setDisplayProducts(products.filter(item=>+item.price<=priceRange))
-    }
-    useEffect(()=>{
-        handlePriceRange()
-    },[priceRange])
     function advancedFilters(){
         if(categoryArray.length&&companyArray.length&&colorArray.length){
             setDisplayProducts(products.filter(item=>
@@ -74,6 +64,8 @@ export default function Products(){
                 companyArray.includes(item.company)
                 &&
                 item.colors.some(item2=>colorArray.includes(item2))
+                &&
+                +item.price<=priceRange
             ))
         }
         else if(categoryArray.length&&companyArray.length&& !colorArray.length){
@@ -81,6 +73,8 @@ export default function Products(){
                 categoryArray.includes(item.category)
                 &&
                 companyArray.includes(item.company)
+                &&
+                +item.price<=priceRange
                 ))
         }
         else if(categoryArray.length&& !companyArray.length &&colorArray.length){
@@ -88,6 +82,8 @@ export default function Products(){
                 categoryArray.includes(item.category)
                 &&
                 item.colors.some(item2=>colorArray.includes(item2))
+                &&
+                +item.price<=priceRange
                 ))
         }
         else if(!categoryArray.length&& companyArray.length &&colorArray.length){
@@ -95,6 +91,8 @@ export default function Products(){
                 companyArray.includes(item.company)
                 &&
                 item.colors.some(item2=>colorArray.includes(item2))
+                &&
+                +item.price<=priceRange
                 ))
         }
         else if(categoryArray.length||companyArray.length||colorArray.length){
@@ -104,21 +102,14 @@ export default function Products(){
                 companyArray.includes(item.company)
                 ||
                 item.colors.some(item2=>colorArray.includes(item2))
+                &&
+                +item.price<=priceRange
             ))
         }
         else{
-            setDisplayProducts(products)
+            setDisplayProducts(products.filter(item=>+item.price<=priceRange))
         }
     }
-    useEffect(()=>{
-        advancedFilters()
-    },[categoryChecked,companyChecked,colorChecked])
-
-    useEffect(()=>{
-        if(products.length){
-            handleFilterPrice()
-        }
-    },[sortBy])
 
     const handleSort=e=>setSortBy(e.target.value)
 
@@ -135,7 +126,17 @@ export default function Products(){
         },[]))
     }
     
-    
+    useEffect(()=>{
+        getProducts()
+    },[])
+    useEffect(()=>{
+        if(products.length){
+            handleFilterPrice()
+        }
+    },[sortBy])
+    useEffect(()=>{
+        advancedFilters()
+    },[categoryChecked,companyChecked,colorChecked,priceRange])
 
     
     return (
@@ -143,7 +144,6 @@ export default function Products(){
             {/* <Header/> */}
             <div>
                 <select onChange={handleSort}>
-                    <option value='' hidden>Sort by Price</option>
                     <option value='lowest'>Low-High</option>
                     <option value='highest'>High-Low</option>
                 </select>
