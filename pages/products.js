@@ -9,7 +9,7 @@ import Image from "next/image";
 export default function Products(){
     const [products,setProducts]=useState([])
     const [displayProducts,setDisplayProducts]=useState([])
-    const [sortBy,setSortBy]=useState('lowest')
+    const [sortBy,setSortBy]=useState('')
 
     const [priceRange,setPriceRange]=useState(0)
 
@@ -19,6 +19,8 @@ export default function Products(){
         acc.push(...currentVal)
         return [...new Set(acc)]
     },[]).sort()
+
+    console.log(sortBy)
 
     const [categoryChecked,setCategoryChecked]=useState([])
     const [companyChecked,setCompanyChecked]=useState([])
@@ -30,8 +32,12 @@ export default function Products(){
 
     const [allFilters,setAllFilter]=useState([])
     
-    console.log(allFilters)
+    
+    function handleAllFilters(){
+        if(allFilters.includes(...categories)){
 
+        }
+    }
     async function getProducts(){
         const data = []
         const querySnapshot = await getDocs(collection(db,'products'));
@@ -45,22 +51,27 @@ export default function Products(){
             return [...new Set(acc)]
         },[]).length).fill(false))
         setPriceRange(data.sort((a,b)=>b.price-a.price)[0].price)
-        setProducts(data.sort((a,b)=>a.price-b.price))
+        setProducts(data)
         setDisplayProducts(data)
     }
 
     function handleFilterPrice(){
         if(sortBy==='lowest'){
-            setDisplayProducts([...displayProducts.sort((a,b)=>+a.price - +b.price)])
+            setDisplayProducts([...products.sort((a,b)=>+a.price - +b.price)])
+            if(categoryArray.length||companyArray.length||colorArray.length||priceRange>=0){
+                setDisplayProducts([...displayProducts.sort((a,b)=>+a.price - +b.price)])
+            }
         }
         else if(sortBy==='highest'){
-            setDisplayProducts([...displayProducts.sort((a,b)=>+b.price - +a.price)])
+            setDisplayProducts([...products.sort((a,b)=>+b.price - +a.price)])
+            if(categoryArray.length||companyArray.length||colorArray.length||priceRange>=0){
+                setDisplayProducts([...displayProducts.sort((a,b)=>+b.price - +a.price)])
+            }
         }
     }
-
     function advancedFilters(){
         if(categoryArray.length&&companyArray.length&&colorArray.length){
-            setDisplayProducts(products.filter(item=>
+            setDisplayProducts([...products.filter(item=>
                 categoryArray.includes(item.category)
                 &&
                 companyArray.includes(item.company)
@@ -68,7 +79,7 @@ export default function Products(){
                 item.colors.some(item2=>colorArray.includes(item2))
                 &&
                 +item.price<=priceRange
-            ))
+            )])
             setAllFilter(
                 [...categoryArray.map(item=>`Category: ${item}`),
                 ...companyArray.map(item=>`Company: ${item}`),
@@ -83,8 +94,8 @@ export default function Products(){
                 +item.price<=priceRange
                 ))
             setAllFilter(
-                [...categoryArray.map(item=>`Category: ${item}`),
-                ...companyArray.map(item=>`Company: ${item}`)])
+                [...categoryArray.map(item=>`Category:${item}`),
+                ...companyArray.map(item=>`Company:${item}`)])
         }
         else if(categoryArray.length&& !companyArray.length &&colorArray.length){
             setDisplayProducts(products.filter(item=>
@@ -95,8 +106,8 @@ export default function Products(){
                 +item.price<=priceRange
                 ))
             setAllFilter([
-                ...categoryArray.map(item=>`Category: ${item}`),
-                ...colorArray.map(item=>`Color: ${item}`)])
+                ...categoryArray.map(item=>`Category:${item}`),
+                ...colorArray.map(item=>`Color:${item}`)])
         }
         else if(!categoryArray.length&& companyArray.length &&colorArray.length){
             setDisplayProducts(products.filter(item=>
@@ -107,23 +118,28 @@ export default function Products(){
                 +item.price<=priceRange
                 ))
             setAllFilter([
-                ...companyArray.map(item=>`Company: ${item}`),
-                ...colorArray.map(item=>`Color: ${item}`)])
+                ...companyArray.map(item=>`Company:${item}`),
+                ...colorArray.map(item=>`Color:${item}`)])
         }
         else if(categoryArray.length||companyArray.length||colorArray.length){
             setDisplayProducts(products.filter(item=>
                 categoryArray.includes(item.category)
+                &&
+                +item.price<=priceRange
                 ||
                 companyArray.includes(item.company)
+                &&
+                +item.price<=priceRange
                 ||
                 item.colors.some(item2=>colorArray.includes(item2))
                 &&
                 +item.price<=priceRange
+
             ))
             setAllFilter(
-                [...categoryArray.map(item=>`Category: ${item}`),
-                ...companyArray.map(item=>`Company: ${item}`),
-                ...colorArray.map(item=>`Color: ${item}`)])
+                [...categoryArray.map(item=>`Category:${item}`),
+                ...companyArray.map(item=>`Company:${item}`),
+                ...colorArray.map(item=>`Color:${item}`)])
         }
         else{
             setDisplayProducts(products.filter(item=>+item.price<=priceRange))
@@ -150,15 +166,13 @@ export default function Products(){
         getProducts()
     },[])
     useEffect(()=>{
-        if(products.length){
-            handleFilterPrice()
-        }
+        handleFilterPrice()
     },[sortBy])
     useEffect(()=>{
         advancedFilters()
     },[categoryChecked,companyChecked,colorChecked,priceRange])
 
-    
+
     return (
         <div>
             {/* <Header/> */}
@@ -168,7 +182,11 @@ export default function Products(){
                     <option value='highest'>High-Low</option>
                 </select>
                 <div>
-                    {allFilters}
+                    {allFilters.map(item=>
+                    <div key={item}>
+                        <p>{item}</p>
+                        <button onClick={handleAllFilters}>X</button>
+                    </div>)}
                 </div>
                 <div>
                     {categories.map((category,index)=>
