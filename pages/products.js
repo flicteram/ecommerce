@@ -4,9 +4,11 @@ import styles from '../styles/Products.module.css'
 import {useEffect,useState} from 'react'
 import {collection, getDocs} from 'firebase/firestore'
 import {db} from '../firebase'
-import Image from "next/image";
+import CheckIcon from '@mui/icons-material/Check';
+import { Hidden } from "@mui/material";
 
 export default function Products(){
+    const [filterWindow,setFilterWindow]=useState(false)
     const [products,setProducts]=useState([])
     const [displayProducts,setDisplayProducts]=useState([])
     const [sortBy,setSortBy]=useState('low')
@@ -241,7 +243,7 @@ export default function Products(){
             return acc
         },[]))
     }
-    
+
     useEffect(()=>{
         getProducts()
     },[])
@@ -253,83 +255,117 @@ export default function Products(){
     },[categoryChecked,companyChecked,colorChecked,priceRange,search])
 
     return (
-        <div>
+        <div style={{position:'relative'}}>
             {/* <Header/> */}
-            <div>
-                <div>
+            <div className={styles.filterOptions}>
+                <button onClick={()=>setFilterWindow(!filterWindow)}>Filter <span>Apply filters</span></button>
+            </div>
+            <div className={filterWindow?styles.filtersContainerActive:styles.filtersContainerNotActive}>
+                <div className={styles.filterDisplayContainer}>
+                    <div className={styles.productsFoundContainer}>
+                        <h4>{displayProducts.length} Products Found</h4>
+                        <button className={styles.displayButton} onClick={()=>setFilterWindow(!filterWindow)}>Display</button>
+                    </div>
+                    <div className={styles.allFiltersContainer}>
+                        {allFilters.length?
+                            allFilters.map((item,index)=>
+                            <button 
+                            className={styles.filterDisplay} 
+                            key={index} 
+                            onClick={()=>handleAllFilters(item)}>
+                            {item}<span>X</span></button>
+                            )
+                            :
+                            <p>No filters applied</p>   
+                        }
+                    </div>
+                </div>
+                <div className={styles.searchContainer}>
                     <input
-                       type='text'
-                       value={search}
-                       name={search}
-                       onChange={handleSearch} 
+                    className={styles.search}
+                    type='text'
+                    value={search}
+                    name={search}
+                    onChange={handleSearch}
+                    placeholder="Search"
                     />
                 </div>
-                <select onChange={handleSort}>
-                    <option value='lowest'>Low-High</option>
-                    <option value='highest'>High-Low</option>
-                </select>
-                <div>
-                    {allFilters.map((item,index)=><button key={index} onClick={()=>handleAllFilters(item)}>{item}</button>)}
+                <div className={styles.categoriesContainer}>
+                    <h4>Category</h4>
+                    <div className={styles.categoriesContainerSelect}>
+                        {categories.map((category,index)=>
+                            <label key={category} className={styles.categoryLabel}>
+                                <input
+                                    type='checkbox'
+                                    value={category}
+                                    name={category}
+                                    checked={categoryChecked[index]}
+                                    onChange={()=>
+                                    handleOnChangeChecked(index,categoryChecked,setCategoryChecked,setCategoryArray,categories)}
+                                />
+                                {category}
+                            </label>
+                        )}
+                    </div>
                 </div>
-                <div>
-                    {categories.map((category,index)=>
-                        <label key={category}>
-                            <input
-                                type='checkbox'
-                                value={category}
-                                name={category}
-                                checked={categoryChecked[index]}
-                                onChange={()=>
-                                handleOnChangeChecked(index,categoryChecked,setCategoryChecked,setCategoryArray,categories)}
-                            />
-                            {category}
-                        </label>
-                    )}
+                <div className={styles.companiesContainer}>
+                    <h4>Company</h4>
+                    <div className={styles.companiesContainerSelect}>
+                        {companies.map((company,index)=>
+                            <label key={company} className={styles.companyLabel}>
+                                <input
+                                    type='checkbox'
+                                    value={company}
+                                    name={company}
+                                    checked={companyChecked[index]}
+                                    onChange={()=>
+                                    handleOnChangeChecked(index,companyChecked,setCompanyChecked,setCompanyArray,companies)}
+                                />
+                                {company}
+                            </label>
+                        )}
+                    </div>
                 </div>
-                <div>
-                    {companies.map((company,index)=>
-                        <label key={company}>
-                            <input
-                                type='checkbox'
-                                value={company}
-                                name={company}
-                                checked={companyChecked[index]}
-                                onChange={()=>
-                                handleOnChangeChecked(index,companyChecked,setCompanyChecked,setCompanyArray,companies)}
-                            />
-                            {company}
-                        </label>
-                    )}
+                <div className={styles.colorsContainer}>
+                    <h4>Colors</h4>
+                    <div className={styles.colorsContainerSelect}>
+                        {colors.map((color,index)=>
+                            <label key={color} className={styles.colorLabel}>
+                                <input
+                                    type='checkbox'
+                                    hidden
+                                    value={color}
+                                    name={color}
+                                    checked={colorChecked[index]}
+                                    onChange={()=>
+                                    handleOnChangeChecked(index,colorChecked,setColorChecked,setColorArray,colors)}
+                                />
+                                <div className={styles.color} style={{backgroundColor:color}}>
+                                    {colorChecked[index]&&<CheckIcon sx={{color:'rgb(214, 107, 19)',fontSize:18}}/>}
+                                </div>
+                            </label>
+                        )}
+                    </div>
                 </div>
-                <div>
-                    {colors.map((color,index)=>
-                        <label key={color}>
-                            <input
-                                type='checkbox'
-                                value={color}
-                                name={color}
-                                checked={colorChecked[index]}
-                                onChange={()=>
-                                handleOnChangeChecked(index,colorChecked,setColorChecked,setColorArray,colors)}
-                            />
-                            {color}
-                        </label>
-                    )}
-                </div>
-                <div>
-                    <label>
+                <div className={styles.priceContainer}>
+                    <h4>Price</h4>
+                    <label className={styles.priceLabel}>
+                        {`$${priceRange}`}
                         <input
                         type="range" 
                         min='0' 
                         max='999.99'
-                        step='0.03'
+                        step='0.01'
                         value={priceRange} 
                         onChange={e=>setPriceRange(e.target.value)}/>
-                        {priceRange}
                     </label>
                 </div>
             </div>
-            <div className={styles.productsContainer}>
+            <select onChange={handleSort}>
+                <option value='lowest'>Low-High</option>
+                <option value='highest'>High-Low</option>
+            </select>
+            <div style={{display:filterWindow&&'none'}} className={styles.productsContainer}>
                 {displayProducts.map((product,index)=>
                     <Product key={index} index={index} product={product}/>)}
             </div>
