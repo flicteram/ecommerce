@@ -10,7 +10,7 @@ export default function Products(){
     const [products,setProducts]=useState([])
     const [displayProducts,setDisplayProducts]=useState([])
     const [sortBy,setSortBy]=useState('low')
-
+    const [search,setSearch]=useState('')
     const [priceRange,setPriceRange]=useState(0)
 
     const categories=[...new Set(products.map(item=>item.category))].sort()
@@ -31,8 +31,7 @@ export default function Products(){
             handleOnChangeChecked(colors.indexOf(item),colorChecked,setColorChecked,setColorArray,colors)
         }
     }
-    
-    
+
     const [categoryChecked,setCategoryChecked]=useState([])
     const [companyChecked,setCompanyChecked]=useState([])
     const [colorChecked,setColorChecked]=useState([])
@@ -75,7 +74,57 @@ export default function Products(){
         }
     }
     function advancedFilters(){
-        if(categoryArray.length&&companyArray.length&&colorArray.length){
+        if(categoryArray.length&&companyArray.length&&colorArray.length&&search.length){
+            setDisplayProducts([...products.filter(item=>
+                categoryArray.includes(item.category)
+                &&
+                companyArray.includes(item.company)
+                &&
+                item.colors.some(item2=>colorArray.includes(item2))
+                &&
+                item.name.toLowerCase().includes(search.toLowerCase())
+                &&
+                +item.price<=priceRange
+            )])
+            setAllFilters([...categoryArray,...companyArray,...colorArray])
+        }
+        else if(categoryArray.length&&companyArray.length&& !colorArray.length && search.length){
+            setDisplayProducts(products.filter(item=>
+                categoryArray.includes(item.category)
+                &&
+                companyArray.includes(item.company)
+                &&
+                item.name.toLowerCase().includes(search.toLowerCase())
+                &&
+                +item.price<=priceRange
+                ))
+            setAllFilters([...categoryArray,...companyArray])
+        }
+        else if(categoryArray.length&& !companyArray.length &&colorArray.length && search.length){
+            setDisplayProducts(products.filter(item=>
+                categoryArray.includes(item.category)
+                &&
+                item.colors.some(item2=>colorArray.includes(item2))
+                &&
+                item.name.toLowerCase().includes(search.toLowerCase())
+                &&
+                +item.price<=priceRange
+                ))
+            setAllFilters([...categoryArray,...colorArray])
+        }
+        else if(!categoryArray.length&& companyArray.length &&colorArray.length && search.length){
+            setDisplayProducts(products.filter(item=>
+                companyArray.includes(item.company)
+                &&
+                item.colors.some(item2=>colorArray.includes(item2))
+                &&
+                item.name.toLowerCase().includes(search.toLowerCase())
+                &&
+                +item.price<=priceRange
+                ))
+            setAllFilters([...companyArray,...colorArray])
+        }
+        else if(categoryArray.length&&companyArray.length&&colorArray.length&&!search.length){
             setDisplayProducts([...products.filter(item=>
                 categoryArray.includes(item.category)
                 &&
@@ -87,35 +136,65 @@ export default function Products(){
             )])
             setAllFilters([...categoryArray,...companyArray,...colorArray])
         }
-        else if(categoryArray.length&&companyArray.length&& !colorArray.length){
-            setDisplayProducts(products.filter(item=>
+        else if(categoryArray.length&&companyArray.length&&!colorArray.length&&!search.length){
+            setDisplayProducts([...products.filter(item=>
                 categoryArray.includes(item.category)
                 &&
                 companyArray.includes(item.company)
                 &&
                 +item.price<=priceRange
-                ))
+            )])
             setAllFilters([...categoryArray,...companyArray])
         }
-        else if(categoryArray.length&& !companyArray.length &&colorArray.length){
-            setDisplayProducts(products.filter(item=>
+        else if(categoryArray.length&&!companyArray.length&&colorArray.length&&!search.length){
+            setDisplayProducts([...products.filter(item=>
                 categoryArray.includes(item.category)
                 &&
                 item.colors.some(item2=>colorArray.includes(item2))
                 &&
                 +item.price<=priceRange
-                ))
+            )])
             setAllFilters([...categoryArray,...colorArray])
         }
-        else if(!categoryArray.length&& companyArray.length &&colorArray.length){
-            setDisplayProducts(products.filter(item=>
+        else if(!categoryArray.length&&companyArray.length&&colorArray.length&&!search.length){
+            setDisplayProducts([...products.filter(item=>
                 companyArray.includes(item.company)
                 &&
                 item.colors.some(item2=>colorArray.includes(item2))
                 &&
                 +item.price<=priceRange
-                ))
+            )])
             setAllFilters([...companyArray,...colorArray])
+        }
+        else if(categoryArray.length&&!companyArray.length&&!colorArray.length&&search.length){
+            setDisplayProducts([...products.filter(item=>
+                categoryArray.includes(item.category)
+                &&
+                item.name.toLowerCase().includes(search.toLowerCase())
+                &&
+                +item.price<=priceRange
+            )])
+            setAllFilters([...categoryArray])
+        }
+        else if(!categoryArray.length&&companyArray.length&&!colorArray.length&&search.length){
+            setDisplayProducts([...products.filter(item=>
+                companyArray.includes(item.company)
+                &&
+                item.name.toLowerCase().includes(search.toLowerCase())
+                &&
+                +item.price<=priceRange
+            )])
+            setAllFilters([...companyArray])
+        }
+        else if(!categoryArray.length&&!companyArray.length&&colorArray.length&&search.length){
+            setDisplayProducts([...products.filter(item=>
+                item.colors.some(item2=>colorArray.includes(item2))
+                &&
+                item.name.toLowerCase().includes(search.toLowerCase())
+                &&
+                +item.price<=priceRange
+            )])
+            setAllFilters([...colorArray])
         }
         else if(categoryArray.length||companyArray.length||colorArray.length){
             setDisplayProducts(products.filter(item=>
@@ -133,6 +212,14 @@ export default function Products(){
             ))
             setAllFilters([...categoryArray,...companyArray,...colorArray])
         }
+        else if(!categoryArray.length&&!companyArray.length&&!colorArray.length&&search.length){
+            setDisplayProducts(products.filter(item=>
+                item.name.toLowerCase().includes(search.toLowerCase())
+                &&
+                +item.price<=priceRange
+            ))
+            setAllFilters([])
+        }
         else{
             setDisplayProducts(products.filter(item=>+item.price<=priceRange))
             setAllFilters([])
@@ -140,6 +227,7 @@ export default function Products(){
     }
 
     const handleSort=e=>setSortBy(e.target.value)
+    const handleSearch=e=>setSearch(e.target.value)
 
     function handleOnChangeChecked(position,checked,setCheckBoxState,setArrayState,initialArray){
         const updated = checked.map((item,index)=>
@@ -162,12 +250,20 @@ export default function Products(){
     },[sortBy])
     useEffect(()=>{
         advancedFilters()
-    },[categoryChecked,companyChecked,colorChecked,priceRange])
+    },[categoryChecked,companyChecked,colorChecked,priceRange,search])
 
     return (
         <div>
             {/* <Header/> */}
             <div>
+                <div>
+                    <input
+                       type='text'
+                       value={search}
+                       name={search}
+                       onChange={handleSearch} 
+                    />
+                </div>
                 <select onChange={handleSort}>
                     <option value='lowest'>Low-High</option>
                     <option value='highest'>High-Low</option>
@@ -226,7 +322,7 @@ export default function Products(){
                         type="range" 
                         min='0' 
                         max='999.99'
-                        step='0.01'
+                        step='0.03'
                         value={priceRange} 
                         onChange={e=>setPriceRange(e.target.value)}/>
                         {priceRange}

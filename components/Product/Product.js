@@ -6,7 +6,7 @@ export default function Product({product,index}){
     <div className={styles.productContainer}>
         <Image src={product.image}
          sizes="50vw"
-         priority
+         priority={index<=10?true:false}
          width={30} 
          height={15} 
          objectFit='cover' 
