@@ -237,7 +237,6 @@ export default function Products(){
                 {displayProducts.map((product,index)=>
                     <Product key={index} index={index} product={product}/>)}
             </div>
-            
         </div>
     )
 }
