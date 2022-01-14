@@ -9,7 +9,7 @@ import Image from "next/image";
 export default function Products(){
     const [products,setProducts]=useState([])
     const [displayProducts,setDisplayProducts]=useState([])
-    const [sortBy,setSortBy]=useState('')
+    const [sortBy,setSortBy]=useState('low')
 
     const [priceRange,setPriceRange]=useState(0)
 
@@ -20,8 +20,19 @@ export default function Products(){
         return [...new Set(acc)]
     },[]).sort()
 
-    console.log(sortBy)
-
+    function handleAllFilters(item){
+        if(categories.includes(item)){
+            handleOnChangeChecked(categories.indexOf(item),categoryChecked,setCategoryChecked,setCategoryArray,categories)
+        }
+        else if(companies.includes(item)){
+            handleOnChangeChecked(companies.indexOf(item),companyChecked,setCompanyChecked,setCompanyArray,companies)
+        }
+        else if(colors.includes(item)){
+            handleOnChangeChecked(colors.indexOf(item),colorChecked,setColorChecked,setColorArray,colors)
+        }
+    }
+    
+    
     const [categoryChecked,setCategoryChecked]=useState([])
     const [companyChecked,setCompanyChecked]=useState([])
     const [colorChecked,setColorChecked]=useState([])
@@ -30,14 +41,8 @@ export default function Products(){
     const [companyArray,setCompanyArray]=useState([])
     const [colorArray,setColorArray]=useState([])
 
-    const [allFilters,setAllFilter]=useState([])
+    const [allFilters,setAllFilters]=useState([])
     
-    
-    function handleAllFilters(){
-        if(allFilters.includes(...categories)){
-
-        }
-    }
     async function getProducts(){
         const data = []
         const querySnapshot = await getDocs(collection(db,'products'));
@@ -51,7 +56,7 @@ export default function Products(){
             return [...new Set(acc)]
         },[]).length).fill(false))
         setPriceRange(data.sort((a,b)=>b.price-a.price)[0].price)
-        setProducts(data)
+        setProducts(data.sort((a,b)=>a.price-b.price))
         setDisplayProducts(data)
     }
 
@@ -80,10 +85,7 @@ export default function Products(){
                 &&
                 +item.price<=priceRange
             )])
-            setAllFilter(
-                [...categoryArray.map(item=>`Category: ${item}`),
-                ...companyArray.map(item=>`Company: ${item}`),
-                ...colorArray.map(item=>`Color: ${item}`)])
+            setAllFilters([...categoryArray,...companyArray,...colorArray])
         }
         else if(categoryArray.length&&companyArray.length&& !colorArray.length){
             setDisplayProducts(products.filter(item=>
@@ -93,9 +95,7 @@ export default function Products(){
                 &&
                 +item.price<=priceRange
                 ))
-            setAllFilter(
-                [...categoryArray.map(item=>`Category:${item}`),
-                ...companyArray.map(item=>`Company:${item}`)])
+            setAllFilters([...categoryArray,...companyArray])
         }
         else if(categoryArray.length&& !companyArray.length &&colorArray.length){
             setDisplayProducts(products.filter(item=>
@@ -105,9 +105,7 @@ export default function Products(){
                 &&
                 +item.price<=priceRange
                 ))
-            setAllFilter([
-                ...categoryArray.map(item=>`Category:${item}`),
-                ...colorArray.map(item=>`Color:${item}`)])
+            setAllFilters([...categoryArray,...colorArray])
         }
         else if(!categoryArray.length&& companyArray.length &&colorArray.length){
             setDisplayProducts(products.filter(item=>
@@ -117,9 +115,7 @@ export default function Products(){
                 &&
                 +item.price<=priceRange
                 ))
-            setAllFilter([
-                ...companyArray.map(item=>`Company:${item}`),
-                ...colorArray.map(item=>`Color:${item}`)])
+            setAllFilters([...companyArray,...colorArray])
         }
         else if(categoryArray.length||companyArray.length||colorArray.length){
             setDisplayProducts(products.filter(item=>
@@ -134,16 +130,12 @@ export default function Products(){
                 item.colors.some(item2=>colorArray.includes(item2))
                 &&
                 +item.price<=priceRange
-
             ))
-            setAllFilter(
-                [...categoryArray.map(item=>`Category:${item}`),
-                ...companyArray.map(item=>`Company:${item}`),
-                ...colorArray.map(item=>`Color:${item}`)])
+            setAllFilters([...categoryArray,...companyArray,...colorArray])
         }
         else{
             setDisplayProducts(products.filter(item=>+item.price<=priceRange))
-            setAllFilter([])
+            setAllFilters([])
         }
     }
 
@@ -172,7 +164,6 @@ export default function Products(){
         advancedFilters()
     },[categoryChecked,companyChecked,colorChecked,priceRange])
 
-
     return (
         <div>
             {/* <Header/> */}
@@ -182,11 +173,7 @@ export default function Products(){
                     <option value='highest'>High-Low</option>
                 </select>
                 <div>
-                    {allFilters.map(item=>
-                    <div key={item}>
-                        <p>{item}</p>
-                        <button onClick={handleAllFilters}>X</button>
-                    </div>)}
+                    {allFilters.map((item,index)=><button key={index} onClick={()=>handleAllFilters(item)}>{item}</button>)}
                 </div>
                 <div>
                     {categories.map((category,index)=>
@@ -235,13 +222,13 @@ export default function Products(){
                 </div>
                 <div>
                     <label>
-                    <input
-                     type="range" 
-                     min='0' 
-                     max='999.99'
-                     step='0.01'
-                     value={priceRange} 
-                     onChange={e=>setPriceRange(e.target.value)}/>
+                        <input
+                        type="range" 
+                        min='0' 
+                        max='999.99'
+                        step='0.01'
+                        value={priceRange} 
+                        onChange={e=>setPriceRange(e.target.value)}/>
                         {priceRange}
                     </label>
                 </div>
