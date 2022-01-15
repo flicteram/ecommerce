@@ -13,9 +13,9 @@
     width: 100%;
     height: 100%;
     z-index: 1000;
-    animation:closeWindow 200ms;
-    margin-left: -999px;
+    display: none;
 }
+
 .filtersContainerActive{
     background-color: white;
     position: absolute;
@@ -34,16 +34,6 @@
     }
     100%{
         margin:0;
-        
-    }
-}
-@keyframes closeWindow{
-    0%{
-        margin:0;
-        width: 100%;
-    }
-    100%{
-        margin-left:-500px;
     }
 }
 .filterDisplayContainer{
