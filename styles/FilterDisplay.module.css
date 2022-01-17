@@ -1,0 +1,143 @@
+.filtersContainerNotActive{
+    background-color: white;
+    position: absolute;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: none;
+}
+
+.filtersContainerActive{
+    background-color: white;
+    position: absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    right: 0;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 1000;
+    animation: openWindow 250ms;
+}
+@keyframes openWindow{
+    0%{
+        margin-left: -500px;
+    }
+    100%{
+        margin:0;
+    }
+}
+.filterDisplayContainer{
+    border:1px solid rgb(128, 145, 153);
+    margin-bottom: 20px;
+    box-shadow: 0 4px 2px -2px gray;
+}
+.productsFoundContainer{
+    display: flex;
+    justify-content: space-between;
+    padding:15px 20px;
+    align-items: center;
+    border-bottom:1px solid rgb(128, 145, 153);
+}
+.allFiltersContainer{
+    padding:15px 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.allFiltersContainer>p{
+    color:rgb(203, 203, 216);
+}
+.displayButton{
+    padding:5px 10px;
+    letter-spacing: 1px;
+    background-color:rgb(214, 107, 19);
+    border:1px solid rgb(214, 107, 19);
+    color:rgb(245, 245, 245);
+    border-radius: 5px;
+    box-shadow: 0px 1px 2px 1px rgb(167, 167, 167);
+}
+.filterDisplay{
+    background-color:rgb(105, 65, 32);
+    border:1px solid rgb(105, 65, 32);
+    color:rgb(245, 245, 245);
+    padding:5px 10px;
+    margin:5px 5px 5px 0px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+.filterDisplay>span{
+    margin-left: 10px;
+    font-size: 1.2rem;
+    color:red;
+}
+.searchContainer{
+    display: flex;
+    flex-direction: column;
+    padding:0px 20px;
+}
+.search{
+    padding:10px 15px;
+    border:1px solid rgb(235, 235, 235);
+    background-color: rgb(235, 235, 235);
+    border-radius: 5px;
+    letter-spacing: 1px;
+    outline-color: black;
+}
+.search::placeholder{
+    color:black;
+}
+.categoriesContainer,
+.companiesContainer,
+.colorsContainer,
+.priceContainer{
+    padding: 0px 20px;
+    margin:20px 0px;
+}
+.priceContainer{
+    padding-bottom: 20px;
+}
+.categoriesContainer>h4,
+.companiesContainer>h4,
+.colorsContainer>h4,
+.priceContainer>h4{
+    margin-bottom: 10px;
+}
+.categoryLabel>input,
+.companyLabel>input{
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.colorLabel>div{
+    margin-right: 5px;
+}
+.categoriesContainerSelect,
+.companiesContainerSelect{
+    display: flex;
+    flex-direction: column;
+}
+.colorsContainerSelect{
+    display: flex;
+}
+.color{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+.filterOptions>button{
+    display: flex;
+    flex-direction: column;
+}
+.priceLabel{
+    display: flex;
+    flex-direction: column;
+}
+.priceLabel>input{
+    align-self: flex-start;
+    width: 150px;
+}
