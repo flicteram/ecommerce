@@ -1,6 +1,6 @@
 .filterContainer{
     padding:0px 20px;
-    margin-top:80px;
+    margin-top:20px;
 }
 .filterContainerActive{
     margin:0;
@@ -28,7 +28,7 @@
     background-color: white;
     position: absolute;
     left:0;
-    top:0;
+    top:-39.5px;
     bottom:0;
     right: 0;
     width: 100%;
@@ -165,14 +165,11 @@
     flex-direction: column;
     margin-right: 10px;
     align-items: center;
-    padding: 0px 5px;
+    padding:5px 10px;
     background-color: white;
     border:1px solid black;
     border-radius: 5px;
     justify-content: center;
-}
-.filterOptions>button:first-child{
-    padding:0px 10px;
 }
 .filter{
     font-weight: 700;

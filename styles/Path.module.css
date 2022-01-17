@@ -1,0 +1,25 @@
+.pathContainer{
+    width: 100%;
+    height: 150px;
+    z-index: 1200;
+    margin-top:79px;
+    background-color: rgb(228, 210, 183);
+    padding:0px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+}
+.pathContainer>h3{
+    font-size: 1.5rem;
+    color:rgb(95, 69, 34);
+}
+.pathContainer>h3:last-child{
+    color:rgb(214, 107, 19);
+}
+.slash{
+    margin:0px 10px;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color:rgb(95, 69, 34);
+}

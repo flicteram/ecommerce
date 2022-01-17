@@ -7,7 +7,7 @@ import {db} from '../firebase'
 import advancedFilter from '../components/Filter/advancedFilter/advancedFilter'
 import GridViewIcon from '@mui/icons-material/GridView';
 import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
-import { display } from "@mui/system";
+import Path from '../components/Path/Path'
 
 
 export default function Products(){
@@ -116,8 +116,11 @@ export default function Products(){
     return (
         <div style={{position:'relative'}}>
             <Header/>
+            <Path 
+            first={'Products'} 
+            firstLink={'/products'}
+            />
             <div className={filterWindow?styles.filtersContainerActive:styles.filterContainer}>
-                
                 <div className={styles.filterOptions}>
                     <button onClick={()=>setFilterWindow(!filterWindow)}>
                     <span className={styles.filter}>Filter</span>
