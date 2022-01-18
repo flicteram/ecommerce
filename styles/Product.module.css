@@ -19,7 +19,9 @@
 .productPrice{
     color:rgb(214, 107, 19);
 }
-
+.image{
+    border-radius: 5px;
+}
 @media(min-width:700px){
     .productContainer{
         margin:0;
