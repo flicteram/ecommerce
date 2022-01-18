@@ -200,7 +200,18 @@
     display: none;
 }
 
+.noProductsFound{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    margin-top:20px;
+    font-weight: 700;
+}
+
+
 @media(min-width:700px){
+    .noProductsFound{
+        margin:0;
+    }
     .productsAndFilterContainer{
         width: 77%;
         padding:0;
@@ -250,6 +261,22 @@
     }
     .searchContainer>input{
         max-width: 200px;
+    }
+    .filterFromProductsSide{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgb(214, 107, 19);
+        padding-bottom: 10px;
+    }
+    .productsFound{
+        order: 1;
+        border:none;
+        padding: 0;
+    }
+    .sortByPriceContainer{
+        order: 2;
+        margin:0;
     }
 }
 @media(min-width:900px){

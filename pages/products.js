@@ -225,30 +225,37 @@ export default function Products(){
                     </div>
                 </div>
                 <div className={styles.productsAndFilterContainer}>
-                    <div className={styles.filterOptions}>
-                        <button onClick={()=>setFilterWindow(!filterWindow)}>
-                        <span className={styles.filter}>Filter</span>
-                        {
-                        allFilters.length?
-                        <span>{allFilters.length} active filters</span>
-                        :
-                        <span>Apply filters</span>
-                        }
-                        </button>
-                        <button><GridViewIcon/></button>
-                        <button><ViewHeadlineIcon/></button>
+                    <div className={styles.filterFromProductsSide}>
+                        <div className={styles.filterOptions}>
+                            <button onClick={()=>setFilterWindow(!filterWindow)}>
+                            <span className={styles.filter}>Filter</span>
+                            {
+                            allFilters.length?
+                            <span>{allFilters.length} active filters</span>
+                            :
+                            <span>Apply filters</span>
+                            }
+                            </button>
+                            <button><GridViewIcon/></button>
+                            <button><ViewHeadlineIcon/></button>
+                        </div>
+                        <div className={styles.sortByPriceContainer}>
+                            <p>Sort By Price</p>
+                            <select onChange={handleSort}>
+                                <option value='lowest'>Low-High</option>
+                                <option value='highest'>High-Low</option>
+                            </select>
+                        </div>
+                        <p className={styles.productsFound}>{displayProducts.length} Products Found</p>
                     </div>
-                    <div className={styles.sortByPriceContainer}>
-                        <p>Sort By Price</p>
-                        <select onChange={handleSort}>
-                            <option value='lowest'>Low-High</option>
-                            <option value='highest'>High-Low</option>
-                        </select>
-                    </div>
-                    <p className={styles.productsFound}>{displayProducts.length} Products Found</p>
                     <div className={filterWindow?styles.productContainerNoActive:styles.productContainer}>
-                        {displayProducts.map((product,index)=>
-                            <Product key={index} index={index} product={product}/>)}
+                        {displayProducts.length
+                        ?
+                        displayProducts.map((product,index)=>
+                            <Product key={index} index={index} product={product}/>)
+                        :
+                        <p className={styles.noProductsFound}>No products matched your search.</p>}
+                        
                     </div>
                 </div>
             </div>
