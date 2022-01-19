@@ -8,7 +8,7 @@ export default function Product({product,index}){
          sizes="50vw"
          priority={index<=10?true:false}
          width={30} 
-         height={15} 
+         height={25} 
          objectFit='cover' 
          className={styles.image} 
          objectPosition={'50% 70%'} 

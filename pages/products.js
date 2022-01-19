@@ -9,8 +9,10 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
 import Path from '../components/Path/Path'
 import CheckIcon from '@mui/icons-material/Check';
+import ProductWithDescription from "../components/ProductWithDescription/ProductWithDescription";
 
 export default function Products(){
+    const [grid,setGrid]=useState(true)
     const [products,setProducts]=useState([])
     const [displayProducts,setDisplayProducts]=useState([])
 
@@ -112,7 +114,6 @@ export default function Products(){
         setAllFilters,
         priceRange)
     },[categoryChecked,companyChecked,colorChecked,priceRange,search])
-
     return (
         <div className={styles.productsContainer}>
             <Header/>
@@ -236,8 +237,8 @@ export default function Products(){
                             <span>Apply filters</span>
                             }
                             </button>
-                            <button><GridViewIcon/></button>
-                            <button><ViewHeadlineIcon/></button>
+                            <button style={{backgroundColor:grid&&'black'}} onClick={()=>setGrid(true)}><GridViewIcon sx={{color:grid&&'rgb(214, 107, 19)'}}/></button>
+                            <button style={{backgroundColor:!grid&&'black'}} onClick={()=>setGrid(false)}><ViewHeadlineIcon sx={{color:!grid&&'rgb(214, 107, 19)'}} /></button>
                         </div>
                         <div className={styles.sortByPriceContainer}>
                             <p>Sort By Price</p>
@@ -248,11 +249,27 @@ export default function Products(){
                         </div>
                         <p className={styles.productsFound}>{displayProducts.length} Products Found</p>
                     </div>
-                    <div className={filterWindow?styles.productContainerNoActive:styles.productContainer}>
-                        {displayProducts.length
+                    <div className={
+                    filterWindow&&grid
+                    ?
+                    styles.productContainerNoActive
+                    :
+                    !grid
+                    ?
+                    styles.porductContainerNoGrid
+                    :
+                    styles.productContainer}>
+                        {displayProducts.length&&grid
                         ?
                         displayProducts.map((product,index)=>
-                            <Product key={index} index={index} product={product}/>)
+                            <Product key={index} index={index} product={product}/>
+                        )
+                        :
+                        displayProducts.length&&!grid
+                        ?
+                        displayProducts.map((product,index)=>
+                            <ProductWithDescription key={index} index={index} product={product}/>
+                        )
                         :
                         <p className={styles.noProductsFound}>No products matched your search.</p>}
                         
@@ -262,3 +279,6 @@ export default function Products(){
         </div>
     )
 }
+//style={{display:'grid',gap:'20px',marginTop:'20px'}}
+// className={filterWindow?styles.productContainerNoActive:styles.productContainer}
+{/* <Product key={index} index={index} product={product}/>) */}

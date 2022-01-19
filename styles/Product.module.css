@@ -11,7 +11,7 @@
 }
 .productName,
 .productPrice{
-    font-size: 0.9rem;
+    font-size: 0.70rem;
 }
 .productName{
     color:rgb(49, 64, 65);
@@ -22,8 +22,18 @@
 .image{
     border-radius: 5px;
 }
+@media(min-width:400px){
+    .productName,
+    .productPrice{
+        font-size: 0.9rem;
+    }
+}
 @media(min-width:700px){
     .productContainer{
         margin:0;
+    }
+    .productName,
+    .productPrice{
+        font-size: 1rem;
     }
 }

@@ -1,14 +1,18 @@
-/* .productsContainer{
-    position: relative;
-} */
 
 
+.porductContainerNoGrid{
+    display: grid;
+    margin-top: 20px;
+    gap:20px;
+}
 .filterContainer{
     margin-top:20px;
     align-self: flex-start;
 }
 .productContainer{
     display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:10px;
 }
 .productsAndFilterContainer{
     position: relative;
@@ -207,7 +211,11 @@
     font-weight: 700;
 }
 
-
+@media(min-width:400px){
+    .productContainer{
+        gap:20px;
+    }
+}
 @media(min-width:700px){
     .noProductsFound{
         margin:0;
@@ -219,14 +227,12 @@
     .productContainer,
     .productContainerNoActive{
         display: grid;
-        gap:20px;
+        gap:30px;
         margin-top:20px;
+        grid-template-columns: 1fr 1fr;
     }
-    .filtersContainerActive{
-        display: none;
-    }
-    .filtersContainerNotActive,
-    .filtersContainerActive{
+    .filtersContainerActive,
+    .filtersContainerNotActive{
         display: initial;
         position: initial;
     }
@@ -278,6 +284,10 @@
         order: 2;
         margin:0;
     }
+    .filterOptions>button{
+        display: flex;
+        padding:5px
+    }
 }
 @media(min-width:900px){
     .productContainer,
@@ -285,7 +295,7 @@
         grid-template-columns: 1fr 1fr;
     }
 }
-@media(min-width:1200px){
+@media(min-width:1100px){
     .productContainer,
     .productContainerNoActive{
         grid-template-columns: 1fr 1fr 1fr;
