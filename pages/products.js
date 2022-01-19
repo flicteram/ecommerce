@@ -10,6 +10,8 @@ import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
 import Path from '../components/Path/Path'
 import CheckIcon from '@mui/icons-material/Check';
 import ProductWithDescription from "../components/ProductWithDescription/ProductWithDescription";
+import LinearProgress from '@mui/material/LinearProgress';
+
 
 export default function Products(){
     const [grid,setGrid]=useState(true)
@@ -114,6 +116,20 @@ export default function Products(){
         setAllFilters,
         priceRange)
     },[categoryChecked,companyChecked,colorChecked,priceRange,search])
+
+    if(!products.length){
+        return(
+        <div>
+            <Header/>
+            <Path 
+            first={'Products'} 
+            firstLink={'/products'}
+            />
+            <div style={{backgroundColor:'rgb(228, 210, 183)'}}>
+                <LinearProgress color={'inherit'} sx={{color:'rgb(214, 107, 19)'}}/>
+            </div>
+        </div>)
+    }
     return (
         <div className={styles.productsContainer}>
             <Header/>
