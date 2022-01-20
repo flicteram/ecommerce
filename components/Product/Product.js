@@ -1,9 +1,11 @@
 import styles from '../../styles/Product.module.css'
 import Image from 'next/image';
+import { useRouter } from 'next/router'
 
-export default function Product({product,index}){
+export default function Product({product,index,id}){
+    const router = useRouter()
     return(
-    <div className={styles.productContainer}>
+    <div className={styles.productContainer} onClick={()=>router.push(`products/${id}`)}>
         <Image src={product.image}
          sizes="50vw"
          priority={index<=10?true:false}

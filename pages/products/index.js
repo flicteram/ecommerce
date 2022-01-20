@@ -1,16 +1,18 @@
-import Header from "../components/Header/Header";
-import Product from "../components/Product/Product";
-import styles from '../styles/Products.module.css'
+import Header from '../../components/Header/Header'
+import Product from "../../components/Product/Product";
+import styles from '../../styles/Products.module.css'
 import {useEffect,useState} from 'react'
 import {collection, getDocs} from 'firebase/firestore'
-import {db} from '../firebase'
-import advancedFilter from '../components/Filter/advancedFilter/advancedFilter'
+import {db} from '../../firebase'
+import advancedFilter from '../../components/Filter/advancedFilter/advancedFilter'
 import GridViewIcon from '@mui/icons-material/GridView';
 import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
-import Path from '../components/Path/Path'
+import Path from '../../components/Path/Path'
 import CheckIcon from '@mui/icons-material/Check';
-import ProductWithDescription from "../components/ProductWithDescription/ProductWithDescription";
+import ProductWithDescription from "../../components/ProductWithDescription/ProductWithDescription";
 import LinearProgress from '@mui/material/LinearProgress';
+import Link from "next/link";
+
 
 
 export default function Products(){
@@ -34,9 +36,10 @@ export default function Products(){
 
     const [allFilters,setAllFilters]=useState([])
 
-    const categories=[...new Set(products.map(item=>item.category))].sort()
-    const companies=[...new Set(products.map(item=>item.company))].sort()
-    const colors = products.map(item=>item.colors).reduce((acc,currentVal)=>{
+
+    const categories=[...new Set(products.map(item=>item.data.category))].sort()
+    const companies=[...new Set(products.map(item=>item.data.company))].sort()
+    const colors = products.map(item=>item.data.colors).reduce((acc,currentVal)=>{
         acc.push(...currentVal)
         return [...new Set(acc)]
     },[]).sort()
@@ -45,19 +48,20 @@ export default function Products(){
         const data = []
         const querySnapshot = await getDocs(collection(db,'products'));
         querySnapshot.forEach((doc) => {
-            data = [...data,doc.data()]
+            data = [...data,{id:doc.id,data:doc.data()}]
         });
-        setCategoryChecked(new Array([...new Set(data.map(item=>item.category))].length).fill(false))
-        setCompanyChecked(new Array([...new Set(data.map(item=>item.company))].length).fill(false))
-        setColorChecked(new Array(data.map(item=>item.colors).reduce((acc,currentVal)=>{
+
+        // console.log(data.map(item=>item.data))
+        setCategoryChecked(new Array([...new Set(data.map(item=>item.data.category))].length).fill(false))
+        setCompanyChecked(new Array([...new Set(data.map(item=>item.data.company))].length).fill(false))
+        setColorChecked(new Array(data.map(item=>item.data.colors).reduce((acc,currentVal)=>{
             acc.push(...currentVal)
             return [...new Set(acc)]
         },[]).length).fill(false))
-        setPriceRange(data.sort((a,b)=>b.price-a.price)[0].price)
-        setProducts(data.sort((a,b)=>a.price-b.price))
+        setPriceRange(data.map(item=>item.data).sort((a,b)=>b.price-a.price)[0].price)
+        setProducts(data.sort((a,b)=>a.data.price-b.data.price))
         setDisplayProducts(data)
     }
-
     function handleFilterPrice(){
         if(sortBy==='lowest'){
             setDisplayProducts([...products.sort((a,b)=>+a.price - +b.price)])
@@ -278,23 +282,20 @@ export default function Products(){
                         {displayProducts.length&&grid
                         ?
                         displayProducts.map((product,index)=>
-                            <Product key={index} index={index} product={product}/>
+                            <Product key={index} id={product.id} index={index} product={product.data}/>
                         )
                         :
                         displayProducts.length&&!grid
                         ?
                         displayProducts.map((product,index)=>
-                            <ProductWithDescription key={index} index={index} product={product}/>
+                            <ProductWithDescription key={index} id={product.id} product={product.data}/>
                         )
                         :
                         <p className={styles.noProductsFound}>No products matched your search.</p>}
-                        
                     </div>
                 </div>
             </div>
+            <Link href='/products/1'><h1>Click</h1></Link>
         </div>
     )
 }
-//style={{display:'grid',gap:'20px',marginTop:'20px'}}
-// className={filterWindow?styles.productContainerNoActive:styles.productContainer}
-{/* <Product key={index} index={index} product={product}/>) */}

@@ -10,152 +10,152 @@ export default function advancedFilter(
 
         if(categoryArray.length&&companyArray.length&&colorArray.length&&search.length){
             setDisplayProducts([...products.filter(item=>
-                categoryArray.includes(item.category)
+                categoryArray.includes(item.data.category)
                 &&
-                companyArray.includes(item.company)
+                companyArray.includes(item.data.company)
                 &&
-                item.colors.some(item2=>colorArray.includes(item2))
+                item.data.colors.some(item2=>colorArray.includes(item2))
                 &&
-                item.name.toLowerCase().includes(search.toLowerCase())
+                item.data.name.toLowerCase().includes(search.toLowerCase())
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
             )])
             setAllFilters([...categoryArray,...companyArray,...colorArray])
         }
         else if(categoryArray.length&&companyArray.length&& !colorArray.length && search.length){
             setDisplayProducts(products.filter(item=>
-                categoryArray.includes(item.category)
+                categoryArray.includes(item.data.category)
                 &&
-                companyArray.includes(item.company)
+                companyArray.includes(item.data.company)
                 &&
-                item.name.toLowerCase().includes(search.toLowerCase())
+                item.data.name.toLowerCase().includes(search.toLowerCase())
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
                 ))
             setAllFilters([...categoryArray,...companyArray])
         }
         else if(categoryArray.length&& !companyArray.length &&colorArray.length && search.length){
             setDisplayProducts(products.filter(item=>
-                categoryArray.includes(item.category)
+                categoryArray.includes(item.data.category)
                 &&
-                item.colors.some(item2=>colorArray.includes(item2))
+                item.data.colors.some(item2=>colorArray.includes(item2))
                 &&
-                item.name.toLowerCase().includes(search.toLowerCase())
+                item.data.name.toLowerCase().includes(search.toLowerCase())
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
                 ))
             setAllFilters([...categoryArray,...colorArray])
         }
         else if(!categoryArray.length&& companyArray.length &&colorArray.length && search.length){
             setDisplayProducts(products.filter(item=>
-                companyArray.includes(item.company)
+                companyArray.includes(item.data.company)
                 &&
-                item.colors.some(item2=>colorArray.includes(item2))
+                item.data.colors.some(item2=>colorArray.includes(item2))
                 &&
-                item.name.toLowerCase().includes(search.toLowerCase())
+                item.data.name.toLowerCase().includes(search.toLowerCase())
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
                 ))
             setAllFilters([...companyArray,...colorArray])
         }
         else if(categoryArray.length&&companyArray.length&&colorArray.length&&!search.length){
             setDisplayProducts([...products.filter(item=>
-                categoryArray.includes(item.category)
+                categoryArray.includes(item.data.category)
                 &&
-                companyArray.includes(item.company)
+                companyArray.includes(item.data.company)
                 &&
-                item.colors.some(item2=>colorArray.includes(item2))
+                item.data.colors.some(item2=>colorArray.includes(item2))
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
             )])
             setAllFilters([...categoryArray,...companyArray,...colorArray])
         }
         else if(categoryArray.length&&companyArray.length&&!colorArray.length&&!search.length){
             setDisplayProducts([...products.filter(item=>
-                categoryArray.includes(item.category)
+                categoryArray.includes(item.data.category)
                 &&
-                companyArray.includes(item.company)
+                companyArray.includes(item.data.company)
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
             )])
             setAllFilters([...categoryArray,...companyArray])
         }
         else if(categoryArray.length&&!companyArray.length&&colorArray.length&&!search.length){
             setDisplayProducts([...products.filter(item=>
-                categoryArray.includes(item.category)
+                categoryArray.includes(item.data.category)
                 &&
-                item.colors.some(item2=>colorArray.includes(item2))
+                item.data.colors.some(item2=>colorArray.includes(item2))
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
             )])
             setAllFilters([...categoryArray,...colorArray])
         }
         else if(!categoryArray.length&&companyArray.length&&colorArray.length&&!search.length){
             setDisplayProducts([...products.filter(item=>
-                companyArray.includes(item.company)
+                companyArray.includes(item.data.company)
                 &&
-                item.colors.some(item2=>colorArray.includes(item2))
+                item.data.colors.some(item2=>colorArray.includes(item2))
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
             )])
             setAllFilters([...companyArray,...colorArray])
         }
         else if(categoryArray.length&&!companyArray.length&&!colorArray.length&&search.length){
             setDisplayProducts([...products.filter(item=>
-                categoryArray.includes(item.category)
+                categoryArray.includes(item.data.category)
                 &&
-                item.name.toLowerCase().includes(search.toLowerCase())
+                item.data.name.toLowerCase().includes(search.toLowerCase())
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
             )])
             setAllFilters([...categoryArray])
         }
         else if(!categoryArray.length&&companyArray.length&&!colorArray.length&&search.length){
             setDisplayProducts([...products.filter(item=>
-                companyArray.includes(item.company)
+                companyArray.includes(item.data.company)
                 &&
-                item.name.toLowerCase().includes(search.toLowerCase())
+                item.data.name.toLowerCase().includes(search.toLowerCase())
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
             )])
             setAllFilters([...companyArray])
         }
         else if(!categoryArray.length&&!companyArray.length&&colorArray.length&&search.length){
             setDisplayProducts([...products.filter(item=>
-                item.colors.some(item2=>colorArray.includes(item2))
+                item.data.colors.some(item2=>colorArray.includes(item2))
                 &&
-                item.name.toLowerCase().includes(search.toLowerCase())
+                item.data.name.toLowerCase().includes(search.toLowerCase())
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
             )])
             setAllFilters([...colorArray])
         }
         else if(categoryArray.length||companyArray.length||colorArray.length){
             setDisplayProducts(products.filter(item=>
-                categoryArray.includes(item.category)
+                categoryArray.includes(item.data.category)
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
                 ||
-                companyArray.includes(item.company)
+                companyArray.includes(item.data.company)
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
                 ||
-                item.colors.some(item2=>colorArray.includes(item2))
+                item.data.colors.some(item2=>colorArray.includes(item2))
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
             ))
             setAllFilters([...categoryArray,...companyArray,...colorArray])
         }
         else if(!categoryArray.length&&!companyArray.length&&!colorArray.length&&search.length){
             setDisplayProducts(products.filter(item=>
-                item.name.toLowerCase().includes(search.toLowerCase())
+                item.data.name.toLowerCase().includes(search.toLowerCase())
                 &&
-                +item.price<=priceRange
+                +item.data.price<=priceRange
             ))
             setAllFilters([])
         }
         else{
-            setDisplayProducts(products.filter(item=>+item.price<=priceRange))
+            setDisplayProducts(products.filter(item=>+item.data.price<=priceRange))
             setAllFilters([])
         }
 }
