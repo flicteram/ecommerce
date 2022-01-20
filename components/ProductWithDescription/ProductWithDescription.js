@@ -8,7 +8,7 @@ export default function ProductWithDescription({product,id}){
         <div className={styles.productContainer}>
             <div className={styles.imageContainer}>
                 <Image 
-                src={product.image} 
+                src={product.images[0]} 
                 layout="fill"
                 objectFit="cover"
                 objectPosition={'50% 65%'}

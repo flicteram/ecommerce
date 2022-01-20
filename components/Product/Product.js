@@ -6,7 +6,7 @@ export default function Product({product,index,id}){
     const router = useRouter()
     return(
     <div className={styles.productContainer} onClick={()=>router.push(`products/${id}`)}>
-        <Image src={product.image}
+        <Image src={product.images[0]}
          sizes="50vw"
          priority={index<=10?true:false}
          width={30} 

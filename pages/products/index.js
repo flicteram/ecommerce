@@ -11,8 +11,6 @@ import Path from '../../components/Path/Path'
 import CheckIcon from '@mui/icons-material/Check';
 import ProductWithDescription from "../../components/ProductWithDescription/ProductWithDescription";
 import LinearProgress from '@mui/material/LinearProgress';
-import Link from "next/link";
-
 
 
 export default function Products(){
@@ -50,8 +48,6 @@ export default function Products(){
         querySnapshot.forEach((doc) => {
             data = [...data,{id:doc.id,data:doc.data()}]
         });
-
-        // console.log(data.map(item=>item.data))
         setCategoryChecked(new Array([...new Set(data.map(item=>item.data.category))].length).fill(false))
         setCompanyChecked(new Array([...new Set(data.map(item=>item.data.company))].length).fill(false))
         setColorChecked(new Array(data.map(item=>item.data.colors).reduce((acc,currentVal)=>{
@@ -64,15 +60,15 @@ export default function Products(){
     }
     function handleFilterPrice(){
         if(sortBy==='lowest'){
-            setDisplayProducts([...products.sort((a,b)=>+a.price - +b.price)])
+            setDisplayProducts([...products.sort((a,b)=>+a.data.price - +b.data.price)])
             if(categoryArray.length||companyArray.length||colorArray.length||priceRange>=0){
-                setDisplayProducts([...displayProducts.sort((a,b)=>+a.price - +b.price)])
+                setDisplayProducts([...displayProducts.sort((a,b)=>+a.data.price - +b.data.price)])
             }
         }
         else if(sortBy==='highest'){
-            setDisplayProducts([...products.sort((a,b)=>+b.price - +a.price)])
+            setDisplayProducts([...products.sort((a,b)=>+b.data.price - +a.data.price)])
             if(categoryArray.length||companyArray.length||colorArray.length||priceRange>=0){
-                setDisplayProducts([...displayProducts.sort((a,b)=>+b.price - +a.price)])
+                setDisplayProducts([...displayProducts.sort((a,b)=>+b.data.price - +a.data.price)])
             }
         }
     }
@@ -135,7 +131,7 @@ export default function Products(){
         </div>)
     }
     return (
-        <div className={styles.productsContainer}>
+        <>
             <Header/>
             <Path 
             first={'Products'} 
@@ -279,15 +275,13 @@ export default function Products(){
                     styles.porductContainerNoGrid
                     :
                     styles.productContainer}>
-                        {displayProducts.length&&grid
+                        {displayProducts.length
                         ?
                         displayProducts.map((product,index)=>
+                            grid
+                            ?
                             <Product key={index} id={product.id} index={index} product={product.data}/>
-                        )
-                        :
-                        displayProducts.length&&!grid
-                        ?
-                        displayProducts.map((product,index)=>
+                            :
                             <ProductWithDescription key={index} id={product.id} product={product.data}/>
                         )
                         :
@@ -295,7 +289,6 @@ export default function Products(){
                     </div>
                 </div>
             </div>
-            <Link href='/products/1'><h1>Click</h1></Link>
-        </div>
+        </>
     )
 }
