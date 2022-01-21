@@ -1,0 +1,115 @@
+.imageCarouselContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.display{
+    display:flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    animation:fadeVisibility 500ms;
+}
+.noDisplay{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+.featuredImageContainer{
+    position: relative;
+    width: 100%;
+    height: 300px;
+}
+.buttonsContainer{
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    top:50%;
+    transform:translateY(-50%);
+}
+.buttonsContainer>button{
+    padding:10px 15px;
+    font-size: 1.5rem;
+    color:white;
+    background-color: rgb(214, 107, 19);
+    border:1px solid rgb(214, 107, 19);
+    border-radius: 50%;
+    font-weight: 900;
+    opacity: 0.95;
+}
+.previewContainer{
+    display: flex;
+    justify-content: space-between;
+    width: 120px;
+    margin-top:20px;
+}
+.dots{
+    width: 20px;
+    height: 20px;
+    background-color: rgb(95, 69, 34);
+    border-radius: 50%;
+}
+.imagePreviewLow{
+    display: none;
+    position: relative;
+}
+@keyframes fadeVisibility {
+    0% {
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@media(min-width:700px){
+    .dots{
+        display: none;
+    }
+    .imagePreviewLow{
+        width: 130px;
+        height: 80px;
+        display: inline-block;
+        border-radius: 5px;
+        overflow: hidden;
+
+    }
+    .previewContainer{
+        display:flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .buttonsContainer{
+        display: none;
+    }
+    .featuredImageContainer{
+        height: 400px;
+    }
+}
+@media(min-width:800px){
+    .featuredImageContainer{
+        height: 600px;
+    }
+    .imagePreviewLow{
+        width:150px;
+    }
+}
+
+@media(min-width:1000px){
+    .imageCarouselContainer{
+        width: 50%;
+    }
+    .imagePreviewLow{
+        width: 95px;
+    }
+
+}
+
+@media(min-width:1200px){
+    .imagePreviewLow{
+        width: 110px;
+    }
+}
