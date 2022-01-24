@@ -4,7 +4,7 @@ import { GoogleAuthProvider, signInWithPopup, getAuth, onAuthStateChanged, signO
 const Context = createContext()
 
 function ContextProvider({children}){
-    const [user,setUser]=useState({})
+    const [user,setUser]=useState('')
     const provider = new GoogleAuthProvider();
     const auth = getAuth()
 

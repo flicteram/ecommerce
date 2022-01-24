@@ -6,32 +6,56 @@ import ImagesCarousel from '../../components/ImagesCarousel/ImagesCarousel'
 import { doc,getDoc } from "firebase/firestore";
 import { db } from '../../firebase';
 import styles from '../../styles/SingleProduct.module.css'
+import {Context} from '../../components/Context/Context'
 
 export default function ProductDetails(){
-
+    const {user} = useContext(Context)
     const [data,setData]= useState({})
+    const [cart,setCart]=useState([])
     const router = useRouter()
     const { productId } = router.query
+
+    
 
     async function getDbData(){
         const docRef = doc(db, "products", productId);
         const docSnap = await getDoc(docRef);
-        setData(docSnap.data())
+        setData({...docSnap.data(),'id':productId,'count':1})
     }
-    
     useEffect(()=>{
-        if(data.colors){
-            localStorage.setItem(productId, JSON.stringify(data))
+        const localStorageData = localStorage.getItem('cart')
+        if(localStorageData){
+            setCart(JSON.parse(localStorageData))
         }
-    },[data])
+    },[])
 
-    
+    useEffect(()=>{
+        localStorage.setItem('cart',JSON.stringify(cart))
+    },[cart])
+
+
     useEffect(()=>{
         if(productId){
             getDbData()
-            
         }
     },[productId])
+
+
+    const handleAddToCart=()=>{
+        if(!cart.length||cart.every(item=>item.id!==productId)){
+            setCart([...cart,data])
+        }
+        else if(cart.some(item=>item.id===productId)){
+            setCart(cart.map(item=>{
+                if(item.id===productId){
+                    return {...item,'count':item.count+1}
+                }
+                else{
+                    return {...item}
+                }
+                }))
+        } 
+    }
 
     if(!data.colors){
         return <h1>Loading...</h1>
@@ -78,7 +102,7 @@ export default function ProductDetails(){
                             </div>
                         </div>
                     </div>
-                    <button onClick={()=>setData({...data,something:'something'})}>Add to cart</button>
+                    <button onClick={handleAddToCart}>Add to cart</button>
                 </div>
             </div>
             
