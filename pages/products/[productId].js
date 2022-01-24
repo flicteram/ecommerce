@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import {useState,useEffect} from 'react'
+import {useState,useEffect,useContext} from 'react'
 import Header from '../../components/Header/Header'
 import Path from '../../components/Path/Path'
 import ImagesCarousel from '../../components/ImagesCarousel/ImagesCarousel'
@@ -26,8 +26,6 @@ export default function ProductDetails(){
     },[data])
 
     
-    console.log(data)
-
     useEffect(()=>{
         if(productId){
             getDbData()

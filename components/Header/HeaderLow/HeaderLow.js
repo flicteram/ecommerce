@@ -1,11 +1,16 @@
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import styles from '../../../styles/HeaderLow.module.css'
-import {useState} from 'react'
+import {useState,useContext} from 'react'
 import Link from 'next/link'
+import { Context } from '../../Context/Context';
+import Avatar from '@mui/material/Avatar';
+
 
 export default function HeaderLow(){
     const [isActive,setIsActive]=useState(false)
+    const {handleSignIn,handleSignOut,user} = useContext(Context)
+
     return (
     <>
     <div onClick={()=>setIsActive(!isActive)} className={isActive?styles.hamburgerAcrive:styles.hamburger}>
@@ -25,10 +30,15 @@ export default function HeaderLow(){
                 <p>Cart</p>
                 <ShoppingCartIcon sx={{fontSize:30,color:'rgb(24, 27, 36)'}}/>
             </div>
-            <div className={styles.login}>
-                <p>Login</p>
-                <PersonAddIcon sx={{fontSize:30,color:'rgb(24, 27, 36)'}}/>
-            </div>
+            {user?
+                <Avatar src={user.photoURL} onClick={handleSignOut}/>
+                :
+                <div className={styles.login} onClick={handleSignIn}>
+                    <p>Login</p>
+                    <PersonAddIcon sx={{fontSize:30,color:'rgb(24, 27, 36)'}}/>
+                </div>
+            }
+
         </div>
     </nav>
     </>
