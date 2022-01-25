@@ -9,7 +9,7 @@ import Avatar from '@mui/material/Avatar';
 
 export default function HeaderLow(){
     const [isActive,setIsActive]=useState(false)
-    const {handleSignIn,handleSignOut,user} = useContext(Context)
+    const {handleSignIn,handleSignOut,user,cartLength} = useContext(Context)
 
     return (
     <>
@@ -28,14 +28,18 @@ export default function HeaderLow(){
         <div className={isActive?styles.actionsContainerActive:styles.actionsContainer}>
             <div className={styles.cart}>
                 <p>Cart</p>
-                <ShoppingCartIcon sx={{fontSize:30,color:'rgb(24, 27, 36)'}}/>
+                <div className={styles.cartLengthContainer}>
+                <ShoppingCartIcon sx={{fontSize:35,color:'rgb(24, 27, 36)'}}/>
+                <p className={styles.cartLength}>{cartLength}</p>
+                </div>
+                
             </div>
             {user?
                 <Avatar src={user.photoURL} onClick={handleSignOut}/>
                 :
                 <div className={styles.login} onClick={handleSignIn}>
                     <p>Login</p>
-                    <PersonAddIcon sx={{fontSize:30,color:'rgb(24, 27, 36)'}}/>
+                    <PersonAddIcon sx={{fontSize:35,color:'rgb(24, 27, 36)'}}/>
                 </div>
             }
 
