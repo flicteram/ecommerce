@@ -266,11 +266,11 @@ export default function Products(){
                         <p className={styles.productsFound}>{displayProducts.length} Products Found</p>
                     </div>
                     <div className={
-                    filterWindow&&grid
+                    filterWindow&&grid||filterWindow&&!grid
                     ?
                     styles.productContainerNoActive
                     :
-                    !grid
+                    !filterWindow&&!grid
                     ?
                     styles.porductContainerNoGrid
                     :
