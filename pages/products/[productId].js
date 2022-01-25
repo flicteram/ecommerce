@@ -9,9 +9,9 @@ import styles from '../../styles/SingleProduct.module.css'
 import {Context} from '../../components/Context/Context'
 
 export default function ProductDetails(){
-    const {user} = useContext(Context)
+    const {user,cart,setCart,addToDbCart} = useContext(Context)
     const [data,setData]= useState({})
-    const [cart,setCart]=useState([])
+
     const router = useRouter()
     const { productId } = router.query
 
@@ -22,16 +22,7 @@ export default function ProductDetails(){
         const docSnap = await getDoc(docRef);
         setData({...docSnap.data(),'id':productId,'count':1})
     }
-    useEffect(()=>{
-        const localStorageData = localStorage.getItem('cart')
-        if(localStorageData){
-            setCart(JSON.parse(localStorageData))
-        }
-    },[])
 
-    useEffect(()=>{
-        localStorage.setItem('cart',JSON.stringify(cart))
-    },[cart])
 
 
     useEffect(()=>{
