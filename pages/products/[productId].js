@@ -7,15 +7,14 @@ import { doc,getDoc } from "firebase/firestore";
 import { db } from '../../firebase';
 import styles from '../../styles/SingleProduct.module.css'
 import {Context} from '../../components/Context/Context'
+import CheckIcon from '@mui/icons-material/Check';
 
 export default function ProductDetails(){
-    const {user,cart,setCart,addToDbCart} = useContext(Context)
+    const {user,cart,setCart} = useContext(Context)
     const [data,setData]= useState({})
-
+    const [color,setColor]=useState(0)
     const router = useRouter()
     const { productId } = router.query
-
-    
 
     async function getDbData(){
         const docRef = doc(db, "products", productId);
@@ -23,22 +22,30 @@ export default function ProductDetails(){
         setData({...docSnap.data(),'id':productId,'count':1})
     }
 
-
-
     useEffect(()=>{
         if(productId){
             getDbData()
         }
     },[productId])
 
+    console.log(cart)
+    useEffect(()=>{
+        if(data.colors){
+            setData({...data,'color':data.colors[color]})
+        }
+    },[color,data.colors])
 
     const handleAddToCart=()=>{
-        if(!cart.length||cart.every(item=>item.id!==productId)){
+        if(!cart.length
+            ||
+            cart.every(item=>item.id!==productId||
+                item.id===productId&&item.color!==data.colors[color]
+            )){
             setCart([...cart,data])
         }
-        else if(cart.some(item=>item.id===productId)){
+        else if(cart.some(item=>item.id===productId&&item.color===data.colors[color])){
             setCart(cart.map(item=>{
-                if(item.id===productId){
+                if(item.id===productId&&item.color===data.colors[color]){
                     return {...item,'count':item.count+1}
                 }
                 else{
@@ -47,7 +54,6 @@ export default function ProductDetails(){
                 }))
         } 
     }
-
     if(!data.colors){
         return <h1>Loading...</h1>
     }
@@ -81,14 +87,17 @@ export default function ProductDetails(){
                         </div>
                         <div className={styles.stock}>
                             <h4>Colors:</h4>
-                            <div className={styles.colorsContainer}>{data.colors.map(item=>
-                                <label key={item}>
-                                <input 
-                                type={'checkbox'}
-                                hidden
-                                />
-                                <div className={styles.color} style={{backgroundColor:item}}></div>
-                                </label>
+                            <div className={styles.colorsContainer}>
+                                {data.colors.map((item,index)=>
+                                    <label key={item}>
+                                    <input 
+                                    type={'checkbox'}
+                                    hidden
+                                    />
+                                    <div className={styles.color} style={{backgroundColor:item}} onClick={()=>setColor(index)}>
+                                        {index===color&&<CheckIcon sx={{fontSize:22,color:'orange'}}/>}
+                                    </div>
+                                    </label>
                                 )}
                             </div>
                         </div>

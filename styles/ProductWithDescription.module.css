@@ -42,6 +42,9 @@
 .name{
     margin-top:10px;
 }
+.color{
+    position: relative;
+}
 @media(min-width:700px){
     .productContainer{
         flex-direction: row;
