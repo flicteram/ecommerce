@@ -99,6 +99,9 @@
 }
 
 @media(min-width:1000px){
+    .featuredImageContainer{
+        height: 550px;
+    }
     .imageCarouselContainer{
         width: 50%;
     }

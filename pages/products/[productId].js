@@ -13,6 +13,7 @@ export default function ProductDetails(){
     const {user,cart,setCart} = useContext(Context)
     const [data,setData]= useState({})
     const [color,setColor]=useState(0)
+    const [count,setCount]=useState(1)
     const router = useRouter()
     const { productId } = router.query
 
@@ -28,13 +29,15 @@ export default function ProductDetails(){
         }
     },[productId])
 
-    console.log(cart)
     useEffect(()=>{
         if(data.colors){
             setData({...data,'color':data.colors[color]})
         }
     },[color,data.colors])
 
+    useEffect(()=>{
+        setData({...data,'count':count})
+    },[count])
     const handleAddToCart=()=>{
         if(!cart.length
             ||
@@ -42,16 +45,18 @@ export default function ProductDetails(){
                 item.id===productId&&item.color!==data.colors[color]
             )){
             setCart([...cart,data])
+            setCount(1)
         }
         else if(cart.some(item=>item.id===productId&&item.color===data.colors[color])){
             setCart(cart.map(item=>{
                 if(item.id===productId&&item.color===data.colors[color]){
-                    return {...item,'count':item.count+1}
+                    return {...item,'count':item.count+count}
                 }
                 else{
                     return {...item}
                 }
                 }))
+            setCount(1)
         } 
     }
     if(!data.colors){
@@ -85,7 +90,9 @@ export default function ProductDetails(){
                             <h4>Brand:</h4>
                             <p className={styles.p}>{data.company}</p>
                         </div>
-                        <div className={styles.stock}>
+                    </div>
+                    <div className={styles.chooseContainer}>
+                        <div className={styles.stockColors}>
                             <h4>Colors:</h4>
                             <div className={styles.colorsContainer}>
                                 {data.colors.map((item,index)=>
@@ -95,14 +102,21 @@ export default function ProductDetails(){
                                     hidden
                                     />
                                     <div className={styles.color} style={{backgroundColor:item}} onClick={()=>setColor(index)}>
-                                        {index===color&&<CheckIcon sx={{fontSize:22,color:'orange'}}/>}
+                                        {index===color&&<CheckIcon sx={{fontSize:25,color:'orange'}}/>}
                                     </div>
                                     </label>
                                 )}
                             </div>
                         </div>
+                        <div className={styles.countProductContainer}>
+                            <button onClick={()=>count>1&&setCount(count-1)} className={styles.countProductButton}>-</button>
+                            <p className={styles.count}>{count}</p>
+                            <button onClick={()=>setCount(count+1)}className={styles.countProductButton}>+</button>
+                        </div>
+                        
+                        <button className={styles.addToCart} onClick={handleAddToCart}>ADD TO CART</button>
                     </div>
-                    <button onClick={handleAddToCart}>Add to cart</button>
+                    
                 </div>
             </div>
             
