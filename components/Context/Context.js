@@ -44,7 +44,9 @@ function ContextProvider({children}){
     useEffect(()=>{
         if(user){
             const unsub = onSnapshot(doc(db,'users',user.uid),(doc)=>{
-                setCart(doc.data().cart)
+                if(doc.exists()){
+                    setCart(doc.data().cart)
+                }
             })
             return unsub
         }
