@@ -8,9 +8,11 @@ import { db } from '../../firebase';
 import styles from '../../styles/SingleProduct.module.css'
 import {Context} from '../../components/Context/Context'
 import CheckIcon from '@mui/icons-material/Check';
+import ModalConfirmation from '../../components/ModalConfirmation/ModalConfirmation'
 
 export default function ProductDetails(){
     const {user,cart,setCart} = useContext(Context)
+    const [modalIsOpen,setModalIsOpen]=useState(false)
     const [data,setData]= useState({})
     const [color,setColor]=useState(0)
     const [count,setCount]=useState(1)
@@ -22,7 +24,6 @@ export default function ProductDetails(){
         const docSnap = await getDoc(docRef);
         setData({...docSnap.data(),'id':productId,'count':1})
     }
-
     useEffect(()=>{
         if(productId){
             getDbData()
@@ -46,6 +47,7 @@ export default function ProductDetails(){
             )){
             setCart([...cart,data])
             setCount(1)
+            setModalIsOpen(true)
         }
         else if(cart.some(item=>item.id===productId&&item.color===data.colors[color])){
             setCart(cart.map(item=>{
@@ -57,6 +59,7 @@ export default function ProductDetails(){
                 }
                 }))
             setCount(1)
+            setModalIsOpen(true)
         } 
     }
     if(!data.colors){
@@ -70,6 +73,11 @@ export default function ProductDetails(){
                 firstLink='/products'
                 second={data.name}
                 secondLink={`/products/${productId}`}
+            />
+            <ModalConfirmation
+                modalIsOpen={modalIsOpen}
+                setModalIsOpen={setModalIsOpen}
+                product={data}
             />
             <div className={styles.productInfoContainer}>
                 <ImagesCarousel images={data.images}/>

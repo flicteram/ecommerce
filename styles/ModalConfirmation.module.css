@@ -1,0 +1,31 @@
+.productAddedContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.productAddedContainer>h5{
+    width: 85%;
+}
+.productAddedContainer>button{
+    font-weight: 500;
+    background-color: inherit;
+    border:inherit;
+    font-size: 1.5rem;
+    align-self: flex-start;
+
+}
+.productInfoContainer{
+    position: initial;
+    display: flex;
+    flex-direction: column;
+}
+.imageContainer{
+    position:"relative";
+    width: 100%;
+    height: 150px;
+}
+.color{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
