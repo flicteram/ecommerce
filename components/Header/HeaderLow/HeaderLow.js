@@ -29,10 +29,9 @@ export default function HeaderLow(){
             <div className={styles.cart}>
                 <p>Cart</p>
                 <div className={styles.cartLengthContainer}>
-                <ShoppingCartIcon sx={{fontSize:35,color:'rgb(24, 27, 36)'}}/>
-                <p className={styles.cartLength}>{cartLength}</p>
+                    <ShoppingCartIcon sx={{fontSize:35,color:'rgb(24, 27, 36)'}}/>
+                    <p className={styles.cartLength}>{cartLength}</p>
                 </div>
-                
             </div>
             {user?
                 <Avatar src={user.photoURL} onClick={handleSignOut}/>
