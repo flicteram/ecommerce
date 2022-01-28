@@ -5,9 +5,11 @@ import {useState,useContext} from 'react'
 import Link from 'next/link'
 import { Context } from '../../Context/Context';
 import Avatar from '@mui/material/Avatar';
+import { useRouter } from 'next/router';
 
 
 export default function HeaderLow(){
+    const router = useRouter()
     const [isActive,setIsActive]=useState(false)
     const {handleSignIn,handleSignOut,user,cartLength} = useContext(Context)
 
@@ -26,7 +28,7 @@ export default function HeaderLow(){
             <Link href='/products'><li>Products</li></Link>
         </ul>
         <div className={isActive?styles.actionsContainerActive:styles.actionsContainer}>
-            <div className={styles.cart}>
+            <div className={styles.cart} onClick={()=>router.push('/cart')}>
                 <p>Cart</p>
                 <div className={styles.cartLengthContainer}>
                     <ShoppingCartIcon sx={{fontSize:35,color:'rgb(24, 27, 36)'}}/>

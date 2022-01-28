@@ -2,10 +2,10 @@ import Modal from 'react-modal';
 import styles from '../../styles/ModalConfirmation.module.css'
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image'
-
+import { useRouter } from 'next/router';
 
 export default function ModalConfirmation({modalIsOpen,setModalIsOpen,product}){
-
+    const router = useRouter()
     const handleCloseModal=()=>setModalIsOpen(false)
 
     return(
@@ -32,7 +32,7 @@ export default function ModalConfirmation({modalIsOpen,setModalIsOpen,product}){
                         <p className={styles.colorP}>Color:</p>
                         <p className={styles.color} style={{backgroundColor:product.color}}></p>
                     </div>
-                    <button className={styles.viewCart}>VIEW CART</button>
+                    <button className={styles.viewCart} onClick={()=>router.push('/cart')}>VIEW CART</button>
                 </div>
 
             </div>

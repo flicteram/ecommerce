@@ -5,7 +5,9 @@ import Avatar from '@mui/material/Avatar';
 import Link from 'next/link';
 import {Context} from '../../Context/Context'
 import {useContext} from 'react'
+import { useRouter } from 'next/router';
 export default function HeaderBig(){
+    const router = useRouter()
     const {handleSignIn,handleSignOut,user,cartLength} = useContext(Context)
 
     return (
@@ -18,7 +20,7 @@ export default function HeaderBig(){
             </ul>
         </nav>
         <div className={styles.actionsContainer}>
-            <div className={styles.cart}>
+            <div className={styles.cart} onClick={()=>router.push('/cart')}>
                 <p>Cart</p>
                 <div className={styles.cartLengthContainer}>
                     <ShoppingCartIcon sx={{fontSize:35,color:'rgb(24, 27, 36)'}}/>
