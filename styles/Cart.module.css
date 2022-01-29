@@ -1,3 +1,23 @@
+.cartEmptyContainer{
+    max-width: 1200px;
+    margin:50px auto;
+    text-align: center;
+    padding:0px 20px;
+    font-size: .8rem;
+}
+
+.cartEmptyContainer>button{
+    margin-top: 20px;
+    align-self: center;
+    padding:10px 20px;
+    letter-spacing: 1px;
+    background-color:rgb(214, 107, 19);
+    border:1px solid rgb(214, 107, 19);
+    color:rgb(245, 245, 245);
+    border-radius: 5px;
+    box-shadow: 0px 1px 2px 1px rgb(167, 167, 167);
+}
+
 .image{
     position: relative;
     width: 100%;
@@ -6,9 +26,12 @@
     border-radius:5px;
 }
 .productsContainer{
+    display: flex;
+    flex-direction: column;
     padding:0px 20px;
-    margin:50px 0px;
+    margin:50px auto;
     color:rgb(90, 95, 95);
+    max-width: 1200px;
 }
 .productContainer{
     margin:20px 0px;
@@ -98,17 +121,14 @@
 
 
 /*product big screen*/
-.productsContainerTableAll{
-    display: none;
-}
 .productsContainerTable{
     color:rgb(90, 95, 95);
     font-size: 0.85rem;
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0px 25px;
 }
-
+.trProduct{
+    display: none;
+}
 .tr>th{
     border-bottom:1px solid rgb(214, 107, 19);
     padding-bottom: 25px;
@@ -147,12 +167,14 @@
 .td{
     text-align: center;
 }
+.tr{
+    display: none;
+}
 .tdQuantity{
-    height: 80px;
+    height: 100px;
     display: flex;
     justify-content: center;
 }
-
 .imageTable{
     position: relative;
     width: 90px;
@@ -168,7 +190,7 @@
 }
 
 .totalContainer{
-    max-width: 350px;
+    width: 100%;
     margin:50px auto 0px auto;
 }
 .tableTotal{
@@ -199,18 +221,22 @@
     border-radius: 5px;
     letter-spacing: 1px;
     font-weight: 700;
-    box-shadow: 0px 1px 1px 1px black;
+    box-shadow: 0px 1px 2px 1px rgb(167, 167, 167);
 }
 @media(min-width:550px){
-    .productsContainerTableAll{
-        display: flex;
-        flex-direction: column;
-        max-width: 1200px;
-        margin:50px auto;
-        padding:0px 20px;
+    .cartEmptyContainer{
+        font-size: initial;
     }
-    .productsContainer{
+    .tr,
+    .trProduct{
+        display:table-header-group;
+    }
+    .productContainer{
         display: none;
+    }
+    .productsContainerTable{
+        border-collapse: separate;
+        border-spacing: 0px 25px;
     }
     .buttonsActionsContainer{
         flex-direction: row;
