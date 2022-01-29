@@ -8,6 +8,7 @@
 .productsContainer{
     padding:0px 20px;
     margin:50px 0px;
+    color:rgb(90, 95, 95);
 }
 .productContainer{
     margin:20px 0px;
@@ -22,7 +23,10 @@
 .name,
 .priceContainer,
 .subtotalContainer{
-    margin:5px 0px;
+    margin:8px 0px;
+}
+.name{
+    font-weight: 500;
 }
 .color{
     border-radius: 5px;
@@ -38,6 +42,8 @@
     display: flex;
     align-items: center;
     margin-left: 5px;
+    color:black;
+    font-weight: 700;
 }
 .countContainer>p{
     margin:0px 10px;
@@ -64,25 +70,50 @@
     border-radius: 5px;
     letter-spacing: 1px;
 }
-@media(min-width:550px){
-    .productContainer{
-        display: none;
-    }
+
+.buttonsActionsContainer{
+    display: flex;
+    flex-direction: column;
+    padding:25px 0px 0px 0px;
+    border-top:1px solid rgb(214, 107, 19);
+    width: 100%;
+    margin:0 auto;
 }
 
-/*product big screen*/
+.buttonsActionsContainer>button{
+    padding:15px 20px;
+    color:white;
+    border-radius: 5px;
+    letter-spacing: 1px;
+}
+.buttonsActionsContainer>button:first-child{
+    background-color: rgb(214, 107, 19);
+    border:1px solid rgb(214, 107, 19);
+}
+.buttonsActionsContainer>button:last-child{
+    background-color: rgb(61, 41, 25);
+    border:1px solid rgb(61, 41, 25);
+    margin-top:10px;
+}
 
+
+/*product big screen*/
+.productsContainerTableAll{
+    display: none;
+}
 .productsContainerTable{
-    margin:50px 0px;
+    color:rgb(90, 95, 95);
     font-size: 0.85rem;
-    padding:0px 20px;
     width: 100%;
     border-collapse: separate;
     border-spacing: 0px 25px;
 }
 
 .tr>th{
-    border-top:1px solid red;
+    border-bottom:1px solid rgb(214, 107, 19);
+    padding-bottom: 25px;
+    font-weight: 400;
+    color:rgb(55, 64, 65);
 }
 .itemContainer{
     display: flex;
@@ -105,9 +136,13 @@
 .quantityContainerTable>button{
     background-color: inherit;
     border:none;
+    display: flex;
+    align-items: center;
 }
 .quantityContainerTable>p{
     margin:0px 5px;
+    color:black;
+    font-weight: 700;
 }
 .td{
     text-align: center;
@@ -118,9 +153,100 @@
     justify-content: center;
 }
 
+.imageTable{
+    position: relative;
+    width: 90px;
+    height: 80px;
+    margin-right: 10px;
+    overflow: hidden;
+    border-radius: 5px;
+
+}
+.priceTable{
+    color:rgb(214, 107, 19);
+    text-align: center;
+}
+
+.totalContainer{
+    max-width: 350px;
+    margin:50px auto 0px auto;
+}
+.tableTotal{
+    border-radius: 5px;
+    width: 100%;
+    border:1px solid rgb(155, 175, 177);
+    display: table;
+    border-spacing: 0px 20px;
+    padding:0px 20px;
+}
+.trOrderTotal>td{
+    padding:30px 0px 10px 0px;
+    border-top:1px solid rgb(155, 175, 177);
+    font-weight: 700;
+    color:black;
+}
+.trSubtotal{
+    font-weight: 700;
+    color:black;
+}
+.toCheckout{
+    width: 100%;
+    margin-top:10px;
+    padding:10px 15px;
+    color:rgb(247, 245, 233);
+    background-color: rgb(145, 96, 62);
+    border:1px solid rgb(145, 96, 62);
+    border-radius: 5px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    box-shadow: 0px 1px 1px 1px black;
+}
+@media(min-width:550px){
+    .productsContainerTableAll{
+        display: flex;
+        flex-direction: column;
+        max-width: 1200px;
+        margin:50px auto;
+        padding:0px 20px;
+    }
+    .productsContainer{
+        display: none;
+    }
+    .buttonsActionsContainer{
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .buttonsActionsContainer>button{
+        padding: 8px 15px;
+    }
+    .buttonsActionsContainer>button:last-child{
+        margin:0;
+    }
+    .totalContainer{
+        width: 350px;
+    }
+    .trOrderTotal>td{
+        font-size: 1.2rem;
+    }
+}
+@media(min-width:700px){
+    .productsContainerTable{
+        font-size: 1rem;
+    }
+    .tr>th{
+        font-size: 1.2rem;
+    }
+    .totalContainer{
+        margin:50px 0px 0px 0px;
+        align-self: flex-end;
+    }
+}
 @media(min-width:1200px){
     .productsContainerTable{
-        width: 1200px;
-        margin:0 auto;
+        font-size: 1.1rem;
+        border-spacing: 0px 30px;
+    }
+    .tr>th:first-child{
+        width: 30%;
     }
 }
