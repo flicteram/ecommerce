@@ -1,12 +1,13 @@
 import { createContext,useState,useEffect } from "react";
 import { db } from "../../firebase";
 import { GoogleAuthProvider, signInWithPopup, getAuth, onAuthStateChanged, signOut} from "firebase/auth";
-import { setDoc, doc, onSnapshot } from 'firebase/firestore'
+import { setDoc, doc, onSnapshot,getDoc, updateDoc, arrayUnion } from 'firebase/firestore'
+import Product from "../Product/Product";
 
 const Context = createContext()
 
 function ContextProvider({children}){
-    const [user,setUser]=useState('')
+    const [user,setUser]=useState(null)
     const [cart,setCart]=useState([])
     const provider = new GoogleAuthProvider();
     const auth = getAuth()
@@ -16,14 +17,19 @@ function ContextProvider({children}){
     useEffect(()=>{
         /*Get data from local storage*/
         const localStorageData = localStorage.getItem('cart')
-        if(localStorageData){
+        if(localStorageData&&!user){
             setCart(JSON.parse(localStorageData))
         }
     },[])
 
     useEffect(()=>{
         /*Add data to local storage*/
-        localStorage.setItem('cart',JSON.stringify(cart))
+        if(!user){
+            localStorage.setItem('cart',JSON.stringify(cart))
+        }
+        else{
+            localStorage.clear()
+        }
     },[cart])
 
     useEffect(()=>{
@@ -32,31 +38,51 @@ function ContextProvider({children}){
             if(user){
                 setUser(user)
             }
+            else{
+                setUser(null)
+                setCart([])
+            }
         })
     },[])
 
-    async function addToDbCart(){
-        const docRef = await setDoc(doc(db,'users',user.uid),{
-            cart:cart
-        }) 
-    }   
+    async function addDataToDb(){
+        const docRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(docRef);
+        await setDoc((docRef),{
+            cartDb:cart
+        })
+    }
+
+    async function getDbCart(){
+        const docRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(docRef);
+        setCart([...cart,...docSnap.data().cartDb])
+    }
 
     useEffect(()=>{
         if(user){
-            const unsub = onSnapshot(doc(db,'users',user.uid),(doc)=>{
-                if(doc.exists()){
-                    setCart(doc.data().cart)
-                }
-            })
-            return unsub
+            getDbCart()
         }
     },[user])
 
     useEffect(()=>{
         if(user){
-            addToDbCart()
+            addDataToDb()
         }
-    },[cart])
+    },[cart,user])
+
+    useEffect(()=>{
+        {/*if same item is added in cart when user is logged out, then add them together when he is logged back in*/}
+        const uniqueCart = [...new Set(cart.map(item=>item.id))]
+        if(uniqueCart.length!==cart.length){
+            const moreProducts = cart.reduce((acc,currentVal)=>{
+                acc[currentVal.id]?acc[currentVal.id].count+=currentVal.count: (acc[currentVal.id]={...currentVal})
+                return acc
+            },{})
+            setCart(Object.values(moreProducts))
+        }
+    },[user,cart])
+
 
     function handleSignIn(){
         signInWithPopup(auth, provider)
@@ -79,7 +105,7 @@ function ContextProvider({children}){
                             cartLength,
                             cart,
                             setCart,
-                            addToDbCart}}>
+                            }}>
             {children}
         </Context.Provider>
     )

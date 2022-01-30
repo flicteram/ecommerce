@@ -32,7 +32,7 @@ export default function ProductDetails(){
 
     useEffect(()=>{
         if(data.colors){
-            setData({...data,'color':data.colors[color]})
+            setData({...data,'color':data.colors[color],'id':`${data.id}${data.colors[color]}`})
         }
     },[color,data.colors])
 

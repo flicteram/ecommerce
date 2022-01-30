@@ -11,7 +11,7 @@ import {useRouter} from 'next/router'
 
 
 export default function Cart(){
-    const {cart,setCart} = useContext(Context)
+    const {cart,setCart,user} = useContext(Context)
     const router = useRouter()
 
     const subtotal = cart.reduce((acc,currentVal)=>acc+(currentVal.price*currentVal.count),0).toFixed(2)
@@ -116,7 +116,7 @@ export default function Cart(){
                     </div>
                 </div>
                 {/*Table for desktop screen*/}
-                <tr className={styles.trProduct}>
+                <tr className={styles.trProduct} key={`${index}table`}>
                     <td className={styles.td}>
                         <div className={styles.itemContainer}>
                             <div className={styles.imageTable}>
@@ -163,10 +163,12 @@ export default function Cart(){
                         </tr>
                         <tr className={styles.trOrderTotal}>
                             <td>Order Total:</td>
-                            <td>${+subtotal + +shippingFee}</td>
+                            <td>${(+subtotal + +shippingFee).toFixed(2)}</td>
                         </tr>
                     </table>
+                    {user&&
                     <button className={styles.toCheckout}>PROCEED TO CHECKOUT</button>
+                    }
                 </div>
             </div>
         </div>
