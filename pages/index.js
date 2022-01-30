@@ -25,7 +25,7 @@ export default function Home() {
     const q = query(collection(db, 'products'),where('featured','==',true),limit(3))
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      data = [...data,doc.data()]
+      data = [...data,{'data':doc.data(),'id':doc.id}]
     });
     setFeatured(data)
   }
@@ -57,7 +57,7 @@ export default function Home() {
           <h2>Featured Products</h2>
           <div className={styles.productsContainer}>
             {featured.map((product,index)=>
-            <Product key={index} index={index} product={product}/>)}
+            <Product key={index} index={index} product={product.data} id={product.id}/>)}
             </div>
           <Link href='/products'><button className={styles.allProducts}>ALL PRODUCTS</button></Link>
         </section>
