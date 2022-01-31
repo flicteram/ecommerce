@@ -76,7 +76,7 @@ function ContextProvider({children}){
         const uniqueCart = [...new Set(cart.map(item=>item.id))]
         if(uniqueCart.length!==cart.length){
             const moreProducts = cart.reduce((acc,currentVal)=>{
-                acc[currentVal.id]?acc[currentVal.id].count+=currentVal.count: (acc[currentVal.id]={...currentVal})
+                acc[currentVal.id]?acc[currentVal.id].count+=currentVal.count: acc[currentVal.id]={...currentVal}
                 return acc
             },{})
             setCart(Object.values(moreProducts))
