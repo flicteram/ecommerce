@@ -1,8 +1,8 @@
 import { createContext,useState,useEffect } from "react";
 import { db } from "../../firebase";
 import { GoogleAuthProvider, signInWithPopup, getAuth, onAuthStateChanged, signOut} from "firebase/auth";
-import { setDoc, doc, onSnapshot,getDoc, updateDoc, arrayUnion } from 'firebase/firestore'
-import Product from "../Product/Product";
+import { setDoc, doc, getDoc } from 'firebase/firestore'
+
 
 const Context = createContext()
 

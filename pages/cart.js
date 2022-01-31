@@ -45,7 +45,6 @@ export default function Cart(){
     const handleClearShoppingCart=()=>setCart([])
     const handleContinueShopping=()=>router.push('/products')
 
-   
     if(!cart.length){
         return (
             <div>
@@ -79,72 +78,50 @@ export default function Cart(){
                         <th></th>
                     </tr>
                 {cart.map((product,index)=>
-                <>
-                {/*Grid for mobile screen*/}
-                <div key={index} className={styles.productContainer}>
-                    <div className={styles.image}>
-                        <Image 
-                         src={product.images[0]}
-                         objectFit='cover' 
-                         layout="fill" 
-                         objectPosition={'50% 70%'}   
-                         />
-                    </div>
-                    <div>
-                        <h4 className={styles.name}>{product.name}</h4>
-                        <div className={styles.colorContainer}>
-                            <p>Color:</p>
-                            <div className={styles.color} style={{backgroundColor:product.color}}></div>
-                        </div>
-                        <div className={styles.priceContainer}>
-                            <p>Price:</p>
-                            <p className={styles.price}>${product.price}</p>
-                        </div>
-                        <div className={styles.quantityContainer}>
-                            <p>Quantity:</p>
-                            <div className={styles.countContainer}>
-                                <button onClick={()=>handleMinusQuantity(product,index)}><RemoveIcon/></button>
-                                <p>{product.count}</p>
-                                <button onClick={()=>handlePlusQuantity(index)}><AddIcon/></button>
-                            </div>
-                        </div>
-                        <div className={styles.subtotalContainer}>
-                            <p>Subtotal:</p>
-                            <p className={styles.subtotalAmount}>${(+product.price*+product.count).toFixed(2)}</p>
-                        </div>
-                        <button className={styles.removeProduct} onClick={()=>handleDeleteProduct(index)}>REMOVE PRODUCT</button>
-                    </div>
-                </div>
-                {/*Table for desktop screen*/}
-                <tr className={styles.trProduct} key={`${index}table`}>
-                    <td className={styles.td}>
+                <tr className={styles.trProduct} key={product.id}>
+                    <td>
                         <div className={styles.itemContainer}>
                             <div className={styles.imageTable}>
-                                <Image src={product.images[0]} objectFit="cover" layout="fill"/>
+                                <Image src={product.images[0]} objectFit="cover" layout="fill" objectPosition={'50% 70%'}/>
                             </div>
                                 
                             <div>
-                                <p>{product.name}</p>
+                                <p className={styles.name}>{product.name}</p>
                                 <div className={styles.colorContainerTable}>
                                     <p>Color:</p>
                                     <div className={styles.colorTable} style={{backgroundColor:product.color}}></div>
                                 </div>
+                                <div className={styles.priceLow}>
+                                    <p>Price: </p>
+                                    <p>${product.price}</p>
+                                </div>
+                                
                             </div>
                         </div>
                     </td>
                     <td className={styles.priceTable}>${product.price}</td>
                     <td className={styles.tdQuantity}>
-                        <div className={styles.quantityContainerTable}>
-                            <button onClick={()=>handleMinusQuantity(product,index)}><RemoveIcon sx={{fontSize:22}}/></button>
-                            <p>{product.count}</p>
-                            <button onClick={()=>handlePlusQuantity(index)}><AddIcon sx={{fontSize:22}}/></button>
+                        <div className={styles.quantityContainer}>
+                            <div className={styles.quantityLow}>
+                                <p>Quantity:</p>
+                                <div className={styles.quantityContainerTable}>
+                                    <button onClick={()=>handleMinusQuantity(product,index)}><RemoveIcon sx={{fontSize:22}}/></button>
+                                    <p>{product.count}</p>
+                                    <button onClick={()=>handlePlusQuantity(index)}><AddIcon sx={{fontSize:22}}/></button>
+                                </div>
+                            </div>
+                            <div className={styles.subtotalLow}>
+                            <p>Subtotal:</p>
+                            <p>${(+product.price*+product.count).toFixed(2)}</p>
+                            </div>
+                            
+                            <button className={styles.removeProduct} onClick={()=>handleDeleteProduct(index)}>REMOVE PRODUCT</button>
                         </div>
                             
                     </td>
-                    <td className={styles.td}>${(+product.price*+product.count).toFixed(2)}</td>
-                    <td className={styles.td} onClick={()=>handleDeleteProduct(index)}><DeleteIcon sx={{color:'red',cursor:'pointer'}}/></td>
+                    <td className={styles.productSubtotal}>${(+product.price*+product.count).toFixed(2)}</td>
+                    <td className={styles.deleteProduct} onClick={()=>handleDeleteProduct(index)}><DeleteIcon sx={{color:'red',cursor:'pointer'}}/></td>
                 </tr>
-                </>
                 )}
                 </table>
                 <div className={styles.buttonsActionsContainer}>
@@ -167,7 +144,7 @@ export default function Cart(){
                         </tr>
                     </table>
                     {user&&
-                    <button className={styles.toCheckout}>PROCEED TO CHECKOUT</button>
+                    <button className={styles.toCheckout}>SEND ORDER</button>
                     }
                 </div>
             </div>
