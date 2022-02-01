@@ -2,6 +2,7 @@ import { createContext,useState,useEffect } from "react";
 import { db } from "../../firebase";
 import { GoogleAuthProvider, signInWithPopup, getAuth, onAuthStateChanged, signOut} from "firebase/auth";
 import { setDoc, doc, getDoc,getDocs,collection } from 'firebase/firestore'
+import Loader from "../Loader/Loader";
 
 
 const Context = createContext()
@@ -114,6 +115,12 @@ function ContextProvider({children}){
         })
     }
 
+    if(loading){
+        return (
+            <Loader/>
+        )
+    }
+
     return( 
         <Context.Provider value={{
                             handleSignIn,
@@ -124,7 +131,8 @@ function ContextProvider({children}){
                             setCart,
                             products,
                             setProducts,
-                            loading
+                            loading,
+                            setLoading
                             }}>
             {children}
         </Context.Provider>

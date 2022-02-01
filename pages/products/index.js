@@ -2,21 +2,18 @@ import Header from '../../components/Header/Header'
 import Product from "../../components/Product/Product";
 import styles from '../../styles/Products.module.css'
 import {useEffect,useState,useContext} from 'react'
-import {collection, getDocs} from 'firebase/firestore'
-import {db} from '../../firebase'
 import advancedFilter from '../../components/Filter/advancedFilter/advancedFilter'
 import GridViewIcon from '@mui/icons-material/GridView';
 import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
 import Path from '../../components/Path/Path'
 import CheckIcon from '@mui/icons-material/Check';
 import ProductWithDescription from "../../components/ProductWithDescription/ProductWithDescription";
-import LinearProgress from '@mui/material/LinearProgress';
 import { Context } from '../../components/Context/Context';
 
 
 export default function Products(){
 
-    const {products,setProducts,loading}=useContext(Context)
+    const {products,setProducts,loading,setLoading}=useContext(Context)
 
     const [grid,setGrid]=useState(true)
     const [displayProducts,setDisplayProducts]=useState([])
@@ -45,6 +42,7 @@ export default function Products(){
     },[]).sort()
     
     function getFilters(){
+        setLoading(true)
         setCategoryChecked(new Array([...new Set(products.map(item=>item.data.category))].length).fill(false))
         setCompanyChecked(new Array([...new Set(products.map(item=>item.data.company))].length).fill(false))
         setColorChecked(new Array(products.map(item=>item.data.colors).reduce((acc,currentVal)=>{
@@ -54,6 +52,7 @@ export default function Products(){
         setPriceRange(products.map(item=>item.data).sort((a,b)=>b.price-a.price)[0].price)
         setProducts(products.sort((a,b)=>a.data.price-b.data.price))
         setDisplayProducts(products)
+        setLoading(false)
     }
     function handleFilterPrice(){
         if(sortBy==='lowest'){
@@ -116,19 +115,6 @@ export default function Products(){
         )
     },[categoryChecked,companyChecked,colorChecked,priceRange,search])
 
-    if(loading){
-        return(
-        <div>
-            <Header/>
-            <Path 
-            first={'Products'} 
-            firstLink={'/products'}
-            />
-            <div style={{backgroundColor:'rgb(228, 210, 183)'}}>
-                <LinearProgress color={'inherit'} sx={{color:'rgb(214, 107, 19)'}}/>
-            </div>
-        </div>)
-    }
     return (
         <>
             <Header/>

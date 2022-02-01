@@ -1,0 +1,29 @@
+.logo{
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: 'The Nautigal', cursive;
+    text-shadow: 0px 1px 3px;
+    animation: animationLogo 1.5s infinite alternate;
+    align-self: center;
+}
+.logoZone{
+    font-family: 'The Nautigal', cursive;
+    color:rgb(214, 107, 19);
+}
+.loadingContainer{
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+@keyframes animationLogo{
+    0% {
+        transform: scale(1.0);
+    }
+    100% {
+        transform: scale(1.2);
+    }
+}

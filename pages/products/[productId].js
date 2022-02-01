@@ -9,9 +9,10 @@ import styles from '../../styles/SingleProduct.module.css'
 import {Context} from '../../components/Context/Context'
 import CheckIcon from '@mui/icons-material/Check';
 import ModalConfirmation from '../../components/ModalConfirmation/ModalConfirmation'
+import Loader from '../../components/Loader/Loader'
 
 export default function ProductDetails(){
-    const {user,cart,setCart} = useContext(Context)
+    const {cart,setCart} = useContext(Context)
     const [modalIsOpen,setModalIsOpen]=useState(false)
     const [data,setData]= useState({})
     const [color,setColor]=useState(0)
@@ -63,7 +64,7 @@ export default function ProductDetails(){
         } 
     }
     if(!data.colors){
-        return <h1>Loading...</h1>
+       return <Loader/>
     }
     return (
         <>

@@ -5,9 +5,7 @@ import DiamondIcon from '@mui/icons-material/Diamond';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import Image from 'next/image';
 import Product from '../components/Product/Product';
-import {db} from '../firebase'
 import {useEffect,useState,useContext} from 'react'
-import { collection, getDocs, query, limit, where } from "firebase/firestore";
 import bigphoto from '../components/Images/bigphoto.jpg'
 import lowphoto from '../components/Images/lowphoto.jpg'
 import Link from 'next/link';
