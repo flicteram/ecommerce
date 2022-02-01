@@ -107,14 +107,15 @@ export default function Products(){
     },[sortBy])
     useEffect(()=>{
         advancedFilter(
-        categoryArray,
-        companyArray,
-        colorArray,
-        search,
-        setDisplayProducts,
-        products,
-        setAllFilters,
-        priceRange)
+            categoryArray,
+            companyArray,
+            colorArray,
+            search,
+            setDisplayProducts,
+            products,
+            setAllFilters,
+            priceRange
+        )
     },[categoryChecked,companyChecked,colorChecked,priceRange,search])
 
     if(!products.length){

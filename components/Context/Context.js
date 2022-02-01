@@ -45,6 +45,7 @@ function ContextProvider({children}){
         })
     },[])
 
+
     async function addDataToDb(){
         const docRef = doc(db, 'users', user.uid);
         const docSnap = await getDoc(docRef);

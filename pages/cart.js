@@ -1,19 +1,23 @@
 import Header from "../components/Header/Header"
 import Path from "../components/Path/Path"
 import { Context } from "../components/Context/Context"
-import { useContext } from "react"
+import { useContext,useState } from "react"
 import Image from "next/image"
 import styles from '../styles/Cart.module.css'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useRouter} from 'next/router'
-
+import {db} from '../firebase'
+import { collection,addDoc,Timestamp } from "firebase/firestore"
+import CircularProgress from '@mui/material/CircularProgress';
+import ModalOrderComplete from "../components/ModalOrderComplete/ModalOrderComplete"
 
 export default function Cart(){
     const {cart,setCart,user} = useContext(Context)
     const router = useRouter()
-
+    const [processing,setProcessing]=useState(false)
+    const [modalIsOpen,setModalIsOpen]=useState(false)
     const subtotal = cart.reduce((acc,currentVal)=>acc+(currentVal.price*currentVal.count),0).toFixed(2)
     const shippingFee = 5.99
 
@@ -42,6 +46,19 @@ export default function Cart(){
     function handleDeleteProduct(productIndex){
         setCart(cart.filter((item,index2)=>index2!==productIndex))
     }
+    function handleSendOrder(){
+        setProcessing(true)
+        setTimeout(async()=>{
+            await addDoc(collection(db,`users/${user.uid}/history`),{
+                'timestamp':Timestamp.now(),
+                'orderDetails':cart,
+                'orderTotal':cart.reduce((acc,currentVal)=>acc+(+currentVal.price * +currentVal.count),0).toFixed(2)
+            })
+            setModalIsOpen(true)
+            setCart([])
+            setProcessing(false)
+        },2500)
+    }
     const handleClearShoppingCart=()=>setCart([])
     const handleContinueShopping=()=>router.push('/products')
 
@@ -57,7 +74,10 @@ export default function Cart(){
                     <h1>YOUR CART IS EMPTY</h1>
                     <button onClick={handleContinueShopping}>FILL IT</button>
                 </div>
-                
+                <ModalOrderComplete
+                modalIsOpen={modalIsOpen}
+                setModalIsOpen={setModalIsOpen}
+                />
             </div>
         )
     }
@@ -68,6 +88,7 @@ export default function Cart(){
                 first={'Cart'}
                 firstLink={'/cart'}
             />
+
             <div className={styles.productsContainer}>
                 <table className={styles.productsContainerTable}>
                     <tr className={styles.tr}>
@@ -144,7 +165,13 @@ export default function Cart(){
                         </tr>
                     </table>
                     {user&&
-                    <button className={styles.toCheckout}>SEND ORDER</button>
+                    <button className={styles.toCheckout} onClick={handleSendOrder} disabled={processing}>
+                    {processing
+                    ?
+                    <CircularProgress size={'20px'} sx={{color:'rgb(247, 245, 233)'}} thickness={5}/>
+                    :
+                    'SEND ORDER'}
+                    </button>
                     }
                 </div>
             </div>
