@@ -12,9 +12,10 @@ import {db} from '../firebase'
 import { collection,addDoc,Timestamp } from "firebase/firestore"
 import CircularProgress from '@mui/material/CircularProgress';
 import ModalOrderComplete from "../components/ModalOrderComplete/ModalOrderComplete"
+import GoogleIcon from '@mui/icons-material/Google';
 
 export default function Cart(){
-    const {cart,setCart,user} = useContext(Context)
+    const {cart,setCart,user,handleSignIn} = useContext(Context)
     const router = useRouter()
     const [processing,setProcessing]=useState(false)
     const [modalIsOpen,setModalIsOpen]=useState(false)
@@ -164,14 +165,18 @@ export default function Cart(){
                             <td>${(+subtotal + +shippingFee).toFixed(2)}</td>
                         </tr>
                     </table>
-                    {user&&
-                    <button className={styles.toCheckout} onClick={handleSendOrder} disabled={processing}>
-                    {processing
-                    ?
-                    <CircularProgress size={'20px'} sx={{color:'rgb(247, 245, 233)'}} thickness={5}/>
-                    :
-                    'SEND ORDER'}
-                    </button>
+                    {user?
+                        <button className={styles.toCheckout} onClick={handleSendOrder} disabled={processing}>
+                        {processing
+                        ?
+                        <CircularProgress size={'20px'} sx={{color:'rgb(247, 245, 233)'}} thickness={5}/>
+                        :
+                        'SEND ORDER'}
+                        </button>
+                        :
+                        <button onClick={handleSignIn} className={styles.signIn}>
+                        <GoogleIcon sx={{color:'white'}}/><span className={styles.signInText}>Sign in with Google</span>
+                        </button>
                     }
                 </div>
             </div>
