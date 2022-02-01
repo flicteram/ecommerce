@@ -19,7 +19,7 @@ export default function ModalConfirmation({modalIsOpen,setModalIsOpen,product}){
         <div>
             <div className={styles.productAddedContainer}>
                 <h4>Product added to your cart</h4>
-                <button onClick={handleCloseModal}><CloseIcon sx={{fontSize:'35px',color:'rgb(220,230,228)'}}/></button>
+                <button onClick={handleCloseModal}><CloseIcon sx={{fontSize:'30px',color:'rgb(200,230,228)'}}/></button>
             </div>
             <div className={styles.productInfoContainer}>
                 <div className={styles.imageContainer} style={{position:'relative'}}>
