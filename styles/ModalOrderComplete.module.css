@@ -1,0 +1,59 @@
+.Modal {
+    position: absolute;
+    top: 50%;
+    transform:translateY(-50%);
+    left:20px;
+    right: 20px;
+    background-color: white;
+    border-radius: 10px;
+    padding:20px;
+}
+.Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.192);
+    z-index: 1020;
+}
+.orderCompleteContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.orderCompleteContainer>h4{
+    color:rgb(24, 148, 24);
+}
+.orderCompleteContainer>button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border:none;
+    background-color: inherit;
+}
+.actionsContainer{
+    display: flex;
+    flex-direction: column;
+}
+.actionsContainer>button{
+    margin:5px 0px;
+    padding:10px 20px;
+    letter-spacing: 1px;
+    background-color:rgb(214, 107, 19);
+    border:1px solid rgb(214, 107, 19);
+    color:rgb(245, 245, 245);
+    border-radius: 5px;
+    box-shadow: 0px 1px 2px 1px rgb(167, 167, 167);
+}
+
+@media(min-width:430px){
+    .actionsContainer{
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .Modal{
+        max-width: 370px;
+        margin:0 auto;
+    }
+}
