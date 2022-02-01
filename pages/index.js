@@ -6,32 +6,29 @@ import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import Image from 'next/image';
 import Product from '../components/Product/Product';
 import {db} from '../firebase'
-import {useEffect,useState} from 'react'
+import {useEffect,useState,useContext} from 'react'
 import { collection, getDocs, query, limit, where } from "firebase/firestore";
 import bigphoto from '../components/Images/bigphoto.jpg'
 import lowphoto from '../components/Images/lowphoto.jpg'
 import Link from 'next/link';
+import { Context } from '../components/Context/Context';
 
 
 export default function Home() {
   const [featured,setFeatured]=useState([])
+  const {products,loading}=useContext(Context)
   const iconsStyle={
     fontSize:50,
     color:'rgb(255, 240, 210)',
   }
-
-  async function getDataFromDb(){
-    let data = []
-    const q = query(collection(db, 'products'),where('featured','==',true),limit(3))
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      data = [...data,{'data':doc.data(),'id':doc.id}]
-    });
-    setFeatured(data)
+  function getFeatured(){
+    setFeatured(products.filter(item=>item.data.featured===true))
   }
   useEffect(()=>{
-    getDataFromDb()
-  },[])
+    if(!loading){
+      getFeatured()
+    }
+  },[loading])
   return (
     <div className={styles.container}>
       <Header/>

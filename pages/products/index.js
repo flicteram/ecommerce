@@ -1,7 +1,7 @@
 import Header from '../../components/Header/Header'
 import Product from "../../components/Product/Product";
 import styles from '../../styles/Products.module.css'
-import {useEffect,useState} from 'react'
+import {useEffect,useState,useContext} from 'react'
 import {collection, getDocs} from 'firebase/firestore'
 import {db} from '../../firebase'
 import advancedFilter from '../../components/Filter/advancedFilter/advancedFilter'
@@ -11,11 +11,14 @@ import Path from '../../components/Path/Path'
 import CheckIcon from '@mui/icons-material/Check';
 import ProductWithDescription from "../../components/ProductWithDescription/ProductWithDescription";
 import LinearProgress from '@mui/material/LinearProgress';
+import { Context } from '../../components/Context/Context';
 
 
 export default function Products(){
+
+    const {products,setProducts,loading}=useContext(Context)
+
     const [grid,setGrid]=useState(true)
-    const [products,setProducts]=useState([])
     const [displayProducts,setDisplayProducts]=useState([])
 
     const [search,setSearch]=useState('')
@@ -34,7 +37,6 @@ export default function Products(){
 
     const [allFilters,setAllFilters]=useState([])
 
-
     const categories=[...new Set(products.map(item=>item.data.category))].sort()
     const companies=[...new Set(products.map(item=>item.data.company))].sort()
     const colors = products.map(item=>item.data.colors).reduce((acc,currentVal)=>{
@@ -42,21 +44,16 @@ export default function Products(){
         return [...new Set(acc)]
     },[]).sort()
     
-    async function getProducts(){
-        const data = []
-        const querySnapshot = await getDocs(collection(db,'products'));
-        querySnapshot.forEach((doc) => {
-            data = [...data,{id:doc.id,data:doc.data()}]
-        });
-        setCategoryChecked(new Array([...new Set(data.map(item=>item.data.category))].length).fill(false))
-        setCompanyChecked(new Array([...new Set(data.map(item=>item.data.company))].length).fill(false))
-        setColorChecked(new Array(data.map(item=>item.data.colors).reduce((acc,currentVal)=>{
+    function getFilters(){
+        setCategoryChecked(new Array([...new Set(products.map(item=>item.data.category))].length).fill(false))
+        setCompanyChecked(new Array([...new Set(products.map(item=>item.data.company))].length).fill(false))
+        setColorChecked(new Array(products.map(item=>item.data.colors).reduce((acc,currentVal)=>{
             acc.push(...currentVal)
             return [...new Set(acc)]
         },[]).length).fill(false))
-        setPriceRange(data.map(item=>item.data).sort((a,b)=>b.price-a.price)[0].price)
-        setProducts(data.sort((a,b)=>a.data.price-b.data.price))
-        setDisplayProducts(data)
+        setPriceRange(products.map(item=>item.data).sort((a,b)=>b.price-a.price)[0].price)
+        setProducts(products.sort((a,b)=>a.data.price-b.data.price))
+        setDisplayProducts(products)
     }
     function handleFilterPrice(){
         if(sortBy==='lowest'){
@@ -98,10 +95,11 @@ export default function Products(){
 
     const handleSort=e=>setSortBy(e.target.value)
     const handleSearch=e=>setSearch(e.target.value)
-
     useEffect(()=>{
-        getProducts()
-    },[])
+        if(!loading){
+            getFilters()
+        }
+    },[loading])
     useEffect(()=>{
         handleFilterPrice()
     },[sortBy])
@@ -118,7 +116,7 @@ export default function Products(){
         )
     },[categoryChecked,companyChecked,colorChecked,priceRange,search])
 
-    if(!products.length){
+    if(loading){
         return(
         <div>
             <Header/>
