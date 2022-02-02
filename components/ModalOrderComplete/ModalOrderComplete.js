@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 export default function ModalOrderComplete({modalIsOpen,setModalIsOpen}){
     const handleCloseModal=()=>setModalIsOpen(false)
-    const handleContinueShopping=()=>router.push('/')
+    const handleContinueShopping=()=>router.push('/products')
     const router = useRouter()
     return (
         <Modal
