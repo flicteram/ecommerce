@@ -239,6 +239,10 @@
     .deleteProduct{
         display: table-cell;
     }
+    .deleteProduct>button{
+        border:none;
+        background-color: inherit;
+    }
     .tr,
     .trProduct{
         display:table-header-group;

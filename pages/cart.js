@@ -127,9 +127,9 @@ export default function Cart(){
                             <div className={styles.quantityLow}>
                                 <p>Quantity:</p>
                                 <div className={styles.quantityContainerTable}>
-                                    <button onClick={()=>handleMinusQuantity(product,index)}><RemoveIcon sx={{fontSize:22}}/></button>
+                                    <button disabled={processing} onClick={()=>handleMinusQuantity(product,index)}><RemoveIcon sx={{fontSize:22}}/></button>
                                     <p>{product.count}</p>
-                                    <button onClick={()=>handlePlusQuantity(index)}><AddIcon sx={{fontSize:22}}/></button>
+                                    <button disabled={processing} onClick={()=>handlePlusQuantity(index)}><AddIcon sx={{fontSize:22}}/></button>
                                 </div>
                             </div>
                             <div className={styles.subtotalLow}>
@@ -137,18 +137,22 @@ export default function Cart(){
                             <p>${(+product.price*+product.count).toFixed(2)}</p>
                             </div>
                             
-                            <button className={styles.removeProduct} onClick={()=>handleDeleteProduct(index)}>REMOVE PRODUCT</button>
+                            <button className={styles.removeProduct} disabled={processing} onClick={()=>handleDeleteProduct(index)}>REMOVE PRODUCT</button>
                         </div>
                             
                     </td>
                     <td className={styles.productSubtotal}>${(+product.price*+product.count).toFixed(2)}</td>
-                    <td className={styles.deleteProduct} onClick={()=>handleDeleteProduct(index)}><DeleteIcon sx={{color:'red',cursor:'pointer'}}/></td>
+                    <td className={styles.deleteProduct}>
+                        <button disabled={processing} onClick={()=>handleDeleteProduct(index)}>
+                            <DeleteIcon sx={{color:'red',cursor:'pointer'}}/>
+                        </button>
+                    </td>
                 </tr>
                 )}
                 </table>
                 <div className={styles.buttonsActionsContainer}>
-                    <button onClick={handleContinueShopping}>Continue Shopping</button>
-                    <button onClick={handleClearShoppingCart}>Clear Shopping Cart</button>
+                    <button disabled={processing} onClick={handleContinueShopping}>Continue Shopping</button>
+                    <button disabled={processing} onClick={handleClearShoppingCart}>Clear Shopping Cart</button>
                 </div>
                 <div className={styles.totalContainer}>
                     <table className={styles.tableTotal}>
