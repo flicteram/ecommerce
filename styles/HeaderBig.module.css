@@ -21,22 +21,82 @@
 .cart>p,
 .login>p{
     color:rgb(24, 27, 36);
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     letter-spacing: 1px;
 }
 .cartLengthContainer{
     position: relative;
 }
 .cartLength{
+    width: 25px; 
+    height: 25px;
     position: absolute;
     top:-10px;
     right: -10px;
     color:rgb(214, 107, 19);
     border-radius: 50%;
     background-color: black;
-    font-size:0.8rem;
-    padding:5px 7px;
-    font-weight: 700;
+    font-size:0.7rem;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.actionsProfileContainer{
+    position: relative;
+}
+.actionsProfile{
+    position: absolute;
+    bottom: -112px;
+    left: -100px;
+    background-color: white;
+    border:1px solid rgb(217, 230, 230);
+    width: 141px;
+    animation:animationActions 250ms;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    box-shadow: 0px 3px 5px 0px rgb(217, 230, 230);
+}
+.actionsProfile>p{
+    padding:15px 0px;
+    cursor: pointer;
+    font-weight: 500;
+}
+.actionsProfile>p:hover{
+    background-color: rgb(214, 107, 19);
+    color:white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.actionsProfile>p:last-child{
+    border-radius: 0px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top:1px solid rgb(217, 230, 230);
+}
+.arrowContainer{
+    position: absolute;
+    width: 100%;
+    top:-13px;
+    height: 13px;
+}
+.cartPreviewContainer{
+    top:50px;
+    width: 100%;
+    position: absolute;
+    border:1px solid red;
+}
+
+@keyframes animationActions{
+    0%{
+        bottom:-122px;
+    }
+    100%{
+        bottom:-112px;
+    }
 }
 @media(max-width:700px){
     .navContainer,
