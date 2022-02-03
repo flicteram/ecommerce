@@ -84,7 +84,7 @@ export default function HeaderBig(){
                             :
                             <p style={{textAlign:'center',paddingTop:'10px'}}>Cart empty</p>}
                             <div className={styles.cartDetails}>
-                                <button >View cart details</button>
+                                <button onClick={()=>router.push('/cart')}>View cart details</button>
                             </div>
                         </div>
                 </div>
@@ -99,7 +99,7 @@ export default function HeaderBig(){
                                 <ArrowDropUpIcon sx={{color:'rgb(217, 230, 230)',position:'absolute',top:'-5px',right:'7px',fontSize:'30px',zIndex:'1010'}}/>
                             </div>
                             <p>My Account</p>
-                            <p onClick={handleSignOut}>Log out</p>
+                            <p onClick={handleSignOut}>Logout</p>
                         </div>
                     </div>
                     :
