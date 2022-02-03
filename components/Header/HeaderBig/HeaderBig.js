@@ -75,14 +75,17 @@ export default function HeaderBig(){
                                     </tr>)}
                                 </tbody>
                             </table>
+                            {cartLength
+                            ?
                             <div className={styles.totalContainer}>
                                 <p>TOTAL: {cartLength} products</p>
                                 <p>${(cart.reduce((acc,val)=>acc+(val.price*val.count),0)).toFixed(2)}</p>
                             </div>
+                            :
+                            <p style={{textAlign:'center',paddingTop:'10px'}}>Cart empty</p>}
                             <div className={styles.cartDetails}>
                                 <button >View cart details</button>
                             </div>
-                            
                         </div>
                 </div>
                 {user?
