@@ -15,7 +15,7 @@ import ModalOrderComplete from "../components/ModalOrderComplete/ModalOrderCompl
 import GoogleIcon from '@mui/icons-material/Google';
 
 export default function Cart(){
-    const {cart,setCart,user,handleSignIn} = useContext(Context)
+    const {cart,setCart,user,handleSignIn,handleDeleteProduct} = useContext(Context)
     const router = useRouter()
     const [processing,setProcessing]=useState(false)
     const [modalIsOpen,setModalIsOpen]=useState(false)
@@ -44,9 +44,7 @@ export default function Cart(){
             }))
         }
     }
-    function handleDeleteProduct(productIndex){
-        setCart(cart.filter((item,index2)=>index2!==productIndex))
-    }
+
     function handleSendOrder(){
         setProcessing(true)
         setTimeout(async()=>{

@@ -16,6 +16,9 @@ function ContextProvider({children}){
     const auth = getAuth()
 
     const cartLength = cart.reduce((acc,currentVal)=>acc+currentVal.count,0)
+    function handleDeleteProduct(productIndex){
+        setCart(cart.filter((item,index2)=>index2!==productIndex))
+    }
 
     async function getDbProducts(){
         const data = []
@@ -132,7 +135,8 @@ function ContextProvider({children}){
                             products,
                             setProducts,
                             loading,
-                            setLoading
+                            setLoading,
+                            handleDeleteProduct
                             }}>
             {children}
         </Context.Provider>
