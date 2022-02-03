@@ -17,12 +17,14 @@
 }
 .cart{
     margin-right: 15px;
+    position: relative;
 }
 .cart>p,
 .login>p{
     color:rgb(24, 27, 36);
     font-size: 1.3rem;
     letter-spacing: 1px;
+    cursor: pointer;
 }
 .cartLengthContainer{
     position: relative;
@@ -85,11 +87,113 @@
 }
 .cartPreviewContainer{
     top:50px;
-    width: 100%;
+    right: 0px;
+    width: 300px;
     position: absolute;
-    border:1px solid red;
+    border:1px solid rgb(217, 230, 230);
+    border-radius: 5px;
+    background-color: white;
+    color:rgb(133, 139, 139);
+    box-shadow: 0px 3px 5px 0px rgb(217, 230, 230);
+    animation:animationCart 250ms;
+}
+.talblePreview{
+    width: 100%;
+    border-collapse: collapse;
+}
+.tBody{
+    display: block;
+    max-height: 350px;
+    overflow-y:scroll;
+}
+.tBody::-webkit-scrollbar{
+    display: none;
+}
+.previewItem{
+    font-size: 0.7rem;
+    border-top:1px solid rgb(217, 230, 230);
+}
+.previewItem:hover{
+    background-color: rgb(248, 248, 248);
+}
+.previewItem:first-child{
+    border:none;
+}
+.previewItem>td{
+    padding:10px;
+}
+.previewItem>td:first-child{
+    width: 20%;
+
+}
+.imagePreview{
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.colorContainer{
+    display: flex;
+    align-items: center;
+}
+.colorContainer>p{
+    margin-right: 5px;
+}
+.previewInfo{
+    cursor: pointer;
+}
+.previewInfo>li:last-child{
+    color:rgb(214, 107, 19);
+}
+.previewCount{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.previewCount>button{
+    margin-top:10px;
+    display: flex;
+    background-color: rgb(241, 241, 241);
+    border:1px solid rgb(241, 241, 241);
+    border-radius: 5px;
+    color:rgb(133, 139, 139);
+}
+.previewCount>button:hover{
+    color:rgb(214, 107, 19);
+}
+.totalContainer{
+    display: flex;
+    justify-content: space-between;
+    padding:10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-bottom: 1px solid rgb(217, 230, 230);
+    border-top:1px solid rgb(217, 230, 230);
+}
+.cartDetails{
+    padding:10px;
+}
+.cartDetails>button{
+    width: 100%;
+    padding:10px;
+    letter-spacing: 1px;
+    background-color:rgb(214, 107, 19);
+    border:1px solid rgb(214, 107, 19);
+    color:rgb(245, 245, 245);
+    border-radius: 5px;
 }
 
+
+@keyframes animationCart{
+    0%{
+        top:60px
+    }
+    100%{
+        top:50px;
+    }
+}
 @keyframes animationActions{
     0%{
         bottom:-122px;
