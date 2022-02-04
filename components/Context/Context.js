@@ -77,7 +77,9 @@ function ContextProvider({children}){
     async function getDbCart(){
         const docRef = doc(db, 'users', user.uid);
         const docSnap = await getDoc(docRef);
-        setCart([...cart,...docSnap.data().cartDb])
+        if(docSnap.exists()){
+            setCart([...cart,...docSnap.data().cartDb])
+        }
     }
 
     useEffect(()=>{
