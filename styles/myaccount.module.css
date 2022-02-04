@@ -1,0 +1,218 @@
+.noUserContainer{
+    max-width: 1200px;
+    margin:20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding:0px 20px;
+}
+.noUserContainer>h1{
+    font-size: 1.5rem;
+}
+.noUserContainer>button{
+    margin-top:20px;
+    display: flex;
+    align-items: center;
+    padding:10px 20px;
+    background-color: rgb(0, 132, 255);
+    border:1px solid rgb(0, 132, 255);
+    color:white;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px 1px black;
+}
+.continueWithGoogle{
+    margin-left: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.accountContainer{
+    padding:0px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.accountInfo{
+    margin-top: 55px;
+    text-align: center;
+}
+.accountInfo>p:nth-child(1),
+.accountInfo>p:nth-child(3){
+    margin:4px 0px;
+}
+.logout{
+    margin-top: 4px;
+    width: 210px;
+    padding:10px 20px;
+    letter-spacing: 1px;
+    color:white;
+    background-color: rgb(172, 6, 6);
+    border: 1px solid rgb(172, 6, 6);
+    border-radius: 5px;
+}
+.avatarContainer{
+    color:rgb(36, 23, 12);
+    font-weight: 500;
+}
+.orderContainer{
+    font-size: 0.8rem;
+    border-bottom: 1px solid rgb(217, 230, 230);
+    padding:20px 0px; 
+    color:rgb(46, 59, 70);
+}
+.noOrders{
+    margin-top:10px;
+}
+.noOrders>h1{
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.orderContainer>.orderDetail{
+    display: flex;
+}
+.orderContainer>.orderDetail:nth-child(2){
+    margin:5px 0px;
+}
+.orderContainer>.orderDetail>p:last-child{
+    margin-left: 5px;
+}
+.orderContainer>.orderDetail>p:first-child{
+    font-weight: 700;
+}
+.orderContainer>button,
+.noOrders>button{
+    width: 100%;
+    margin-top: 5px;
+    background-color:rgb(214, 107, 19);
+    border:1px solid rgb(214, 107, 19);
+    color:rgb(245, 245, 245);
+    border-radius: 5px;
+    box-shadow: 0px 1px 2px 1px rgb(167, 167, 167);
+}
+.noOrders>button{
+    padding:10px 20px;
+    letter-spacing: 1px;
+}
+.product{
+    display: flex;
+    margin:10px 0px;
+    align-items: center;
+    color:rgb(78, 95, 95);
+    animation:animationProduct 500ms;
+    cursor: pointer;
+}
+.productInfoContainer{
+    margin-left: 10px;
+}
+.productImageContainer{
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.colorContainer,
+.priceContainer,
+.quantityContainer{
+    display: flex;
+    align-items: center;
+}
+.priceContainer,
+.quantityContainer{
+    margin:3px 0px;
+}
+.priceContainer>p:last-child,
+.quantityContainer>p:last-child{
+    margin-left: 5px;
+}
+.colorContainer>div{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+@keyframes animationProduct {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@media(min-width:600px){
+    .orderDetails{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .product{
+        margin-top:10px;
+    }
+
+}
+@media(min-width:700px){
+    .accountContainer{
+        margin:50px auto;
+    }
+    .accountContainerInner{
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+    .avatarContainer{
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+    }
+    .accountInfo{
+        margin: 0;
+        text-align: left;
+    }
+    .noOrders{
+        margin:0;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    .orderContainer:first-child{
+        padding-top:0;
+    }
+    .myOrders,
+    .noOrders{
+        width: 65%;
+        margin:0;
+    }
+    .orderContainer{
+        font-size: .9rem;
+    }
+    .orderDetails{
+        grid-template-columns: 1fr;
+    }
+    .orderContainer>button,
+    .noOrders>button{
+        width: 200px;
+    }
+
+}
+
+@media(min-width:1000px){
+    .myOrders,
+    .noOrders{
+        width: 100%;
+    }
+    .orderDetails{
+        grid-template-columns: 1fr 1fr;
+    }
+    
+}
+
+@media(min-width:1200px){
+    .orderDetails{
+        grid-template-columns: 1fr 1fr 1fr;
+        gap:20px;
+    }
+    
+}
