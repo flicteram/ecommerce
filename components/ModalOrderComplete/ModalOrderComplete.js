@@ -22,7 +22,7 @@ export default function ModalOrderComplete({modalIsOpen,setModalIsOpen}){
                 </div>
                 <div className={styles.actionsContainer}>
                     <button onClick={handleContinueShopping}>Continue Shopping</button>
-                    <button>Order history</button>
+                    <button onClick={()=>router.push('/myaccount')}>Order history</button>
                 </div>
             </div>
         </Modal>
