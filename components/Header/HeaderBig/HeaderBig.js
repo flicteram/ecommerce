@@ -17,6 +17,7 @@ export default function HeaderBig(){
     const {handleSignIn,handleSignOut,user,cartLength,cart,handleDeleteProduct} = useContext(Context)
 
     const handleToSingleProductPage = (id) => router.push(`/products/${id}`)
+    const handleToMyAccount=()=>router.push('/myaccount')
 
     return (
         <>
@@ -93,12 +94,12 @@ export default function HeaderBig(){
                     onMouseEnter={()=>setOptionsActive(true)}
                     onMouseLeave={()=>setOptionsActive(false)}
                     >
-                        <Avatar src={user.photoURL}/>
+                        <Avatar src={user.photoURL} onClick={handleToMyAccount}/>
                         <div className={styles.actionsProfile} style={{display:!optionsActive&&'none'}}>
                             <div className={styles.arrowContainer}>
                                 <ArrowDropUpIcon sx={{color:'rgb(217, 230, 230)',position:'absolute',top:'-5px',right:'7px',fontSize:'30px',zIndex:'1010'}}/>
                             </div>
-                            <p>My Account</p>
+                            <p onClick={handleToMyAccount}>My Account</p>
                             <p onClick={handleSignOut}>Logout</p>
                         </div>
                     </div>
