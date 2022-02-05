@@ -10,7 +10,7 @@ import bigphoto from '../components/Images/bigphoto.jpg'
 import lowphoto from '../components/Images/lowphoto.jpg'
 import Link from 'next/link';
 import { Context } from '../components/Context/Context';
-
+import { useInView } from 'react-hook-inview'
 
 export default function Home() {
   const [featured,setFeatured]=useState([])
@@ -20,13 +20,20 @@ export default function Home() {
     color:'rgb(255, 240, 210)',
   }
   const getFeatured=()=>setFeatured(products.filter(item=>item.data.featured===true))
+
+  const [missionRef,inViewMission]=useInView({unobserveOnEnter:true,threshold:0})
+  const [visionRef,inViewVision]=useInView({unobserveOnEnter:true,threshold:0})
+  const [historyRef,inViewHisory]=useInView({unobserveOnEnter:true,threshold:1})
+
+  const handleInViewMission = () => inViewMission?styles.inViewObjective:styles.objective
+  const handleInViewVision = () => inViewVision?styles.inViewObjective:styles.objective
+  const handleInViewHistory = () => inViewHisory?styles.inViewObjective:styles.objective 
     
   useEffect(()=>{
     if(!loading){
       getFeatured()
     }
   },[loading])
-
 
   return (
     <div className={styles.container}>
@@ -63,19 +70,19 @@ export default function Home() {
           <h2>Custom Furniture Built Only For You</h2>
           <p>We are here to make your dreams come true. Let us be part of your life.</p>
           <div className={styles.aboutContainer}>
-            <div className={styles.mission}>
+            <div className={handleInViewMission()} ref={missionRef}>
               <ExploreIcon sx={iconsStyle}/>
               <h3>Mission</h3>
               <p>Our mission is to create Value for our customers through Reliability and Flexibility.
                 We want our customers to experience the warmth and comfort through Respect and Trust.</p>
             </div>
-            <div className={styles.vision}>
+            <div className={handleInViewVision()} ref={visionRef}>
               <DiamondIcon sx={iconsStyle}/>
               <h3>Vision</h3>
               <p>Our vision is to be a leading international furniture manufacturer
                 offering innovative and superior quality products.</p>
             </div>
-            <div className={styles.history}>
+            <div className={handleInViewHistory()} ref={historyRef}>
               <HistoryEduIcon sx={iconsStyle}/>
               <h3>History</h3>
               <p>Our company has years of designing and making best quality furniture for thousands of happy costumers.</p>
