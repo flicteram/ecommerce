@@ -1,11 +1,17 @@
 import Image from "next/image";
 import styles from '../../styles/ProductWithDescription.module.css'
 import { useRouter } from "next/router";
+import {useInView} from 'react-hook-inview'
 
 export default function ProductWithDescription({product,id}){
     const router = useRouter()
+
+    const [ref,inView]=useInView({unobserveOnEnter:true,threshold:0.5})
+
+    const handleInView = () => inView?styles.productContainerAnim:styles.productContainer
+
     return (
-        <div className={styles.productContainer}>
+        <div className={handleInView()} ref={ref}>
             <div className={styles.imageContainer}>
                 <Image 
                 src={product.images[0]} 
