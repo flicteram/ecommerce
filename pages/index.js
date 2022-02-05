@@ -19,14 +19,15 @@ export default function Home() {
     fontSize:50,
     color:'rgb(255, 240, 210)',
   }
-  function getFeatured(){
-    setFeatured(products.filter(item=>item.data.featured===true))
-  }
+  const getFeatured=()=>setFeatured(products.filter(item=>item.data.featured===true))
+    
   useEffect(()=>{
     if(!loading){
       getFeatured()
     }
   },[loading])
+
+
   return (
     <div className={styles.container}>
       <Header/>

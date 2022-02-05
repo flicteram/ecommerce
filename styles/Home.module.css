@@ -14,20 +14,47 @@
 }
 .firstContainerRight{
     display: none;
+    animation:firstRight 250ms;
 }
 .lowPhoto{
     position: absolute;
     bottom:-4px;
     left:-150px
 }
-.firstContainerLeft>p{
+.firstContainerLeft{
+    animation: firstLeft 250ms;
+}
+@keyframes firstLeft{
+    0%{
+        margin-top: 250px;
+        opacity: 0;
+
+    }
+    100%{
+        margin:0;
+        opacity: 1;
+    }
+}
+@keyframes firstRight{
+    0%{
+        margin-top:300px;
+        opacity: 0;
+    }
+    100%{
+        margin:0;
+        opacity: 1;
+    }
+}
+.firstContainerLeft>p,
+.firstContainerLeftAnimation>p{
     letter-spacing: 1px;
     line-height: 25px;
     margin:10px 0px;
     color:rgb(94, 117, 128);
     max-width: 500px;
 }
-.firstContainerLeft>h1{
+.firstContainerLeft>h1,
+.firstContainerLeftAnimation>h1{
     max-width: 300px;
 }
 .zone{
@@ -105,8 +132,6 @@
     margin-bottom: 20px;
     padding-bottom: 20px;
 }
-
-
 .allProducts{
     margin-top: 20px;
     align-self: center;
@@ -134,18 +159,6 @@
     border-radius: 5px;
 }
 @media(min-width:600px){
-
-@media(min-width:700px){
-    .secondContainer>h2{
-        font-size: 2.5rem;
-    }
-    .productsContainer{
-        margin:50px 0px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap:20px;
-    }
-}
     .thirdContainer>h2{
         font-size: 2rem;
         max-width: 350px;
@@ -166,18 +179,32 @@
         grid-template-columns: 1fr 1fr;
     }
 }
+@media(min-width:700px){
+    .secondContainer>h2{
+        font-size: 2.5rem;
+    }
+    .productsContainer{
+        margin:50px 0px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap:20px;
+    }
+}
 @media(min-width:980px){
     .firstContainer{
         height: 100vh;
     }
-    .firstContainerLeft{
+    .firstContainerLeft,
+    .firstContainerLeftAnimation{
         max-width: 400px;
     }
-    .firstContainerLeft>p{
+    .firstContainerLeft>p,
+    .firstContainerLeftAnimation>p{
         font-size: 1.5rem;
         line-height: 40px;
     }
-    .firstContainerLeft>h1{
+    .firstContainerLeft>h1,
+    .firstContainerLeftAnimation>h1{
         font-size: 2.75rem;
     }
     .firstContainerRight{
