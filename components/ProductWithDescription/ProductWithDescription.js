@@ -6,7 +6,7 @@ import {useInView} from 'react-hook-inview'
 export default function ProductWithDescription({product,id}){
     const router = useRouter()
 
-    const [ref,inView]=useInView({unobserveOnEnter:true,threshold:0.5})
+    const [ref,inView]=useInView({unobserveOnEnter:true,threshold:0})
 
     const handleInView = () => inView?styles.productContainerAnim:styles.productContainer
 
