@@ -20,6 +20,14 @@
     color:white;
     border-radius: 5px;
     box-shadow: 0px 2px 5px 1px black;
+    transition: background-color 250ms, transform 250ms, border 250ms;
+}
+.noUserContainer>button:hover,
+.noUserContainer>button:focus{
+    background-color: rgb(0, 88, 170);
+    border:1px solid rgb(0, 88, 170);
+    transform:scale(1.05);
+    transition: background-color 250ms, transform 250ms, border 250ms;
 }
 .continueWithGoogle{
     margin-left: 10px;
@@ -49,6 +57,14 @@
     background-color: rgb(172, 6, 6);
     border: 1px solid rgb(172, 6, 6);
     border-radius: 5px;
+    transition: background-color 250ms, transform 250ms, border 250ms;
+}
+.logout:hover,
+.logout:focus{
+    transform: scale(1.05);
+    background-color: rgb(68, 2, 2);
+    border: 1px solid rgb(68, 2, 2);
+    transition: background-color 250ms, transform 250ms, border 250ms;
 }
 .avatarContainer{
     color:rgb(36, 23, 12);

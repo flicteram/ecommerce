@@ -117,7 +117,9 @@ export default function Products(){
 
     return (
         <>
-            <Header/>
+            <Header
+                products={true}
+            />
             <Path 
             first={'Products'} 
             firstLink={'/products'}

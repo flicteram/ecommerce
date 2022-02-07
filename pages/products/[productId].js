@@ -68,7 +68,9 @@ export default function ProductDetails(){
     }
     return (
         <>
-            <Header/>
+            <Header
+                products={true}
+            />
             <Path
                 first='Products'
                 firstLink='/products'

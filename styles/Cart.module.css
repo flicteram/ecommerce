@@ -16,6 +16,7 @@
     color:rgb(245, 245, 245);
     border-radius: 5px;
     box-shadow: 0px 1px 2px 1px rgb(167, 167, 167);
+    transition: transform 250ms, background-color 250ms, border 250ms;
 }
 
 .productsContainer{
@@ -54,11 +55,29 @@
 .buttonsActionsContainer>button:first-child{
     background-color: rgb(214, 107, 19);
     border:1px solid rgb(214, 107, 19);
+    transition: transform 250ms, background-color 250ms, border 250ms;
+}
+.buttonsActionsContainer>button:first-child:hover,
+.buttonsActionsContainer>button:first-child:focus,
+.cartEmptyContainer>button:hover,
+.cartEmptyContainer>button:focus{
+    transform: scale(1.05);
+    background-color: rgb(107, 83, 65);
+    border:1px solid rgb(107, 83, 65);
+    transition: transform 250ms, background-color 250ms, border 250ms;
 }
 .buttonsActionsContainer>button:last-child{
     background-color: rgb(61, 41, 25);
     border:1px solid rgb(61, 41, 25);
     margin-top:10px;
+    transition: transform 250ms, background-color 250ms, border 250ms;
+}
+.buttonsActionsContainer>button:last-child:hover,
+.buttonsActionsContainer>button:last-child:focus{
+    background-color: rgb(143, 21, 0);
+    border:1px solid rgb(143, 21, 0);
+    transform:scale(1.05);
+    transition: transform 250ms, background-color 250ms, border 250ms;
 }
 
 .productsContainerTable{
@@ -191,6 +210,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transform:scale(1);
+    transition:transform 250ms, background-color 250ms, border 250ms;
+}
+.toCheckout:hover,
+.toCheckout:focus{
+    transform:scale(1.05);
+    background-color: rgb(214, 107, 19);
+    border:1px solid rgb(214, 107, 19);
+    transition: transform 250ms, background-color 250ms, border 250ms;;
 }
 .toCheckout:disabled{
     background-color: rgb(70, 41, 28);
@@ -207,6 +235,14 @@
     box-shadow: 0px 2px 5px 1px black;
     border-radius: 5px;
     justify-content: center;
+    transition: background-color 250ms, transform 250ms, border 250ms;
+}
+.signIn:focus,
+.signIn:hover{
+    background-color: rgb(0, 88, 170);
+    border:1px solid rgb(0, 88, 170);
+    transform:scale(1.05);
+    transition: background-color 250ms, transform 250ms, border 250ms;
 }
 .signInText{
     margin-left: 10px;

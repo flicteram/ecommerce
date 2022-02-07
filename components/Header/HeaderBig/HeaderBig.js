@@ -10,7 +10,7 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Image from 'next/image'
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function HeaderBig(){
+export default function HeaderBig({home,about,products}){
     const [optionsActive,setOptionsActive]=useState(false)
     const [cartPreview,setCartPreview]=useState(false)
     const router = useRouter()
@@ -23,9 +23,9 @@ export default function HeaderBig(){
         <>
             <nav className={styles.navContainer}>
                 <ul className={styles.ulContainer}>
-                    <Link href='/'><li>Home</li></Link>
-                    <li>About</li>
-                    <Link href='/products'><li>Products</li></Link>
+                    <Link href='/'><li className={home?styles.onPage:styles.li}>Home</li></Link>
+                    <li className={about?styles.onPage:styles.li}>About</li>
+                    <Link href='/products'><li className={products?styles.onPage:styles.li}>Products</li></Link>
                 </ul>
             </nav>
             <div className={styles.actionsContainer}>
@@ -94,7 +94,7 @@ export default function HeaderBig(){
                     onMouseEnter={()=>setOptionsActive(true)}
                     onMouseLeave={()=>setOptionsActive(false)}
                     >
-                        <Avatar src={user.photoURL} onClick={handleToMyAccount}/>
+                        <Avatar src={user.photoURL} onClick={handleToMyAccount} sx={{cursor:'pointer'}}/>
                         <div className={styles.actionsProfile} style={{display:!optionsActive&&'none'}}>
                             <div className={styles.arrowContainer}>
                                 <ArrowDropUpIcon sx={{color:'rgb(217, 230, 230)',position:'absolute',top:'-5px',right:'7px',fontSize:'30px',zIndex:'1010'}}/>

@@ -37,7 +37,7 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <Header/>
+      <Header home={true}/>
       <div className={styles.firstContainerAll}>
           <div className={styles.firstContainer}>
             <div className={styles.firstContainerLeft}>

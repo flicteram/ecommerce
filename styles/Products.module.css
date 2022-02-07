@@ -1,5 +1,4 @@
 
-
 .porductContainerNoGrid{
     display: grid;
     margin-top: 20px;
@@ -123,6 +122,7 @@
     border:none;
     font-size: 1rem;
     outline-color: black;
+    cursor: pointer;
 }
 .categoriesContainer,
 .companiesContainer,
@@ -145,13 +145,19 @@
 .priceLabel{
     align-self: flex-start;
 }
+.categoryLabel,
+.companyLabel{
+    cursor: pointer;
+}
 .categoryLabel>input,
 .companyLabel>input{
     margin-right: 10px;
     margin-top: 5px;
+    cursor: pointer;
 }
 .colorLabel>div{
     margin-right: 5px;
+    cursor: pointer;
 }
 .categoriesContainerSelect,
 .companiesContainerSelect{
@@ -193,6 +199,7 @@
 .priceLabel>input{
     align-self: flex-start;
     width: 150px;
+    cursor: pointer;
 }
 .productsFound{
     border-bottom: 1px solid rgb(214, 107, 19);

@@ -19,7 +19,14 @@
 .pathContainerInner>h3{
     font-size: 1.5rem;
     color:rgb(95, 69, 34);
+    cursor: pointer;
+    transition: color 250ms;
 }
+.pathContainerInner>h3:hover{
+    color:rgb(214, 107, 19);
+    transition: color 250ms;
+}
+
 .pathContainerInner>h3:last-child{
     color:rgb(214, 107, 19);
 }

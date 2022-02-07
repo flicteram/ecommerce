@@ -177,7 +177,7 @@ export default function Cart(){
                         </button>
                         :
                         <button onClick={handleSignIn} className={styles.signIn}>
-                        <GoogleIcon sx={{color:'white'}}/><span className={styles.signInText}>Sign in with Google</span>
+                        <GoogleIcon sx={{color:'white'}}/><span className={styles.signInText}>Login with Google</span>
                         </button>
                     }
                 </div>
