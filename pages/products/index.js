@@ -9,12 +9,13 @@ import Path from '../../components/Path/Path'
 import CheckIcon from '@mui/icons-material/Check';
 import ProductWithDescription from "../../components/ProductWithDescription/ProductWithDescription";
 import { Context } from '../../components/Context/Context';
+import Loader from '../../components/Loader/Loader';
 
 
 export default function Products(){
-
-    const {products,setProducts,loading,setLoading}=useContext(Context)
-
+    
+    const {products,setProducts}=useContext(Context)
+    const [loading, setLoading]=useState(true)
     const [grid,setGrid]=useState(true)
     const [displayProducts,setDisplayProducts]=useState([])
 
@@ -40,9 +41,7 @@ export default function Products(){
         acc.push(...currentVal)
         return [...new Set(acc)]
     },[]).sort()
-    
-    function getFilters(){
-        setLoading(true)
+    async function getFilters(){
         setCategoryChecked(new Array([...new Set(products.map(item=>item.data.category))].length).fill(false))
         setCompanyChecked(new Array([...new Set(products.map(item=>item.data.company))].length).fill(false))
         setColorChecked(new Array(products.map(item=>item.data.colors).reduce((acc,currentVal)=>{
@@ -52,7 +51,6 @@ export default function Products(){
         setPriceRange(products.map(item=>item.data).sort((a,b)=>b.price-a.price)[0].price)
         setProducts(products.sort((a,b)=>a.data.price-b.data.price))
         setDisplayProducts(products)
-        setLoading(false)
     }
     function handleFilterPrice(){
         if(sortBy==='lowest'){
@@ -95,10 +93,10 @@ export default function Products(){
     const handleSort=e=>setSortBy(e.target.value)
     const handleSearch=e=>setSearch(e.target.value)
     useEffect(()=>{
-        if(!loading){
-            getFilters()
+        if(products){
+            getFilters().then(setLoading(false))
         }
-    },[loading])
+    },[products])
     useEffect(()=>{
         handleFilterPrice()
     },[sortBy])
@@ -115,8 +113,11 @@ export default function Products(){
         )
     },[categoryChecked,companyChecked,colorChecked,priceRange,search])
 
+    if(loading){
+        return (<Loader/>)
+    }
     return (
-        <>
+        <div className={filterWindow?styles.noScrollBar:''}>
             <Header
                 products={true}
             />
@@ -252,16 +253,7 @@ export default function Products(){
                         </div>
                         <p className={styles.productsFound}>{displayProducts.length} Products Found</p>
                     </div>
-                    <div className={
-                    filterWindow&&grid||filterWindow&&!grid
-                    ?
-                    styles.productContainerNoActive
-                    :
-                    !filterWindow&&!grid
-                    ?
-                    styles.porductContainerNoGrid
-                    :
-                    styles.productContainer}>
+                    <div className={grid?styles.productContainer:styles.porductContainerNoGrid}>
                         {displayProducts.length
                         ?
                         displayProducts.map((product,index)=>
@@ -276,6 +268,6 @@ export default function Products(){
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
