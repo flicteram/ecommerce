@@ -41,7 +41,7 @@ export default function Products(){
         acc.push(...currentVal)
         return [...new Set(acc)]
     },[]).sort()
-    async function getFilters(){
+    async function getFilters(){        
         setCategoryChecked(new Array([...new Set(products.map(item=>item.data.category))].length).fill(false))
         setCompanyChecked(new Array([...new Set(products.map(item=>item.data.company))].length).fill(false))
         setColorChecked(new Array(products.map(item=>item.data.colors).reduce((acc,currentVal)=>{
@@ -49,8 +49,8 @@ export default function Products(){
             return [...new Set(acc)]
         },[]).length).fill(false))
         setPriceRange(products.map(item=>item.data).sort((a,b)=>b.price-a.price)[0].price)
-        setProducts(products.sort((a,b)=>a.data.price-b.data.price))
         setDisplayProducts(products)
+        setProducts(products.sort((a,b)=>a.data.price-b.data.price))
     }
     function handleFilterPrice(){
         if(sortBy==='lowest'){
@@ -113,6 +113,7 @@ export default function Products(){
         )
     },[categoryChecked,companyChecked,colorChecked,priceRange,search])
 
+    console.log(displayProducts.length)
     if(loading){
         return (<Loader/>)
     }
@@ -254,17 +255,16 @@ export default function Products(){
                         <p className={styles.productsFound}>{displayProducts.length} Products Found</p>
                     </div>
                     <div className={grid?styles.productContainer:styles.porductContainerNoGrid}>
-                        {displayProducts.length
-                        ?
+                    {displayProducts.length?
                         displayProducts.map((product,index)=>
-                            grid
-                            ?
+                            grid?
                             <Product key={index} id={product.id} index={index} product={product.data}/>
                             :
                             <ProductWithDescription key={index} id={product.id} product={product.data}/>
-                        )
+                        )   
                         :
-                        <p className={styles.noProductsFound}>No products matched your search.</p>}
+                        <p className={styles.noProductsFound}>No products matched your search.</p>
+                    }
                     </div>
                 </div>
             </div>
