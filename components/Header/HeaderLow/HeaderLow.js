@@ -28,7 +28,7 @@ export default function HeaderLow(){
             <Link href='/products'><li>Products</li></Link>
             {user&&<li onClick={handleSignOut}>Logout</li>}
         </ul>
-        <div className={isActive?styles.actionsContainerActive:styles.actionsContainer}>
+        <div className={styles.actionsContainer}>
             <div className={styles.cart} onClick={()=>router.push('/cart')}>
                 <p>Cart</p>
                 <div className={styles.cartLengthContainer}>

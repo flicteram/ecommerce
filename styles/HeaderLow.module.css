@@ -41,14 +41,15 @@
     transition: transform 250ms;
 }
 .navLow{
-    padding: 20px 0px;
+    padding: 20px 20px;
     background-color: white;
     position: fixed;
     right:0px;
     top:0px;
-    width:0;
+    width:100%;
     height: 100%;
-    transition:width 250ms;
+    transform: translateX(100%);
+    transition: transform 250ms;
 }
 .navLowActive{
     padding:20px 20px;
@@ -58,15 +59,14 @@
     top:0px;
     height: 100%;
     width: 100%;
-    transition:width 250ms;
+    transform: translateX(0%);
+    transition: transform 250ms;
 }
-.actionsContainerActive{
+
+.actionsContainer{
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.actionsContainer{
-    display: flex;
 }
 .ulContainer{
     margin:50px 0px;
@@ -94,13 +94,17 @@
 }
 .cartLength{
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     top:-10px;
     right: -10px;
     color:rgb(214, 107, 19);
     border-radius: 50%;
     background-color: black;
     font-size:0.8rem;
-    padding:5px 7px;
+    width: 28px;
+    height: 28px;
     font-weight: 700;
 }
 
