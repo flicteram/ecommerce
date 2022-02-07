@@ -47,6 +47,9 @@
     width: 120px;
     margin-top:20px;
 }
+.previewContainer>div{
+    cursor: pointer;
+}
 .dots{
     width: 20px;
     height: 20px;
