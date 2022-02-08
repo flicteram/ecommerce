@@ -2,6 +2,10 @@
     max-height: 100vh;
     overflow: hidden;
 }
+.productsFilterContainer{
+    position: relative;
+    min-height: 100vh;
+}
 .porductContainerNoGrid{
     display: grid;
     margin-top: 20px;

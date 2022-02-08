@@ -4,6 +4,7 @@
     max-width: 1200px;
     margin:50px auto;
     padding:0px 20px;
+    min-height: 60vh;
 }
 .name{
     font-size: 1.7rem;

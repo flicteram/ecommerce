@@ -2,6 +2,7 @@
     padding:0px 20px;
     margin:50px auto;
     max-width: 1200px;
+    min-height: 60vh;
 }
 
 .image{

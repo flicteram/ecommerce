@@ -6,7 +6,7 @@
     align-items: center;
     text-align: center;
     padding:0px 20px;
-    min-height: 60vh;
+    min-height: 80vh;
 }
 .noUserContainer>h1{
     font-size: 1.5rem;
@@ -40,7 +40,7 @@
     padding:0px 20px;
     max-width: 1200px;
     margin: 0 auto;
-    min-height: 65vh;
+    min-height: 80vh;
 }
 .accountInfo{
     margin-top: 55px;

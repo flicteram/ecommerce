@@ -119,7 +119,7 @@ export default function Products(){
         return (<Loader/>)
     }
     return (
-        <div className={filterWindow?styles.noScrollBar:''}>
+        <div className={filterWindow?styles.noScrollBar:styles.container}>
             <Header
                 products={true}
             />

@@ -4,7 +4,7 @@
     text-align: center;
     padding:0px 20px;
     font-size: .8rem;
-    min-height: 65vh;
+    min-height: 80vh;
 }
 
 .cartEmptyContainer>button{
@@ -27,6 +27,7 @@
     margin:50px auto;
     color:rgb(90, 95, 95);
     max-width: 1200px;
+    min-height: 80vh;
 }
 .removeProduct{
     width: 100%;
