@@ -24,7 +24,7 @@ export default function HeaderBig({home,about,products}){
             <nav className={styles.navContainer}>
                 <ul className={styles.ulContainer}>
                     <Link href='/'><li className={home?styles.onPage:styles.li}>Home</li></Link>
-                    <li className={about?styles.onPage:styles.li}>About</li>
+                    <Link href='/about'><li className={about?styles.onPage:styles.li}>About</li></Link>
                     <Link href='/products'><li className={products?styles.onPage:styles.li}>Products</li></Link>
                 </ul>
             </nav>

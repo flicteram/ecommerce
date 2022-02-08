@@ -24,7 +24,7 @@ export default function HeaderLow(){
         <p className={styles.logo}>Comfort<span className={styles.logoZone}>Zone</span></p>
         <ul className={styles.ulContainer}>
             <Link href='/'><li>Home</li></Link>
-            <li>About</li>
+            <Link href='/about'><li>About</li></Link>
             <Link href='/products'><li>Products</li></Link>
             {user&&<li onClick={handleSignOut}>Logout</li>}
         </ul>
