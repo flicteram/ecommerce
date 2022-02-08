@@ -5,6 +5,7 @@
 .productsFilterContainer{
     position: relative;
     min-height: 100vh;
+    margin:20px 0px;
 }
 .porductContainerNoGrid{
     display: grid;
