@@ -11,6 +11,7 @@ import lowphoto from '../components/Images/lowphoto.jpg'
 import Link from 'next/link';
 import { Context } from '../components/Context/Context';
 import { useInView } from 'react-hook-inview'
+import Footer from '../components/Footer/Footer';
 
 export default function Home() {
   const [featured,setFeatured]=useState([])
@@ -91,6 +92,7 @@ export default function Home() {
         </section>
       </div>
       <div className={styles.white}></div>
+      <Footer/>
     </div>
   )
 }

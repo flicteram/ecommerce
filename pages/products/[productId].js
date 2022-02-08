@@ -10,6 +10,7 @@ import {Context} from '../../components/Context/Context'
 import CheckIcon from '@mui/icons-material/Check';
 import ModalConfirmation from '../../components/ModalConfirmation/ModalConfirmation'
 import Loader from '../../components/Loader/Loader'
+import Footer from '../../components/Footer/Footer'
 
 export default function ProductDetails(){
     const {cart,setCart} = useContext(Context)
@@ -129,8 +130,9 @@ export default function ProductDetails(){
                     </div>
                     
                 </div>
+                
             </div>
-            
+            <Footer/>
         </>
     )
 }

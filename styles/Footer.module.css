@@ -1,0 +1,9 @@
+.footerContainer{
+    text-align: center;
+    padding:20px;
+    background-color: rgb(44, 29, 0);
+}
+.footerContainer>h4{
+    margin-bottom: 5px;
+    color:rgb(214, 107, 19);
+}

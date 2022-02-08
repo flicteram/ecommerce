@@ -253,7 +253,7 @@
         display: flex;
         max-width: 1200px;
         justify-content: space-between;
-        margin: 50px auto 0px auto;
+        margin: 50px auto;
         padding:0px 20px;
     }
     .filterContainer{

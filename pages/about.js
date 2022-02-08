@@ -3,6 +3,7 @@ import Path from '../components/Path/Path'
 import aboutImage from '../components/Images/aboutImage.jpg'
 import Image from 'next/image'
 import styles from '../styles/About.module.css'
+import Footer from '../components/Footer/Footer'
 
 export default function About(){
 
@@ -15,7 +16,7 @@ export default function About(){
             />
             <div className={styles.aboutContainer}>
                 <div className={styles.image}>
-                    <Image src={aboutImage} layout="fill" objectFit='cover'/>
+                    <Image src={aboutImage} layout="fill" objectFit='cover' priority/>
                 </div>
                 <div className={styles.storyContainer}>
                     <h1>Our Story</h1>
@@ -24,6 +25,7 @@ export default function About(){
                     </p>
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }

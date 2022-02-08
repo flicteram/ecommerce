@@ -13,6 +13,7 @@ import { createTheme } from '@mui/material';
 import { useRouter } from 'next/router';
 import GoogleIcon from '@mui/icons-material/Google';
 import Loader from '../components/Loader/Loader';
+import Footer from '../components/Footer/Footer';
 
 export default function MyAccount(){
     const {user,handleSignIn,handleSignOut}=useContext(Context)
@@ -85,6 +86,7 @@ export default function MyAccount(){
                     <h1>Login to see your orders history</h1>
                     <button onClick={handleSignIn}><GoogleIcon/> <span className={styles.continueWithGoogle}>Continue with Google</span></button>
                 </div>
+                <Footer/>
             </div>
         )
     }
@@ -172,6 +174,7 @@ export default function MyAccount(){
                     }
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }

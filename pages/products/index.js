@@ -10,6 +10,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import ProductWithDescription from "../../components/ProductWithDescription/ProductWithDescription";
 import { Context } from '../../components/Context/Context';
 import Loader from '../../components/Loader/Loader';
+import Footer from '../../components/Footer/Footer';
 
 
 export default function Products(){
@@ -268,6 +269,7 @@ export default function Products(){
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }

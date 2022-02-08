@@ -13,6 +13,7 @@ import { collection,addDoc,Timestamp } from "firebase/firestore"
 import CircularProgress from '@mui/material/CircularProgress';
 import ModalOrderComplete from "../components/ModalOrderComplete/ModalOrderComplete"
 import GoogleIcon from '@mui/icons-material/Google';
+import Footer from "../components/Footer/Footer"
 
 export default function Cart(){
     const {cart,setCart,user,handleSignIn,handleDeleteProduct} = useContext(Context)
@@ -77,6 +78,7 @@ export default function Cart(){
                 modalIsOpen={modalIsOpen}
                 setModalIsOpen={setModalIsOpen}
                 />
+                <Footer/>
             </div>
         )
     }
@@ -182,6 +184,7 @@ export default function Cart(){
                     }
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }
