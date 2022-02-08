@@ -24,7 +24,7 @@ function ContextProvider({children}){
         if(localStorageData&&!user){
             setCart(JSON.parse(localStorageData))
         }
-    },[])
+    },[user])
 
     useEffect(()=>{
         /*Add data to local storage*/
@@ -38,13 +38,12 @@ function ContextProvider({children}){
 
     useEffect(()=>{
         /*Check if user is logged in*/
-        onAuthStateChanged(auth,(user)=>{
-            if(user){
-                setUser(user)
+        onAuthStateChanged(auth,(currentUser)=>{
+            if(currentUser){
+                setUser(currentUser)
             }
             else{
                 setUser(null)
-                setCart([])
             }
         })
     },[])
