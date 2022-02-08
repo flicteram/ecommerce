@@ -12,7 +12,16 @@ import ModalConfirmation from '../../components/ModalConfirmation/ModalConfirmat
 import Loader from '../../components/Loader/Loader'
 import Footer from '../../components/Footer/Footer'
 
-export default function ProductDetails(){
+export async function getServerSideProps({query}){
+    const docRef = doc(db, "products", query.productId);
+    const docSnap = await getDoc(docRef);
+    return {
+        props:{productData:docSnap.data()}
+    }
+
+}
+
+export default function ProductDetails({productData}){
     const {cart,setCart} = useContext(Context)
     const [modalIsOpen,setModalIsOpen]=useState(false)
     const [data,setData]= useState({})
@@ -22,15 +31,11 @@ export default function ProductDetails(){
     const { productId } = router.query
 
     async function getDbData(){
-        const docRef = doc(db, "products", productId);
-        const docSnap = await getDoc(docRef);
-        setData({...docSnap.data(),'id':productId,'count':1})
+        setData({...productData,'count':1})
     }
     useEffect(()=>{
-        if(productId){
-            getDbData()
-        }
-    },[productId])
+        getDbData()
+    },[])
 
     useEffect(()=>{
         if(data.colors){
@@ -39,7 +44,9 @@ export default function ProductDetails(){
     },[color,data.colors])
 
     useEffect(()=>{
-        setData({...data,'count':count})
+        if(data.colors){
+            setData({...data,'count':count})
+        }
     },[count])
     const handleAddToCart=()=>{
         if(!cart.length

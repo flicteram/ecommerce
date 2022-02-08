@@ -5,22 +5,31 @@ import DiamondIcon from '@mui/icons-material/Diamond';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import Image from 'next/image';
 import Product from '../components/Product/Product';
-import {useEffect,useState,useContext} from 'react'
 import bigphoto from '../components/Images/bigphoto.jpg'
 import lowphoto from '../components/Images/lowphoto.jpg'
 import Link from 'next/link';
-import { Context } from '../components/Context/Context';
 import { useInView } from 'react-hook-inview'
 import Footer from '../components/Footer/Footer';
+import { getDocs,collection,query,where } from 'firebase/firestore'
+import {db} from '../firebase'
 
-export default function Home() {
-  const [featured,setFeatured]=useState([])
-  const {products,loading}=useContext(Context)
+export async function getStaticProps() {
+  const docRef = collection(db,'products')
+  const q = query(docRef,where('featured','==',true))
+  const querySnapshot = await getDocs(q);
+  const data = querySnapshot.docs.map((doc) => ({
+      id:doc.id,data:doc.data()
+  }));
+  return {
+    props: { featured: data },
+  }
+}
+
+export default function Home({featured}) {
   const iconsStyle={
     fontSize:50,
     color:'rgb(255, 240, 210)',
   }
-  const getFeatured=()=>setFeatured(products.filter(item=>item.data.featured===true))
 
   const [missionRef,inViewMission]=useInView({unobserveOnEnter:true,threshold:0})
   const [visionRef,inViewVision]=useInView({unobserveOnEnter:true,threshold:0})
@@ -29,12 +38,7 @@ export default function Home() {
   const handleInViewMission = () => inViewMission?styles.inViewObjective:styles.objective
   const handleInViewVision = () => inViewVision?styles.inViewObjective:styles.objective
   const handleInViewHistory = () => inViewHisory?styles.inViewObjective:styles.objective 
-    
-  useEffect(()=>{
-    if(!loading){
-      getFeatured()
-    }
-  },[loading])
+  
 
   return (
     <div className={styles.container}>

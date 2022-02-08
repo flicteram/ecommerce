@@ -1,8 +1,8 @@
 import { createContext,useState,useEffect } from "react";
 import { db } from "../../firebase";
 import { GoogleAuthProvider, signInWithPopup, getAuth, onAuthStateChanged, signOut} from "firebase/auth";
-import { setDoc, doc, getDoc,getDocs,collection } from 'firebase/firestore'
-import Loader from "../Loader/Loader";
+import { setDoc, doc, getDoc } from 'firebase/firestore'
+
 
 
 const Context = createContext()
@@ -10,8 +10,6 @@ const Context = createContext()
 function ContextProvider({children}){
     const [user,setUser]=useState(null)
     const [cart,setCart]=useState([])
-    const [products,setProducts]=useState([])
-    const [loading,setLoading]=useState(true)
     const provider = new GoogleAuthProvider();
     const auth = getAuth()
 
@@ -19,20 +17,6 @@ function ContextProvider({children}){
     function handleDeleteProduct(productIndex){
         setCart(cart.filter((item,index2)=>index2!==productIndex))
     }
-
-    async function getDbProducts(){
-        const data = []
-        const querySnapshot = await getDocs(collection(db,'products'));
-        querySnapshot.forEach((doc) => {
-            data = [...data,{id:doc.id,data:doc.data()}]
-        });
-        setProducts(data)
-        setLoading(false)
-    }
-
-    useEffect(()=>{
-        getDbProducts()
-    },[])
 
     useEffect(()=>{
         /*Get data from local storage*/
@@ -65,10 +49,9 @@ function ContextProvider({children}){
         })
     },[])
 
-
+    console.log(user)
     async function addDataToDb(){
         const docRef = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(docRef);
         await setDoc((docRef),{
             cartDb:cart
         })
@@ -120,12 +103,6 @@ function ContextProvider({children}){
         })
     }
 
-    if(loading){
-        return (
-            <Loader/>
-        )
-    }
-
     return( 
         <Context.Provider value={{
                             handleSignIn,
@@ -134,10 +111,6 @@ function ContextProvider({children}){
                             cartLength,
                             cart,
                             setCart,
-                            products,
-                            setProducts,
-                            loading,
-                            setLoading,
                             handleDeleteProduct
                             }}>
             {children}

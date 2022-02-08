@@ -1,22 +1,29 @@
 import Header from '../../components/Header/Header'
 import Product from "../../components/Product/Product";
 import styles from '../../styles/Products.module.css'
-import {useEffect,useState,useContext} from 'react'
+import {useEffect,useState} from 'react'
 import advancedFilter from '../../components/Filter/advancedFilter/advancedFilter'
 import GridViewIcon from '@mui/icons-material/GridView';
 import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
 import Path from '../../components/Path/Path'
 import CheckIcon from '@mui/icons-material/Check';
 import ProductWithDescription from "../../components/ProductWithDescription/ProductWithDescription";
-import { Context } from '../../components/Context/Context';
-import Loader from '../../components/Loader/Loader';
 import Footer from '../../components/Footer/Footer';
+import {db} from '../../firebase'
+import { getDocs,collection } from 'firebase/firestore'
 
+export async function getStaticProps(){
+    const querySnapshot = await getDocs(collection(db,'products'));
+    const products = querySnapshot.docs.map(product=>({
+        id:product.id,data:product.data()
+    }))
+    return {
+        props:{products:products}
+    }
+}
 
-export default function Products(){
-    
-    const {products,setProducts}=useContext(Context)
-    const [loading, setLoading]=useState(true)
+export default function Products({products}){
+
     const [grid,setGrid]=useState(true)
     const [displayProducts,setDisplayProducts]=useState([])
 
@@ -42,7 +49,7 @@ export default function Products(){
         acc.push(...currentVal)
         return [...new Set(acc)]
     },[]).sort()
-    async function getFilters(){        
+    function getFilters(){        
         setCategoryChecked(new Array([...new Set(products.map(item=>item.data.category))].length).fill(false))
         setCompanyChecked(new Array([...new Set(products.map(item=>item.data.company))].length).fill(false))
         setColorChecked(new Array(products.map(item=>item.data.colors).reduce((acc,currentVal)=>{
@@ -50,8 +57,8 @@ export default function Products(){
             return [...new Set(acc)]
         },[]).length).fill(false))
         setPriceRange(products.map(item=>item.data).sort((a,b)=>b.price-a.price)[0].price)
-        setDisplayProducts(products)
-        setProducts(products.sort((a,b)=>a.data.price-b.data.price))
+        setDisplayProducts(products.sort((a,b)=>a.data.price-b.data.price))
+        // setProducts(products.sort((a,b)=>a.data.price-b.data.price))
     }
     function handleFilterPrice(){
         if(sortBy==='lowest'){
@@ -94,10 +101,8 @@ export default function Products(){
     const handleSort=e=>setSortBy(e.target.value)
     const handleSearch=e=>setSearch(e.target.value)
     useEffect(()=>{
-        if(products){
-            getFilters().then(setLoading(false))
-        }
-    },[products])
+        getFilters()
+    },[])
     useEffect(()=>{
         handleFilterPrice()
     },[sortBy])
@@ -114,10 +119,6 @@ export default function Products(){
         )
     },[categoryChecked,companyChecked,colorChecked,priceRange,search])
 
-    console.log(displayProducts.length)
-    if(loading){
-        return (<Loader/>)
-    }
     return (
         <div className={filterWindow?styles.noScrollBar:styles.container}>
             <Header
