@@ -34,16 +34,13 @@ function ContextProvider({children}){
         else{
             localStorage.clear()
         }
-    },[cart])
+    },[user,cart])
 
     useEffect(()=>{
         /*Check if user is logged in*/
         onAuthStateChanged(auth,(currentUser)=>{
             if(currentUser){
                 setUser(currentUser)
-            }
-            else{
-                setUser(null)
             }
         })
     },[])
@@ -98,7 +95,8 @@ function ContextProvider({children}){
     function handleSignOut(){
         signOut(auth)
         .then(()=>{
-            setUser('')
+            setUser(null)
+            setCart([])
         })
     }
 
