@@ -152,7 +152,7 @@ export default function MyAccount(){
                                                     <p>Quantity:</p>
                                                     <p>{product.count}</p>
                                                 </div>
-                                                <p>Subtotal: ${product.price*product.count}</p>
+                                                <p>Subtotal: ${(product.price*product.count).toFixed(2)}</p>
                                             </div>
                                         </div>
                                     )}
