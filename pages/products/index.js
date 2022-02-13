@@ -58,7 +58,6 @@ export default function Products({products}){
         },[]).length).fill(false))
         setPriceRange(products.map(item=>item.data).sort((a,b)=>b.price-a.price)[0].price)
         setDisplayProducts(products.sort((a,b)=>a.data.price-b.data.price))
-        // setProducts(products.sort((a,b)=>a.data.price-b.data.price))
     }
     function handleFilterPrice(){
         if(sortBy==='lowest'){
