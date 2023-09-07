@@ -12,6 +12,8 @@ import { useInView } from 'react-hook-inview'
 import Footer from '../components/Footer/Footer';
 import { getDocs,collection,query,where } from 'firebase/firestore'
 import {db} from '../firebase'
+import {LoaderSSR, useLoadingSRR} from "../components/LoaderSSR"
+
 
 export async function getStaticProps() {
   const docRef = collection(db,'products')
@@ -30,6 +32,8 @@ export default function Home({featured}) {
     fontSize:50,
     color:'rgb(255, 240, 210)',
   }
+  const {handleProductDetails, loading} = useLoadingSRR()
+
 
   const [missionRef,inViewMission]=useInView({unobserveOnEnter:true,threshold:0})
   const [visionRef,inViewVision]=useInView({unobserveOnEnter:true,threshold:0})
@@ -42,6 +46,7 @@ export default function Home({featured}) {
 
   return (
     <div className={styles.container}>
+      <LoaderSSR loading={loading}/>
       <Header home={true}/>
       <div className={styles.firstContainerAll}>
           <div className={styles.firstContainer}>
@@ -64,8 +69,8 @@ export default function Home({featured}) {
         <section className={styles.secondContainer}>
           <h2>Featured Products</h2>
           <div className={styles.productsContainer}>
-            {featured.map((product,index)=>
-            <Product key={index} index={index} product={product.data} id={product.id} grid={true}/>)}
+            {featured.map((product)=>
+            <Product key={product.id} product={product.data} id={product.id} grid={true} handleProductDetails={handleProductDetails}/>)}
             </div>
           <Link href='/products'><button className={styles.allProducts}>ALL PRODUCTS</button></Link>
         </section>

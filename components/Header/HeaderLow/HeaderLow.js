@@ -6,15 +6,19 @@ import Link from 'next/link'
 import { Context } from '../../Context/Context';
 import Avatar from '@mui/material/Avatar';
 import { useRouter } from 'next/router';
+import { useLoadingSRR, LoaderSSR } from '../../LoaderSSR';
 
 
 export default function HeaderLow(){
     const router = useRouter()
     const [isActive,setIsActive]=useState(false)
     const {handleSignIn,handleSignOut,user,cartLength} = useContext(Context)
+    const {handleNavigateToProducts, loading} = useLoadingSRR()
+    const handleToMyAccount=()=>router.push('/myaccount')
 
     return (
     <>
+    <LoaderSSR loading={loading}/>
     <div onClick={()=>setIsActive(!isActive)} className={isActive?styles.hamburgerAcrive:styles.hamburger}>
         <div className={styles.hamline1}></div>
         <div className={styles.hamline2}></div>
@@ -25,7 +29,9 @@ export default function HeaderLow(){
         <ul className={styles.ulContainer}>
             <Link href='/'><li>Home</li></Link>
             <Link href='/about'><li>About</li></Link>
-            <Link href='/products'><li>Products</li></Link>
+            <button onClick={handleNavigateToProducts()}>
+                Products
+            </button>
             {user&&<li onClick={handleSignOut}>Logout</li>}
         </ul>
         <div className={styles.actionsContainer}>
@@ -37,9 +43,7 @@ export default function HeaderLow(){
                 </div>
             </div>
             {user?
-                <div>
-                    <Avatar src={user.photoURL}/>
-                </div>
+                <Avatar src={user.photoURL} onClick={handleToMyAccount}/>
                 :
                 <div className={styles.login} onClick={handleSignIn}>
                     <p>Login</p>

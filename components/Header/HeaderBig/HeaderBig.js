@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Image from 'next/image'
 import CloseIcon from '@mui/icons-material/Close';
+import { useLoadingSRR, LoaderSSR } from '../../LoaderSSR';
 
 export default function HeaderBig({home,about,products}){
     const [optionsActive,setOptionsActive]=useState(false)
@@ -16,16 +17,21 @@ export default function HeaderBig({home,about,products}){
     const router = useRouter()
     const {handleSignIn,handleSignOut,user,cartLength,cart,handleDeleteProduct} = useContext(Context)
 
+    const {handleNavigateToProducts, loading} = useLoadingSRR()
+
     const handleToSingleProductPage = (id) => router.push(`/products/${id}`)
     const handleToMyAccount=()=>router.push('/myaccount')
 
     return (
         <>
+        <LoaderSSR loading={loading}/>
             <nav className={styles.navContainer}>
                 <ul className={styles.ulContainer}>
                     <Link href='/'><li className={home?styles.onPage:styles.li}>Home</li></Link>
                     <Link href='/about'><li className={about?styles.onPage:styles.li}>About</li></Link>
-                    <Link href='/products'><li className={products?styles.onPage:styles.li}>Products</li></Link>
+                    <button onClick={handleNavigateToProducts()} className={products?styles.onPage:styles.li}>
+                        Products
+                    </button>
                 </ul>
             </nav>
             <div className={styles.actionsContainer}>

@@ -1,7 +1,7 @@
 import Header from '../../components/Header/Header'
 import Product from "../../components/Product/Product";
 import styles from '../../styles/Products.module.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef, useCallback,useMemo } from 'react'
 import advancedFilter from '../../components/Filter/advancedFilter/advancedFilter'
 import GridViewIcon from '@mui/icons-material/GridView';
 import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
@@ -10,6 +10,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import Footer from '../../components/Footer/Footer';
 import { db } from '../../firebase'
 import { getDocs, collection } from 'firebase/firestore'
+import {LoaderSSR, useLoadingSRR} from '../../components/LoaderSSR';
 
 export async function getServerSideProps() {
     const querySnapshot = await getDocs(collection(db, 'products'));
@@ -23,13 +24,15 @@ export async function getServerSideProps() {
 
 export default function Products({ products }) {
 
+    const isFirstRender = useRef(true)
+    const {handleProductDetails, loading} = useLoadingSRR()
     const [grid, setGrid] = useState(true)
-    const [displayProducts, setDisplayProducts] = useState([])
+    const [displayProducts, setDisplayProducts] = useState(products.sort((a, b) => a.data.price - b.data.price))
 
     const [search, setSearch] = useState('')
     const [filterWindow, setFilterWindow] = useState(false)
 
-    const [sortBy, setSortBy] = useState('low')
+    const [sortBy, setSortBy] = useState('lowest')
     const [priceRange, setPriceRange] = useState(0)
 
     const [categoryChecked, setCategoryChecked] = useState([])
@@ -42,36 +45,24 @@ export default function Products({ products }) {
 
     const [allFilters, setAllFilters] = useState([])
 
-    const categories = [...new Set(products.map(item => item.data.category))].sort()
-    const companies = [...new Set(products.map(item => item.data.company))].sort()
-    const colors = products.map(item => item.data.colors).reduce((acc, currentVal) => {
-        acc.push(...currentVal)
-        return [...new Set(acc)]
-    }, []).sort()
-    function getFilters() {
-        setCategoryChecked(new Array([...new Set(products.map(item => item.data.category))].length).fill(false))
-        setCompanyChecked(new Array([...new Set(products.map(item => item.data.company))].length).fill(false))
-        setColorChecked(new Array(products.map(item => item.data.colors).reduce((acc, currentVal) => {
-            acc.push(...currentVal)
-            return [...new Set(acc)]
-        }, []).length).fill(false))
-        setPriceRange(products.map(item => item.data).sort((a, b) => b.price - a.price)[0].price)
-        setDisplayProducts(products.sort((a, b) => a.data.price - b.data.price))
-    }
-    function handleFilterPrice() {
-        if (sortBy === 'lowest') {
-            setDisplayProducts([...products.sort((a, b) => +a.data.price - +b.data.price)])
-            if (categoryArray.length || companyArray.length || colorArray.length || priceRange >= 0) {
-                setDisplayProducts([...displayProducts.sort((a, b) => +a.data.price - +b.data.price)])
-            }
+    const {categories, companies, colors} = useMemo(()=>{
+        const categories = new Set()
+        const companies = new Set()
+        const colors = new Set()
+        products.forEach(product=>{
+            categories.add(product.data.category)
+            companies.add(product.data.company)
+            product.data.colors.forEach(color=>{
+                colors.add(color)
+            })
+        })
+        return {
+            categories:[...categories].sort(),
+            companies:[...companies].sort(),
+            colors:[...colors].sort()
         }
-        else if (sortBy === 'highest') {
-            setDisplayProducts([...products.sort((a, b) => +b.data.price - +a.data.price)])
-            if (categoryArray.length || companyArray.length || colorArray.length || priceRange >= 0) {
-                setDisplayProducts([...displayProducts.sort((a, b) => +b.data.price - +a.data.price)])
-            }
-        }
-    }
+    },[products])
+
     function handleOnChangeChecked(position, checked, setCheckBoxState, setArrayState, initialArray) {
         const updated = checked.map((item, index) =>
             index === position ? !item : item
@@ -84,7 +75,7 @@ export default function Products({ products }) {
             return acc
         }, []))
     }
-    function handleAllFilters(item) {
+    const handleAllFilters = useCallback((item)=>{
         if (categories.includes(item)) {
             handleOnChangeChecked(categories.indexOf(item), categoryChecked, setCategoryChecked, setCategoryArray, categories)
         }
@@ -94,31 +85,49 @@ export default function Products({ products }) {
         else if (colors.includes(item)) {
             handleOnChangeChecked(colors.indexOf(item), colorChecked, setColorChecked, setColorArray, colors)
         }
-    }
+    },[categories, categoryChecked, colorChecked, colors, companies, companyChecked])
 
     const handleSort = e => setSortBy(e.target.value)
     const handleSearch = e => setSearch(e.target.value)
     useEffect(() => {
-        getFilters()
-    }, [])
+        (function getFilters() {
+            setCategoryChecked(new Array([...new Set(products.map(item => item.data.category))].length).fill(false))
+            setCompanyChecked(new Array([...new Set(products.map(item => item.data.company))].length).fill(false))
+            setColorChecked(new Array(products.map(item => item.data.colors).reduce((acc, currentVal) => {
+                acc.push(...currentVal)
+                return [...new Set(acc)]
+            }, []).length).fill(false))
+            setPriceRange(products.map(item => item.data).sort((a, b) => b.price - a.price)[0].price)
+        })()
+    }, [products])
     useEffect(() => {
-        handleFilterPrice()
-    }, [sortBy])
+        if(isFirstRender.current){
+            isFirstRender.current=false
+        }else{
+            advancedFilter(
+                categoryArray,
+                companyArray,
+                colorArray,
+                search,
+                setDisplayProducts,
+                products,
+                setAllFilters,
+                priceRange
+            )
+        }
+    }, [categoryChecked, companyChecked, colorChecked, priceRange, search, categoryArray, colorArray, companyArray, products])
     useEffect(() => {
-        advancedFilter(
-            categoryArray,
-            companyArray,
-            colorArray,
-            search,
-            setDisplayProducts,
-            products,
-            setAllFilters,
-            priceRange
-        )
-    }, [categoryChecked, companyChecked, colorChecked, priceRange, search])
+        if (sortBy === 'lowest') {
+            setDisplayProducts(prevProducts=>prevProducts.toSorted((a, b) => +a.data.price - +b.data.price))
+        }
+        else if (sortBy === 'highest') {
+            setDisplayProducts(prevProducts=>prevProducts.toSorted((a, b) => +b.data.price - +a.data.price))
+        }
+    }, [sortBy, allFilters.length])
 
     return (
         <div className={filterWindow ? styles.noScrollBar : styles.container}>
+            <LoaderSSR loading={loading}/>
             <Header
                 products={true}
             />
@@ -364,7 +373,7 @@ export default function Products({ products }) {
                     <div className={grid ? styles.productContainer : styles.porductContainerNoGrid}>
                         {displayProducts.length ?
                             displayProducts.map((product) =>
-                                <Product key={product.id} id={product.id} product={product.data} grid={grid}/>
+                                <Product key={product.id} id={product.id} product={product.data} grid={grid} handleProductDetails={handleProductDetails}/>
                             )
                             :
                             <p className={styles.noProductsFound}>No products matched your search.</p>

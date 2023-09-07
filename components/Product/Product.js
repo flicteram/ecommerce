@@ -1,16 +1,9 @@
 import sNoDescription from '../../styles/Product.module.css'
 import sWithDescription from "../../styles/ProductWithDescription.module.css"
 import Image from 'next/image';
-import { useState } from 'react';
-import { useRouter } from 'next/router'
-import LinearProgress from '@mui/material/LinearProgress';
 
-export default function Product({product,id, grid}){
-  const router = useRouter()
+export default function Product({product,id, grid, handleProductDetails}){
 
-  const [loading,setLoading]=useState(false)
-
-  const handleOnClickProduct=()=>(setLoading(true), router.push(`products/${id}`))
   const styles = grid ? sNoDescription : sWithDescription
 
   const imgProps = grid?{
@@ -26,8 +19,7 @@ export default function Product({product,id, grid}){
   }
   return(
     <div>
-    {loading&&<LinearProgress color={'inherit'} sx={{color:'rgb(214, 107, 19)',position:'fixed',top:'0',left:'0',right:'0',zIndex:'1100'}}/>}
-      <div className={styles.productContainer} onClick={handleOnClickProduct}>
+      <div className={styles.productContainer} onClick={handleProductDetails(id)}>
         <div className={styles.imageContainer}> 
           <Image 
           styles={styles.image}
@@ -49,7 +41,7 @@ export default function Product({product,id, grid}){
               {!grid&&
               <>
                 <p className={styles.description}>{product.description.slice(0,150)}...</p>
-                <button onClick={handleOnClickProduct}>DETAILS</button> 
+                <button onClick={handleProductDetails(id)}>DETAILS</button> 
               </>
               }
             </div>
