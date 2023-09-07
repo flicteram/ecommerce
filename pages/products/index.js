@@ -364,7 +364,7 @@ export default function Products({ products }) {
                     <div className={grid ? styles.productContainer : styles.porductContainerNoGrid}>
                         {displayProducts.length ?
                             displayProducts.map((product) =>
-                                <Product key={index} id={product.id} product={product.data} grid={grid}/>
+                                <Product key={product.id} id={product.id} product={product.data} grid={grid}/>
                             )
                             :
                             <p className={styles.noProductsFound}>No products matched your search.</p>
