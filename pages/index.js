@@ -65,7 +65,7 @@ export default function Home({featured}) {
           <h2>Featured Products</h2>
           <div className={styles.productsContainer}>
             {featured.map((product,index)=>
-            <Product key={index} index={index} product={product.data} id={product.id}/>)}
+            <Product key={index} index={index} product={product.data} id={product.id} grid={true}/>)}
             </div>
           <Link href='/products'><button className={styles.allProducts}>ALL PRODUCTS</button></Link>
         </section>

@@ -1,88 +1,80 @@
-.productContainer,
-.productContainerAnim{
+.productContainer {
     display: flex;
     flex-direction: column;
 }
-.image{
-    border-radius: 5px;
-}
-.productContainer>div:first-child{
-    transform: scale(0);
-}
-.productContainerAnim>div:first-child{
-    transform:scale(1);
-    transition: transform 250ms linear;
-}
-.productContainer>div:last-child{
-    transform: rotateY(-90deg);
-}
-.productContainerAnim>div:last-child{
-    transform: rotateY(0deg);
-    transition: transform 350ms linear;
-}
-.description{
+
+.description {
     font-size: 0.85rem;
-    margin:10px 0px;
+    margin: 10px 0px;
 }
 
-.imageContainer{
+.imageContainer {
     width: 100%;
     height: 250px;
     position: relative;
     align-self: flex-start;
+    overflow: hidden;
+    border-radius: 5px;
 }
-.detailsContainer{
-     display: flex;
-     flex-direction: column;
-     justify-content: space-evenly;
+
+.detailsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
-.detailsContainer>button{
+
+.detailsContainer>button {
     align-self: flex-start;
-    padding:5px 10px;
+    padding: 5px 10px;
     font-size: 0.75rem;
     letter-spacing: 1px;
-    background-color:rgb(214, 107, 19);
-    border:1px solid rgb(214, 107, 19);
-    color:rgb(245, 245, 245);
+    background-color: rgb(214, 107, 19);
+    border: 1px solid rgb(214, 107, 19);
+    color: rgb(245, 245, 245);
     border-radius: 5px;
-    box-shadow: 0px 1px 2px 1px rgb(167, 167, 167);    
+    box-shadow: 0px 1px 2px 1px rgb(167, 167, 167);
     transform: scale(1);
     transition: transform 250ms, background-color 250ms, border 250ms;
 }
+
 .detailsContainer>button:hover,
-.detailsContainer>button:focus{
+.detailsContainer>button:focus {
     transform: scale(1.05);
     background-color: rgb(107, 83, 65);
-    border:1px solid rgb(107, 83, 65);
+    border: 1px solid rgb(107, 83, 65);
     transition: transform 250ms, background-color 250ms, border 250ms;
 }
-.price{
-    margin-top:5px;
+
+.productPrice {
+    margin-top: 5px;
     font-weight: 700;
-    color:rgb(214, 107, 19);
+    color: rgb(214, 107, 19);
     font-size: 0.95rem;
 }
-.name{
-    margin-top:10px;
+
+.productName {
+    margin-top: 10px;
 }
 
-@media(min-width:700px){
-    .productContainer,
-    .productContainerAnim{
+@media(min-width:700px) {
+    .productContainer {
         flex-direction: row;
         justify-content: space-between;
     }
-    .imageContainer{
+
+    .imageContainer {
         width: 33%;
         height: 150px;
     }
-    .detailsContainer{
+
+    .detailsContainer {
         width: 65%;
     }
-    .price,
+
+    .productPrice,
     .description,
-    .name{
-        margin:0;
+    .productName {
+        margin: 0;
     }
 
 }

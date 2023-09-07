@@ -7,12 +7,11 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import ViewHeadlineIcon from '@mui/icons-material/ViewHeadline';
 import Path from '../../components/Path/Path'
 import CheckIcon from '@mui/icons-material/Check';
-import ProductWithDescription from "../../components/ProductWithDescription/ProductWithDescription";
 import Footer from '../../components/Footer/Footer';
 import { db } from '../../firebase'
 import { getDocs, collection } from 'firebase/firestore'
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const querySnapshot = await getDocs(collection(db, 'products'));
     const products = querySnapshot.docs.map(product => ({
         id: product.id, data: product.data()
@@ -346,8 +345,12 @@ export default function Products({ products }) {
                                         <span>Apply filters</span>
                                 }
                             </button>
-                            <button style={{ backgroundColor: grid && 'black' }} onClick={() => setGrid(true)}><GridViewIcon sx={{ color: grid && 'rgb(214, 107, 19)' }} /></button>
-                            <button style={{ backgroundColor: !grid && 'black' }} onClick={() => setGrid(false)}><ViewHeadlineIcon sx={{ color: !grid && 'rgb(214, 107, 19)' }} /></button>
+                            <button style={{ backgroundColor: grid && 'black' }} onClick={() => setGrid(true)}>
+                                <GridViewIcon sx={{ color: grid && 'rgb(214, 107, 19)' }} />
+                            </button>
+                            <button style={{ backgroundColor: !grid && 'black' }} onClick={() => setGrid(false)}>
+                                <ViewHeadlineIcon sx={{ color: !grid && 'rgb(214, 107, 19)' }} />
+                            </button>
                         </div>
                         <div className={styles.sortByPriceContainer}>
                             <p>Sort By Price</p>
@@ -360,11 +363,8 @@ export default function Products({ products }) {
                     </div>
                     <div className={grid ? styles.productContainer : styles.porductContainerNoGrid}>
                         {displayProducts.length ?
-                            displayProducts.map((product, index) =>
-                                grid ?
-                                    <Product key={index} id={product.id} index={index} product={product.data} />
-                                    :
-                                    <ProductWithDescription key={index} id={product.id} product={product.data} />
+                            displayProducts.map((product) =>
+                                <Product key={index} id={product.id} product={product.data} grid={grid}/>
                             )
                             :
                             <p className={styles.noProductsFound}>No products matched your search.</p>
